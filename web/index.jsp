@@ -9,9 +9,15 @@
 <html>
   <head>
       <meta charset="utf-8">
-      <script src="jquery-1.10.2.js"></script>
-      <script src="jquery-ui.js"></script>
-      <script src="form.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <script src="javascript/jquery-1.10.2.js"></script>
+      <script src="javascript/jquery-ui.js"></script>
+      <script src="javascript/form.js"></script>
+      <script src="javascript/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="css/jquery-ui.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+
       <title>Title</title>
   </head>
   <body>
@@ -19,34 +25,81 @@
 
     <div class="se-pre-con"></div>
     <div id="regdialog-form" title="Δημιουργία νέου χρήστη"  style="display:none;">
-        <p class="validateTips">Όλα τα πεδία είναι υποχρεωτικά.</p>
 
-        <form action="" method="post">
+        <form class="form-horizontal" action="" method="post">
+
+            <p class="validateTips">Όλα τα πεδία είναι υποχρεωτικά.</p>
+
             <fieldset>
-                <label for="fullname">Ονοματεπώνυμο</label>
-                <input type="text" name="fullname" id="fullname" placeholder="Ονοματεπώνυμο" class="text ui-widget-content ui-corner-all" required>
-                <br>
-                <label for="username">Όνομα χρήστη</label>
-                <input type="text" name="username" id="username" placeholder="username" class="text ui-widget-content ui-corner-all" required>
-                <br>
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email"  placeholder="Email"  class="text ui-widget-content ui-corner-all" required>
-                <br>
-                <label for="password">Κωδικός</label>
-                <input type="password" name="password" id="password"  placeholder="κωδικός" class="text ui-widget-content ui-corner-all" required>
-                <br>
-                <label for="passwordc">Επαλήθευση Κωδικού</label>
-                <input type="password" name="passwordc" id="passwordc"  placeholder="Επαλήθευση Κωδικού" class="text ui-widget-content ui-corner-all" required>
 
-                <!-- Allow form submission with keyboard without duplicating the dialog button -->
-                <br/>
-                <input class="button-primary" type="submit" value="Εγγραφή">
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="fullname">Ονοματεπώνυμο</label>
+                    <div class="col-md-4">
+                        <input id="fullname" name="fullname" placeholder="Ονοματεπώνυμο" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="username">Όνομα Χρήστη</label>
+                    <div class="col-md-4">
+                        <input id="username" name="username" placeholder="Όνομα Χρήστη" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <!-- Password input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="password">Κωδικός</label>
+                    <div class="col-md-4">
+                        <input id="password" name="password" placeholder="Κωδικός" class="form-control input-md" required="" type="password">
+
+                    </div>
+                </div>
+
+                <!-- Password input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="password_repeat">Επαλήθευση Κωδικού</label>
+                    <div class="col-md-4">
+                        <input id="password_repeat" name="password_repeat" placeholder="Επαλήθευση Κωδικού" class="form-control input-md" required="" type="password">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="email">Email</label>
+                    <div class="col-md-4">
+                        <input id="email" name="email" placeholder="Email" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="UserRole">Τύπος Χρήστη</label>
+                    <div class="col-md-4">
+                        <select id="UserRole" name="UserRole" class="form-control">
+                            <option value="1">Πωλητής</option>
+                            <option value="2">Προσφέρων</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <button id="register" name="register" class="btn btn-success">Εγγραφή</button>
+                    </div>
+                </div>
 
             </fieldset>
         </form>
     </div>
 
-    <input type="submit" id="register_button" value="Εγγραφή">
+    <input type="submit" id="register_button" class="btn btn-default" value="Εγγραφή">
 
 
   </body>
