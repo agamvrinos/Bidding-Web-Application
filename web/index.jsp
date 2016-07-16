@@ -31,7 +31,6 @@
             <p class="validateTips">Όλα τα πεδία είναι υποχρεωτικά.</p>
 
             <fieldset>
-
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="fullname">Ονοματεπώνυμο</label>
@@ -91,7 +90,7 @@
                 <!-- Button -->
                 <div class="form-group">
                     <div class="col-md-4">
-                        <button id="register" name="register" class="btn btn-success">Εγγραφή</button>
+                        <button id="register" name="register" class="btn btn-primary">Εγγραφή</button>
                     </div>
                 </div>
 
@@ -99,7 +98,8 @@
         </form>
     </div>
 
-    <input type="submit" id="register_button" class="btn btn-default" value="Εγγραφή">
+    <input type="submit" id="register_button" class="btn btn-primary " value="Εγγραφή">
+    <input type="submit" id="login_button" class="btn btn-success " value="Σύνδεση">
 
 
   </body>
