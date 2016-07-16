@@ -11,10 +11,10 @@ import javax.sql.DataSource;
 public abstract class ConnectionFactory {
 	
 	//Actually should be read from a properties file
-	private static final String URL = "jdbc:mysql://83.212.123.209:3306/ted3";
+	private static final String URL = "jdbc:mysql://localhost:8080/ted";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String USERNAME = "ted";
-    private static final String PASSWORD = "ted";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
     
     //Singleton pattern: Connection factory instance is created only once
     private static ConnectionFactory instance = null;
