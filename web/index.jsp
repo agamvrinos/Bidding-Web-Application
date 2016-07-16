@@ -76,6 +76,47 @@
                     </div>
                 </div>
 
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="phone">Τηλέφωνο</label>
+                    <div class="col-md-4">
+                        <input id="phone" name="phone" placeholder="Τηλέφωνο" class="form-control input-md" required="" type="text">
+
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="country">Χώρα Κατοικίας</label>
+                    <div class="col-md-4">
+                        <input id="country" name="country" placeholder="Χώρα Κατοικίας" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="city">Πόλη Κατοικίας</label>
+                    <div class="col-md-4">
+                        <input id="city" name="city" placeholder="Πόλη Κατοικίας" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="address">Διεύθυνση</label>
+                    <div class="col-md-4">
+                        <input id="address" name="address" placeholder="Διεύθυνση" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="afm">ΑΦΜ</label>
+                    <div class="col-md-4">
+                        <input id="afm" name="afm" placeholder="ΑΦΜ" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+
                 <!-- Select Basic -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="UserRole">Τύπος Χρήστη</label>
