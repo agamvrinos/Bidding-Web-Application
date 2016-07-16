@@ -8,14 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "Register")
+@WebServlet("/Register")
 public class Register extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String fullname = request.getParameter("fullname");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String role = request.getParameter("UserRole");
 
+        response.getWriter().print("Success! Name: " + fullname +
+                "\nUsername: " + username + "\nPassword: " + password + "\nRole: " + role);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

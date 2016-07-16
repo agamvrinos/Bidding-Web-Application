@@ -26,7 +26,7 @@
     <div class="se-pre-con"></div>
     <div id="regdialog-form" title="Δημιουργία νέου χρήστη"  style="display:none;">
 
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal" action="Register" method="post">
 
             <p class="validateTips">Όλα τα πεδία είναι υποχρεωτικά.</p>
 
