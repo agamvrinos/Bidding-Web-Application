@@ -21,9 +21,6 @@ public class UserDAO {
                 , userInfo.getPhone(), userInfo.getCountry(), userInfo.getCity(), userInfo.getAddress(), userInfo.getAfm(),
                 userInfo.getRole()};
 
-        System.out.println("COUNYTY: " + userInfo.getCountry());
-
-
         try (
                 Connection connection = factory.getConnection();
                 PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ADD_NEW_USER, false, values);)
