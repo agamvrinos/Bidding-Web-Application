@@ -1,11 +1,11 @@
 package dao;
 
+import entities.User;
 import java.sql.*;
-import java.io.*;
 
 public class UserDAO {
 
-    private static final String SQL_FIND_BY_ID = "SELECT * FROM users";
+    private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
 
     private ConnectionFactory factory;
 
@@ -15,24 +15,28 @@ public class UserDAO {
         factory = ConnectionFactory.getInstance(pool);
     }
 
-    boolean insertUser(){
-        return true;
-    }
+    public boolean insertUser(User userInfo){
 
-    public void getUsers() {
+        Object[] values = { userInfo.getFullname(), userInfo.getUsername(), userInfo.getPassword(), userInfo.getEmail()
+                , userInfo.getPhone(), userInfo.getCountry(), userInfo.getCity(), userInfo.getAddress(), userInfo.getAfm(),
+                userInfo.getRole()};
+
+        System.out.println("COUNYTY: " + userInfo.getCountry());
+
+
         try (
-            Connection connection = factory.getConnection();
-            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_FIND_BY_ID, false);
-            ResultSet resultSet = statement.executeQuery();)
+                Connection connection = factory.getConnection();
+                PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ADD_NEW_USER, false, values);)
         {
-            System.out.println("x0a0xa0xa022");
+            int affectedRows = statement.executeUpdate();
+            System.out.println("Affected Rows: " + affectedRows);
 
-            while (resultSet.next()){
-                System.out.println(resultSet.getString("fullname"));
-            }
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+
+        return true;
     }
+
 }

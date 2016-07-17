@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 public abstract class ConnectionFactory {
 	
 	//Actually should be read from a properties file
-	private static final String URL = "jdbc:mysql://127.0.0.1:3306/ted";
+	private static final String URL = "jdbc:mysql://127.0.0.1:3306/ted?useUnicode=yes&characterEncoding=UTF-8";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
