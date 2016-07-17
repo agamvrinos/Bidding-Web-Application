@@ -139,6 +139,23 @@
         </form>
     </div>
 
+    <div id="logdialog-form" title="Σύνδεση χρήστη" style="display:none;">
+        <form action="Login" method="post">
+            <fieldset>
+                <label for="username">Όνομα χρήστη</label>
+                <br/>
+                <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all" required>
+                <br/>
+                <label for="password">Κωδικός</label>
+                <br/>
+                <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" required>
+                <br/>
+                <br/>
+                <input class="button-primary" type="submit" value="Συνδεση">
+            </fieldset>
+        </form>
+    </div>
+
     <input type="submit" id="register_button" class="btn btn-primary " value="Εγγραφή">
     <input type="submit" id="login_button" class="btn btn-success " value="Σύνδεση">
 
