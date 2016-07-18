@@ -39,6 +39,11 @@
             <form class="form-horizontal" action="Login" method="post">
 
                 </br><h3>Σύνδεση Χρήστη</h3>
+
+                <% if (request.getAttribute("login-error") == "yes") { %>
+                    <div class ="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Error! Username or Password invalid. Try Again!</div>
+                <% } %>
+
                 <fieldset>
                     <!-- Text input-->
                     <div class="form-group">

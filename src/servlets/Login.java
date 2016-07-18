@@ -1,5 +1,6 @@
 package servlets;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +29,9 @@ public class Login extends HttpServlet {
             response.getWriter().println("Success! You have succesfully logged in with username: " + username);
         }
         else{
-            response.getWriter().println("ERROR! Username or Password incorrect!");
+            request.setAttribute("login-error","yes");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
         }
 
     }
