@@ -46,8 +46,8 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="username">Όνομα Χρήστη</label>
                         <div class="col-md-4">
-                            <input id="username" name="username" placeholder="Όνομα Χρήστη" class="form-control input-md" required="" type="text">
-
+                            <input id="username" name="username" placeholder="Όνομα Χρήστη" class="form-control input-md" onblur="usernameAvailability()" required="" type="text">
+                            <div id="ajaxGetUserServletResponse"></div>
                         </div>
                     </div>
 
