@@ -24,11 +24,6 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <script src="javascript/jquery-1.10.2.js"></script>
-    <script src="javascript/jquery-ui.js"></script>
-    <script src="javascript/form.js"></script>
-    <script src="javascript/bootstrap.min.js"></script>
-
 </head>
 <body>
 
@@ -148,6 +143,22 @@
     </form>
 </div>
 
+<div id="logdialog-form" title="Σύνδεση χρήστη" style="display:none;">
+    <form action="Login" method="post">
+        <fieldset>
+            <label for="username">Όνομα χρήστη</label>
+            <br/>
+            <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all" required>
+            <br/>
+            <label for="password">Κωδικός</label>
+            <br/>
+            <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" required>
+            <br/>
+            <br/>
+            <input class="button-primary" type="submit" value="Συνδεση">
+        </fieldset>
+    </form>
+</div>
 
 <div class="header-area">
     <div class="container">
@@ -159,8 +170,9 @@
                         <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                         <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
                         <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                        <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
-                        <li><a href="#" id="register_button"><i class="fa fa-user"></i> Register</a></li>
+                        <li><a href="#" id="login_button"><i class="fa fa-user"></i> Login</a></li>
+                        <%--<li><a href="#" id="register_button"><i class="fa fa-user"></i> Register</a></li>--%>
+                        <li> <button type="submit" id="register_button" class="btn-primary">Register</button> </li>
                     </ul>
                 </div>
             </div>
@@ -197,7 +209,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="logo">
-                    <h1><a href="index.html">e<span>Electronics</span></a></h1>
+                    <h1><a href="index.jsp">e<span>Bidders</span></a></h1>
                 </div>
             </div>
 
@@ -615,11 +627,11 @@
     </div>
 </div> <!-- End footer bottom area -->
 
-<!-- Latest jQuery form server -->
-<script src="https://code.jquery.com/jquery.min.js"></script>
+<script src="javascript/jquery-1.10.2.js"></script>
+<script src="javascript/jquery-ui.js"></script>
+<script src="javascript/form.js"></script>
+<script src="javascript/bootstrap.min.js"></script>
 
-<!-- Bootstrap JS form CDN -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <!-- jQuery sticky menu -->
 <script src="javascript/owl.carousel.min.js"></script>
