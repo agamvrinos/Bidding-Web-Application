@@ -27,25 +27,6 @@
 </head>
 <body>
 
-
-
-<div id="logdialog-form" title="Σύνδεση χρήστη" style="display:none;">
-    <form action="Login" method="post">
-        <fieldset>
-            <label for="username">Όνομα χρήστη</label>
-            <br/>
-            <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all" required>
-            <br/>
-            <label for="password">Κωδικός</label>
-            <br/>
-            <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" required>
-            <br/>
-            <br/>
-            <input class="button-primary" type="submit" value="Συνδεση">
-        </fieldset>
-    </form>
-</div>
-
 <div class="header-area">
     <div class="container">
         <div class="row">
@@ -56,7 +37,7 @@
                         <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                         <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
                         <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                        <li><a href="#" id="login_button"><i class="fa fa-user"></i> Login</a></li>
+                        <li><a href="login.jsp" id="login_button"><i class="fa fa-user"></i> Login</a></li>
                         <li><a href="register.jsp" id="register_button"><i class="fa fa-user"></i> Register</a></li>
                     </ul>
                 </div>

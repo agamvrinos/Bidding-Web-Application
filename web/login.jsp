@@ -1,7 +1,14 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: stef
+  Date: 18/7/2016
+  Time: 1:37 μμ
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register</title>
+    <title>Login</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -115,19 +122,10 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            <form class="form-horizontal" action="Register" method="post">
+            <form class="form-horizontal" action="Login" method="post">
 
-                </br><h3>Εγγραφή Χρήστη</h3>
+                </br><h3>Σύνδεση Χρήστη</h3>
                 <fieldset>
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="fullname">Ονοματεπώνυμο</label>
-                        <div class="col-md-4">
-                            <input id="fullname" name="fullname" placeholder="Ονοματεπώνυμο" class="form-control input-md" required="" type="text">
-
-                        </div>
-                    </div>
-
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="username">Όνομα Χρήστη</label>
@@ -146,81 +144,11 @@
                         </div>
                     </div>
 
-                    <!-- Password input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="password_repeat">Επαλήθευση Κωδικού</label>
-                        <div class="col-md-4">
-                            <input id="password_repeat" name="password_repeat" placeholder="Επαλήθευση Κωδικού" class="form-control input-md" required="" type="password">
-
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">Email</label>
-                        <div class="col-md-4">
-                            <input id="email" name="email" placeholder="Email" class="form-control input-md" required="" type="text">
-
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="phone">Τηλέφωνο</label>
-                        <div class="col-md-4">
-                            <input id="phone" name="phone" placeholder="Τηλέφωνο" class="form-control input-md" required="" type="text">
-
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="country">Χώρα Κατοικίας</label>
-                        <div class="col-md-4">
-                            <input id="country" name="country" placeholder="Χώρα Κατοικίας" class="form-control input-md" required="" type="text">
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="city">Πόλη Κατοικίας</label>
-                        <div class="col-md-4">
-                            <input id="city" name="city" placeholder="Πόλη Κατοικίας" class="form-control input-md" required="" type="text">
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="address">Διεύθυνση</label>
-                        <div class="col-md-4">
-                            <input id="address" name="address" placeholder="Διεύθυνση" class="form-control input-md" required="" type="text">
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="afm">ΑΦΜ</label>
-                        <div class="col-md-4">
-                            <input id="afm" name="afm" placeholder="ΑΦΜ" class="form-control input-md" required="" type="text">
-                        </div>
-                    </div>
-
-                    <!-- Select Basic -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="UserRole">Τύπος Χρήστη</label>
-                        <div class="col-md-4">
-                            <select id="UserRole" name="UserRole" class="form-control">
-                                <option value="1">Πωλητής</option>
-                                <option value="2">Προσφέρων</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <!-- Button -->
                     <div class="form-group">
                         <div class="col-md-7"></div>
                         <div class="col-md-4">
-                            <button id="register" name="register" class="btn btn-primary">Εγγραφή</button>
+                            <button id="login" name="login" class="btn btn-primary">Σύνδεση</button>
                         </div>
                     </div>
 
@@ -327,5 +255,6 @@
 
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
+
 </body>
 </html>
