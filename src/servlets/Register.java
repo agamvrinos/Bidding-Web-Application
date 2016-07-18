@@ -42,11 +42,12 @@ public class Register extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+        //TODO: NA VALW ME ALERT AN PAR OLA AUTA DWSEI DUPLICATE USERNAME
         if (register_result == -2){     // Duplicate Username check
             response.getWriter().print("UserName Already Exists");
             response.getWriter().println("<script type=\"text/javascript\">");
             response.getWriter().println("alert('User or password incorrect');");
-            response.getWriter().println("location='index.jsp';");
+            response.getWriter().println("location='register.jsp';");
             response.getWriter().println("</script>");
 
         }

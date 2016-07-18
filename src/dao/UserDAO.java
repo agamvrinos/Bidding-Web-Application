@@ -8,6 +8,7 @@ public class UserDAO {
     private static final Integer USERNAME_EXISTS_ERROR = -2;
     private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SEARCH_USER = "SELECT * FROM users WHERE username = ? AND password = MD5(?) ";
+    private static final String SQL_EXISTS_USER = "SELECT 1 FROM users WHERE username = ?";
 
     private ConnectionFactory factory;
 
@@ -68,4 +69,25 @@ public class UserDAO {
 
     }
 
+    public boolean existsUsername(String username){
+
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_EXISTS_USER, false, username);
+            ResultSet results = statement.executeQuery();
+
+            if (!results.isBeforeFirst())
+                // Username does not exist
+                return false;
+            else
+                // Username exists
+                return true;
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            return false;
+
+        }
+    }
 }
