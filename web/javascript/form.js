@@ -1,5 +1,6 @@
 $( document ).ready(function(){
-
+    $(".se-pre-con").fadeOut("slow");
+    
     // Register Popup
     regdialog = $( "#regdialog-form" ).dialog({
         autoOpen: false,
@@ -14,9 +15,12 @@ $( document ).ready(function(){
             }
         }
     });
+
+
     $( "#register_button" ).on( "click", function() {
         regdialog.dialog( "open" );
     });
+
 
     // Login Popup
     logdialog = $( "#logdialog-form" ).dialog({
