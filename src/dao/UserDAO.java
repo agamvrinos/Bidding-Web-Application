@@ -7,6 +7,7 @@ public class UserDAO {
 
     private static final Integer USERNAME_EXISTS_ERROR = -2;
     private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_SEARCH_USER = "SELECT * FROM users WHERE username = ? AND password = MD5(?) ";
 
     private ConnectionFactory factory;
 
@@ -48,6 +49,23 @@ public class UserDAO {
 
         ret = 1;
         return ret;
+    }
+
+    public boolean findUser(String username, String password){
+
+
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_SEARCH_USER, false, username, password);
+            ResultSet results = statement.executeQuery();
+
+            return results.next();
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            return false;
+        }
+
     }
 
 }
