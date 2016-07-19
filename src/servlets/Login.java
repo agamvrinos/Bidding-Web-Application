@@ -25,18 +25,22 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
 
         // in case you are alread logged in
-        if (session.getAttribute("username")!=null)
+        if (session.getAttribute("username")!=null) {
             response.sendRedirect("index.jsp");
+            return;
+        }
 
         // success
         if (dao.findUser(username, password)){
             session.setAttribute("username", username);
             response.sendRedirect("index.jsp");
+            return;
         }
         else{ // error
             request.setAttribute("login-error","yes");
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
             dispatcher.forward(request, response);
+            return;
         }
 
     }
