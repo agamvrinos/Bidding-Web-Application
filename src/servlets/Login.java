@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
         UserDAO dao = new UserDAO(true);
         HttpSession session = request.getSession();
 
-        // in case you are alread logged in
+        // in case you are already logged in
         if (session.getAttribute("username")!=null) {
             response.sendRedirect("index.jsp");
             return;

@@ -29,9 +29,20 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
+
             <form class="form-horizontal" action="Register" method="post">
 
                 </br><h3>Εγγραφή Χρήστη</h3>
+
+                <%
+                    Integer value = (Integer)request.getAttribute("register-error");
+                    // Username already exists error
+                    if (value != null && value == -2) {%>
+                        <div class ="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Username already exists! Please try again with a different one.</div><%  }
+                    // Other error
+                    else if (value != null && value == -1){%>
+                        <div class ="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> An error occurred! Please try again.</div><%  }%>
+
                 <fieldset>
                     <!-- Text input-->
                     <div class="form-group">

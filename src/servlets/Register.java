@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import entities.User;
 
@@ -42,22 +43,22 @@ public class Register extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        //TODO: NA VALW ME ALERT AN PAR OLA AUTA DWSEI DUPLICATE USERNAME
         if (register_result == -2){     // Duplicate Username check
-            response.getWriter().print("UserName Already Exists");
-            response.getWriter().println("<script type=\"text/javascript\">");
-            response.getWriter().println("alert('User or password incorrect');");
-            response.getWriter().println("location='register.jsp';");
-            response.getWriter().println("</script>");
-
+            request.setAttribute("register-error", register_result);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+            dispatcher.forward(request, response);
         }
         else if (register_result == -1) {
-            response.getWriter().print("Error! Please try again.");
+            request.setAttribute("register-error", register_result);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+            dispatcher.forward(request, response);
         }
         else if (register_result == 1){ // No Errors. Register is successful
-            response.getWriter().print("Success! Name: " + fullname +
-                "\nUsername: " + username + "\nPassword: " + password + "\nRole: " + role);
+            request.setAttribute("username", username);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("registerSuccess.jsp");
+            dispatcher.forward(request, response);
         }
+
     }
 
 }
