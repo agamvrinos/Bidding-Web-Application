@@ -16,7 +16,7 @@ public class Logout extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("username")!=null)
+        if (session.getAttribute("user")!=null)
             session.invalidate();
 
         response.sendRedirect("index.jsp");

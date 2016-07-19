@@ -52,7 +52,7 @@ public class UserDAO {
         return ret;
     }
 
-    public boolean findUser(String username, String password){
+    public User getUser(String username, String password){
 
 
         try{
@@ -60,11 +60,23 @@ public class UserDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_SEARCH_USER, false, username, password);
             ResultSet results = statement.executeQuery();
 
-            return results.next();
+            if(!results.next())
+                return null;
+            else{
+                User user = new User(results.getString("fullname"), results.getString("username"), null,
+                        results.getString("email"), results.getString("phone"), results.getString("country"), results.getString("city"),
+                        results.getString("address"), results.getString("afm"), results.getInt("role"));
+
+                user.setId(results.getInt("id"));
+
+                return user;
+
+            }
+
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
-            return false;
+            return null;
         }
 
     }

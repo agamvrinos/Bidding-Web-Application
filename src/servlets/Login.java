@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import dao.UserDAO;
+import entities.User;
 
 
 @WebServlet("/Login")
@@ -25,14 +26,16 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
 
         // in case you are already logged in
-        if (session.getAttribute("username")!=null) {
+        if (session.getAttribute("user")!=null) {
             response.sendRedirect("index.jsp");
             return;
         }
 
+        User user = dao.getUser(username,password);
+
         // success
-        if (dao.findUser(username, password)){
-            session.setAttribute("username", username);
+        if (user != null){
+            session.setAttribute("user", user);
             response.sendRedirect("index.jsp");
             return;
         }

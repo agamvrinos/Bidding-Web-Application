@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="entities.User" %>
 
     <div class="header-area">
         <div class="container">
@@ -10,7 +10,7 @@
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
-                            <% if (request.getSession().getAttribute("username")==null){ %>
+                            <% if (request.getSession().getAttribute("user")==null){ %>
                             <li><a href="login.jsp" id="login_button"><i class="fa fa-user"></i> Login</a></li>
                             <li><a href="register.jsp" id="register_button"><i class="fa fa-user"></i> Register</a></li>
                             <% }
@@ -30,12 +30,14 @@
                         <ul class="list-unstyled list-inline">
                             <li>
                                 Hello,
-                                <% if (request.getSession().getAttribute("username")==null){ %>
+                                <% if (request.getSession().getAttribute("user")==null){ %>
                                 guest!
                                 <% }
                                    else {
+                                    User user = (User) request.getSession().getAttribute("user");
+                                    String username = user.getUsername();
                                 %>
-                                <%=request.getSession().getAttribute("username") + "!" %>
+                                <%=username%>!
                                 <%
                                     }
                                 %>
