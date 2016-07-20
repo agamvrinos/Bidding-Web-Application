@@ -42,7 +42,11 @@
 
                 <% if (request.getAttribute("login-error") == "yes") { %>
                     <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> Error! Username or Password invalid. Try Again!</div>
-                <% } %>
+                <% }
+                   if (request.getAttribute("nologgedin") == "no") { %>
+                    <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> You need to be logged in to access your profile!</div>
+                <% }%>
+
 
                 <fieldset>
                     <!-- Text input-->

@@ -1,4 +1,5 @@
 <%@ page import="entities.User" %>
+<%@ page import="javax.servlet.RequestDispatcher" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,7 +27,10 @@
 
 <% //in case you are not logged in
     if (request.getSession().getAttribute("user")==null) {
-        response.sendRedirect("login.jsp");
+        request.setAttribute("nologgedin","no");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+        dispatcher.forward(request, response);
+
         return;
     }
 %>
