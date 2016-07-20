@@ -30,14 +30,12 @@
 
 <div class="container">
     <div class="row">
-        </br><h3>Προφίλ Χρήστη: <%=user.getUsername()%></h3>
+        </br><h3>Προφίλ Χρήστη: <%=user.getUsername()%></h3><br>
         <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-
-
+        <div>
             <div class="panel panel-info">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color:#399280; color:black; border-bottom: black;">
                     <h3 class="panel-title"><%=user.getFullname()%></h3>
                 </div>
                 <div class="panel-body">
@@ -105,9 +103,10 @@
 
                                 </tbody>
                             </table>
-
-                            <a href="#" class="btn btn-primary">My Sales Performance</a>
-                            <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                            <div class="btn-toolbar">
+                                <a href="#" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Επεξεργασία Προφίλ</a>
+                                <a href="#" class="btn btn-primary"><i class="fa fa-envelope" aria-hidden="true"></i> Τα Μηνύματα μου </a>
+                            </div>
                         </div>
                     </div>
                 </div>
