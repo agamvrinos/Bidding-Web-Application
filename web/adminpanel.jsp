@@ -43,10 +43,10 @@
             <table id="userlist-table" class="table table-hover table-striped table-condensed">
                 <thead>
                 <tr>
-                    <th><div style="text-align: center">Ονοματεπώνυμο</div></th>
-                    <th><div style="text-align: center">Όνομα Χρήστη</div></th>
-                    <th><div style="text-align: center">Email</div></th>
-                    <th><div style="text-align: center">Ρόλος</div></th>
+                    <th>Ονοματεπώνυμο</th>
+                    <th>Όνομα Χρήστη</th>
+                    <th>Email</th>
+                    <th>Ρόλος</th>
                     <th><div style="text-align: center">Επικυρωμένος</div></th>
                     <th></th>
                 </tr>
@@ -71,7 +71,12 @@
                             roletext = "Προσφέρον";
                         }%>
                     <td><%=roletext%></td>
+                    <% if (userlist.get(i).getValidated()==0){ %>
                     <td><div style="color: red;text-align: center">Όχι</div></td>
+                    <% }
+                        else{ %>
+                    <td><div style="color: forestgreen;text-align: center">Ναι</div></td>
+                    <% } %>
                     <td><a class="btn btn-primary" href="#" role="button">Προφίλ</a></td>
                 </tr>
                 <% } %>

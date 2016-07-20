@@ -9,6 +9,7 @@ public class UserDAO {
     private static final Integer USERNAME_EXISTS_ERROR = -2;
     private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SEARCH_USER = "SELECT * FROM users WHERE username = ? AND password = MD5(?) ";
+    private static final String SQL_SEARCH_USER_BY_ID = "SELECT * FROM users WHERE id = ? ";
     private static final String SQL_EXISTS_USER = "SELECT 1 FROM users WHERE username = ?";
     private static final String SQL_GET_USER_LIST = "SELECT * FROM users";
 
@@ -70,6 +71,7 @@ public class UserDAO {
                         results.getString("address"), results.getString("afm"), results.getInt("role"));
 
                 user.setId(results.getInt("id"));
+                user.setValidated(results.getInt("validated"));
 
                 return user;
 
@@ -98,6 +100,7 @@ public class UserDAO {
                         results.getString("address"), results.getString("afm"), results.getInt("role"));
 
                 user.setId(results.getInt("id"));
+                user.setValidated(results.getInt("validated"));
 
                 userlist.add(user);
             }
@@ -108,6 +111,34 @@ public class UserDAO {
         }
 
         return userlist;
+    }
+
+    public User getUserbyID(Integer id){
+
+        try{
+
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_SEARCH_USER_BY_ID, false, id);
+            ResultSet results = statement.executeQuery();
+
+            if(!results.next())
+                return null;
+            else{
+                User user = new User(results.getString("fullname"), results.getString("username"), null,
+                        results.getString("email"), results.getString("phone"), results.getString("country"), results.getString("city"),
+                        results.getString("address"), results.getString("afm"), results.getInt("role"));
+
+                user.setId(results.getInt("id"));
+                user.setValidated(results.getInt("validated"));
+
+                return user;
+            }
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
     public boolean existsUsername(String username){
