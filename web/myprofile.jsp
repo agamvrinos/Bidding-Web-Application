@@ -1,3 +1,4 @@
+<%@ page import="entities.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -23,20 +24,27 @@
 </head>
 <body>
 
+<% //in case you are not logged in
+    if (request.getSession().getAttribute("user")==null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <jsp:include page="header.jsp" />
+
+<% User user = (User) request.getSession().getAttribute("user"); %>
 
 <div class="container">
         <div class="row">
+            </br><h3>Το προφιλ μου</h3>
             <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
-                <br>
-                <br>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Stefa Anagnostou</h3>
+                        <h3 class="panel-title"><%=user.getFullname()%></h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -58,35 +66,47 @@
                                 <table class="table table-user-information">
                                     <tbody>
                                     <tr>
-                                        <td>Department:</td>
-                                        <td>Programming</td>
+                                        <td>Όνομα Χρήστη:</td>
+                                        <td><%=user.getUsername()%></td>
                                     </tr>
                                     <tr>
-                                        <td>Hire date:</td>
-                                        <td>06/23/2013</td>
+                                        <td>Ρόλος:</td>
+                                        <% int role = user.getRole();
+                                            String roletext;
+                                           if (role==0) {
+                                               roletext = "Διαχειριστής";
+                                           }
+                                            else if (role == 1) {
+                                               roletext = "Πωλητής";
+                                           }
+                                            else {
+                                               roletext = "Προσφέρον";
+                                           }%>
+                                        <td><%=roletext%></td>
                                     </tr>
                                     <tr>
-                                        <td>Date of Birth</td>
-                                        <td>01/24/1988</td>
-                                    </tr>
-
-                                    <tr>
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td>Male</td>
+                                        <td>ΑΦΜ:</td>
+                                        <td><%=user.getAfm()%></td>
                                     </tr>
                                     <tr>
-                                        <td>Home Address</td>
-                                        <td>Metro Manila,Philippines</td>
+                                        <td>Χώρα:</td>
+                                        <td><%=user.getCountry()%></td>
                                     </tr>
                                     <tr>
-                                        <td>Email</td>
-                                        <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                        <td>Πόλη:</td>
+                                        <td><%=user.getCity()%></td>
                                     </tr>
-                                    <td>Phone Number</td>
-                                    <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                                    </td>
-
+                                    <tr>
+                                        <td>Διεύθυνση:</td>
+                                        <td><%=user.getAddress()%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td><%=user.getEmail()%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Τηλέφωνο:</td>
+                                        <td><%=user.getPhone()%></td>
                                     </tr>
 
                                     </tbody>
