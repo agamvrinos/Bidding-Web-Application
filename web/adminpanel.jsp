@@ -77,7 +77,7 @@
                         else{ %>
                     <td><div style="color: forestgreen;text-align: center">Ναι</div></td>
                     <% } %>
-                    <td><a class="btn btn-primary" href="#" role="button">Προφίλ</a></td>
+                    <td><a class="btn btn-primary" href="userprofile.jsp?id=<%=userlist.get(i).getId()%>" role="button">Προφίλ</a></td>
                 </tr>
                 <% } %>
                 </tbody>
