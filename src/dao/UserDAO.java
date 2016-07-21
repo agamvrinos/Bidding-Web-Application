@@ -12,6 +12,7 @@ public class UserDAO {
     private static final String SQL_SEARCH_USER_BY_ID = "SELECT * FROM users WHERE id = ? ";
     private static final String SQL_EXISTS_USER = "SELECT 1 FROM users WHERE username = ?";
     private static final String SQL_GET_USER_LIST = "SELECT * FROM users";
+    private static final String SQL_VALIDATE_USER = "UPDATE users SET validated=1 WHERE id= ?";
 
     private ConnectionFactory factory;
 
@@ -160,6 +161,18 @@ public class UserDAO {
             System.err.println(e.getMessage());
             return false;
 
+        }
+    }
+
+    public void approveUser(String id){
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_VALIDATE_USER, false, id);
+            statement.executeUpdate();
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
         }
     }
 }

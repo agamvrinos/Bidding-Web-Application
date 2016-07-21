@@ -1,7 +1,12 @@
 <%@ page import="entities.User" %>
 <%@ page import="dao.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% User user = new UserDAO(true).getUserbyID(Integer.valueOf(request.getParameter("id"))); %>
+<% User user = new UserDAO(true).getUserbyID(Integer.valueOf(request.getParameter("id")));
+    User sessionUser = (User) request.getSession().getAttribute("user");
+    int sessionUserRole = -1;
+    if (sessionUser != null)
+        sessionUserRole = sessionUser.getRole();
+%>
 <html>
 <head>
     <title>Προφίλ Χρήστη - <%=user.getUsername()%></title>
@@ -54,7 +59,7 @@
                             <dd>Male</dd>
                           </dl>
                         </div>-->
-                        <div class=" col-md-9 col-lg-9 ">
+                        <span class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
                                 <tbody>
                                 <tr>
@@ -99,6 +104,19 @@
                                 <tr>
                                     <td>Τηλέφωνο:</td>
                                     <td><%=user.getPhone()%></td>
+                                </tr>
+                                <tr>
+                                    <td>Επικυρωμένος:</td>
+                                    <% if (user.getValidated()==0){ %>
+                                    <td><span style="color: red">Όχι</span>
+                                        <% if (sessionUserRole == 0){ %>
+                                            <a href="/validateUser?id=<%=user.getId()%>" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Έγκριση Προφίλ</a>
+                                        <% } %>
+                                    </td>
+                                    <% }
+                                    else{ %>
+                                    <td><span style="color: forestgreen">Ναι</span></td>
+                                    <% } %>
                                 </tr>
 
                                 </tbody>
