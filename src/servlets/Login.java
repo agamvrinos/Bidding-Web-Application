@@ -36,7 +36,12 @@ public class Login extends HttpServlet {
         // success
         if (user != null){
             session.setAttribute("user", user);
-            response.sendRedirect("index.jsp");
+
+            if(user.getRole()==0)
+                response.sendRedirect("adminpanel.jsp");
+            else
+                response.sendRedirect("index.jsp");
+
             return;
         }
         else{ // error

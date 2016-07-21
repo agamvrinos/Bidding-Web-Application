@@ -1,13 +1,11 @@
 <%@ page import="dao.UserDAO" %>
 <%@ page import="entities.User" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: stef
-  Date: 20/7/2016
-  Time: 1:12 μμ
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%  User sessionUser = (User) request.getSession().getAttribute("user");
+    if(sessionUser==null || sessionUser.getRole()!=0)
+        response.sendRedirect("index.jsp");
+%>
 <html>
 <head>
     <title>Πίνακας Διαχειριστή</title>
