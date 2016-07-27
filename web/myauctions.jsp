@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="entities.User" %>
 
-<%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null || sessionUser.getRole()!=0)
-        response.sendRedirect("index.jsp");
-%>
+<%--<%  User sessionUser = (User) request.getSession().getAttribute("user");--%>
+    <%--if(sessionUser==null || sessionUser.getRole()!=0)--%>
+        <%--response.sendRedirect("index.jsp");--%>
+<%--%>--%>
 
 <html>
 <head>
@@ -35,24 +35,52 @@
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
             <div class="container">
-                <br>
+
+                </br><h3>Οι Δημοπρασίες Μου</h3></br>
+                <hr style="border-top: 1px solid #1abc9c">
+
                 <div class="row">
                     <div class="col-sm-3 col-xs-3 col-md-3">
                         <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="50%" height="50%">
                     </div>
                     <div class="col-sm-7 col-xs-7 col-md-7">
-                        <div class="title"> <span style="font-weight: bold">Τίτλος: </span> Nokia 3110 </div>
-                        <div class="category"><span style="font-weight: bold">Κατηγορία/ες:</span> Ηλεκτρονικά </div>
-                        <div class="current"><span style="font-weight: bold">Τρέχουσα προσφορά:</span> 0 </div>
-                        <div class="buyprice"><span style="font-weight: bold">Τιμή Αγοράς:</span> 500 </div>
-                        <div class="firstbid"><span style="font-weight: bold">Αρχική Προσφορά:</span> 25 </div>
-                        <div class="startdate"><span style="font-weight: bold">Ημερομηνία/Ώρα Έναρξης:</span> 2016-07-23 16:29:53 </div>
-                        <div class="enddate"><span style="font-weight: bold">Ημερομηνία/Ώρα Λήξης:</span> 2016-07-28 16:29:53 </div>
-                        <div class="state"><span style="font-weight: bold">Κατάσταση:</span> Δημοσιευμένη </div>
+
+                        <table id="userlist-table" class="table table-hover table-striped table-condensed">
+                            <tbody>
+                            <tr>
+                                <th>Τίτλος</th>
+                                <td>Nokia 3110</td>
+                            </tr>
+                            <tr>
+                                <th>Κατηγορία/ες</th>
+                                <td>Ηλεκτρονικά</td>
+                            </tr>
+                            <tr>
+                                <th>Τρέχουσα προσφορά</th>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>Τιμή Αγοράς</th>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <th>Αρχική Προσφορά</th>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <th>Ημερομηνία/Ώρα Λήξης</th>
+                                <td>2016-07-23 16:29:53</td>
+                            </tr>
+                            <tr>
+                                <th>Κατάσταση</th>
+                                <td style="color: red">Μη Δημοσιευμένη</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="col-sm-1 col-xs-1 col-md-1">
-                        <a href="newauction.jsp" class="btn btn-danger" role="button">Eνεργοποίηση</a>
+                        <a href="newauction.jsp" class="btn btn-success" role="button">Eνεργοποίηση</a>
                     </div>
                 </div>
 
@@ -63,18 +91,41 @@
                         <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="50%" height="50%">
                     </div>
                     <div class="col-sm-7 col-xs-7 col-md-7">
-                        <div class="title"> <span style="font-weight: bold">Τίτλος: </span> Nokia 3110 </div>
-                        <div class="category"><span style="font-weight: bold">Κατηγορία/ες:</span> Ηλεκτρονικά </div>
-                        <div class="current"><span style="font-weight: bold">Τρέχουσα προσφορά:</span> 0 </div>
-                        <div class="buyprice"><span style="font-weight: bold">Τιμή Αγοράς:</span> 500 </div>
-                        <div class="firstbid"><span style="font-weight: bold">Αρχική Προσφορά:</span> 25 </div>
-                        <div class="startdate"><span style="font-weight: bold">Ημερομηνία/Ώρα Έναρξης:</span> 2016-07-23 16:29:53 </div>
-                        <div class="enddate"><span style="font-weight: bold">Ημερομηνία/Ώρα Λήξης:</span> 2016-07-28 16:29:53 </div>
-                        <div class="state"><span style="font-weight: bold">Κατάσταση:</span> Μη Δημοσιευμένη </div>
-
+                        <table id="userlist-table" class="table table-hover table-striped table-condensed">
+                            <tbody>
+                            <tr>
+                                <th>Τίτλος</th>
+                                <td>Nokia 3110</td>
+                            </tr>
+                            <tr>
+                                <th>Κατηγορία/ες</th>
+                                <td>Ηλεκτρονικά</td>
+                            </tr>
+                            <tr>
+                                <th>Τρέχουσα προσφορά</th>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>Τιμή Αγοράς</th>
+                                <td>200</td>
+                            </tr>
+                            <tr>
+                                <th>Αρχική Προσφορά</th>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <th>Ημερομηνία/Ώρα Λήξης</th>
+                                <td>2016-07-23 16:29:53</td>
+                            </tr>
+                            <tr>
+                                <th>Κατάσταση</th>
+                                <td style="color: green">Δημοσιευμένη</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="col-sm-1 col-xs-1 col-md-1">
-                        <a href="newauction.jsp" class="btn btn-success" role="button">Eνεργοποίηση</a>
+                        <a href="newauction.jsp" class="btn btn-danger" role="button">Eνεργοποίηση</a>
                     </div>
                 </div>
 
