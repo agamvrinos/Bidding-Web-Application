@@ -45,7 +45,6 @@ public class createItem extends HttpServlet {
         String latitude = request.getParameter("latitude");
         String longitude = request.getParameter("longitude");
         String date = request.getParameter("date");
-        String time = request.getParameter("time");
         String desc = request.getParameter("desc");
 
         Double first_bid_number = null;
@@ -68,19 +67,20 @@ public class createItem extends HttpServlet {
         }
         catch (NumberFormatException ex){
             request.setAttribute("item-creation-error","Κάτι πήγε στραβά με τα αριθμητικά στοιχεία που συμπληρώσατε! Προσπαθήστε ξανά! " + ex.getMessage());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("createItem.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("newauction.jsp");
             dispatcher.forward(request, response);
             return;
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         Date datetime;
         try {
-            datetime = sdf.parse(date + " " + time);
+            datetime = sdf.parse(date);
         }
         catch (ParseException ex){
+            //TODO: Den xreiazetai me to new calendar mallon
             request.setAttribute("item-creation-error","Κάτι πήγε στραβά με την ημερομηνία που συμπληρώσατε! Προσπαθήστε ξανά!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("createItem.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("newauction.jsp");
             dispatcher.forward(request, response);
             return;
         }
@@ -98,6 +98,7 @@ public class createItem extends HttpServlet {
         ItemDAO dao = new ItemDAO(true);
         dao.insertItem(item);
 
+        //TODO: MAPA! na se petaei sto myauction.jsp tou xristi
         response.sendRedirect("index.jsp");
     }
 

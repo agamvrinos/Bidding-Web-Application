@@ -1037,3 +1037,8 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .toppad
 {margin-top:20px;
 }
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}

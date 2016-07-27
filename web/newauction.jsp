@@ -1,6 +1,13 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="entities.User" %>
+
+<%  User sessionUser = (User) request.getSession().getAttribute("user");
+    if(sessionUser==null || sessionUser.getRole()!=0)
+        response.sendRedirect("index.jsp");
+%>
+
 <html>
 <head>
     <title>Δημιουργία Νέας Δημοπρασίας</title>
@@ -23,17 +30,11 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/>
+
 </head>
 <body>
-
-<script>
-    $(document).ready(function() {
-        $("#datepicker").datepicker();
-    });
-</script>
 
 <jsp:include page="header.jsp" />
 
@@ -44,25 +45,23 @@
 
             <form class="form-horizontal" action="Create" method="post" id="createitem">
 
-                </br><h3>Δημιουργία Νέας Δημοπρασίας</h3>
-                <br>
+                </br><h3>Δημιουργία Νέας Δημοπρασίας</h3></br>
                 <%  if (request.getAttribute("item-creation-error") != null) { %>
                 <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> <%=request.getAttribute("item-creation-error")%></div>
                 <br>
                 <% } %>
 
                 <fieldset>
-                    <!-- title input-->
-                    <div class="form-group">
+                    <!-- Auction Title -->
+                    <div class="form-group required">
                         <label class="col-md-4 control-label" for="title">Τίτλος</label>
                         <div class="col-md-4">
-                            <input id="title" name="title" placeholder="π.χ. Καρέκλα Γραφείου με ροδάκια" class="form-control input-md" required type="text" maxlength="250">
-
+                                <input id="title" name="title" placeholder="Τίτλος Δημοπρασίας" class="form-control input-md" required="" type="text">
                         </div>
                     </div>
 
                     <!-- Category Multiple Choice-->
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-md-4 control-label" for="categories">Κατηγορία</label>
                         <div class="col-md-4">
                             <select id="categories" name="categories" required multiple size="3">
@@ -75,41 +74,42 @@
                         </div>
                     </div>
 
-                    <!-- First Bid input-->
+                    <!-- Item Buy Price -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="first-bid">Αρχική Τιμή</label>
-                        <div class="col-md-2">
-                            <input id="first-bid" name="first-bid" class="form-control input-md" min="0.01" step="0.01" required type="number">
+                        <label class="col-md-4 control-label" for="buyout">Τιμή Άμεσης Αγοράς</label>
+                        <div class="col-md-4">
+                            <input id="buyout" name="buyout" placeholder="Τιμή Άμεσης Αγοράς" class="form-control input-md" type="text">
                         </div>
                     </div>
 
-                    <!-- Buyout Price input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="buyout">Τιμή Εξαγοράς*</label>
-                        <div class="col-md-2">
-                            <input id="buyout" name="buyout" class="form-control input-md" min="0.01" step="0.01" type="number">
+
+                    <!-- First Bid -->
+                    <div class="form-group required">
+                        <label class="col-md-4 control-label" for="first-bid">Αρχική Προσφορά</label>
+                        <div class="col-md-4">
+                            <input id="first-bid" name="first-bid" placeholder="Αρχική Προσφορά" class="form-control input-md" required="" type="text">
                         </div>
                     </div>
 
-                    <!-- Country input-->
-                    <div class="form-group">
+                    <!-- Country -->
+                    <div class="form-group required">
                         <label class="col-md-4 control-label" for="country">Χώρα</label>
                         <div class="col-md-4">
-                            <input id="country" name="country" placeholder="π.χ. Ελλάδα" class="form-control input-md" required type="text">
+                            <input id="country" name="country" placeholder="π.χ Ελλάδα" class="form-control input-md" required="" type="text">
                         </div>
                     </div>
 
-                    <!-- Location input-->
-                    <div class="form-group">
+                    <!-- Location -->
+                    <div class="form-group required">
                         <label class="col-md-4 control-label" for="location">Περιοχή</label>
                         <div class="col-md-4">
-                            <input id="location" name="location" placeholder="π.χ. Αθήνα" class="form-control input-md" required type="text">
+                            <input id="location" name="location" placeholder="π.χ Αθήνα" class="form-control input-md" required="" type="text">
                         </div>
                     </div>
 
                     <!-- Latitude-Longitude input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Συντεταγμένες*</label>
+                        <label class="col-md-4 control-label">Συντεταγμένες</label>
                         <div class="col-md-2">
                             <input id="latitude" name="latitude" placeholder="Latitude" class="form-control input-md" type="text">
                         </div>
@@ -118,27 +118,45 @@
                         </div>
                     </div>
 
-                    <!-- date and time input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Χρόνος Λήξης</label>
-                        <div class="col-md-2">
-                            <input id="datepicker" name="date" placeholder="ΜΜ/ΗΗ/ΧΧΧΧ" class="form-control input-md" required type="text">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control input-md" placeholder="ΩΩ:ΛΛ" required pattern="([01]?[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}" title="π.χ. 23:59" name="time"/>
+                    <%--<div class="form-group required">--%>
+                        <%--<label class="col-md-4 control-label" for="datetimepicker_dark2">Ημερομηνία/Ώρα έναρξης</label>--%>
+                        <%--<div class="col-md-4">--%>
+                            <%--<div class="input-group date" >--%>
+                                <%--<input id="datetimepicker_dark2" type="text" placeholder="Ημερομηνία/Ώρα έναρξης" class="form-control" />--%>
+                                    <%--<span class="input-group-addon">--%>
+                                        <%--<i class="fa fa-calendar" aria-hidden="true"></i>--%>
+                                    <%--</span>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+
+                    <div class="form-group required">
+                        <label class="col-md-4 control-label" for="datetimepicker_dark">Ημερομηνία/Ώρα λήξης</label>
+                        <div class="col-md-4">
+                            <div class="input-group date" >
+                                <input name="date" id="datetimepicker_dark" type="text" placeholder="Ημερομηνία/Ώρα λήξης" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Desc input-->
-                    <div class="form-group">
+                    <!-- Item Description -->
+                    <div class="form-group required">
                         <label class="col-md-4 control-label" for="desc">Περιγραφή</label>
                         <div class="col-md-4">
-                            <textarea rows="5" cols="50" id="desc" name="desc" form="createitem" required placeholder="Δώστε μια περιγραφή για το αντικείμενο..."></textarea>
-
+                            <textarea class="form-control" rows="8" id="desc" name="desc" placeholder="Δώστε μια περιγραφή για το αντικείμενο."></textarea>
                         </div>
                     </div>
 
-                    <br>
+                    <!-- Item Image browse -->
+                    <div class="form-group">
+                        <label class="col-md-4  control-label">Επιλογή Φωτογραφίας</label>
+                        <div class="col-md-4">
+                            <input id="input-1a" type="file" class="file form-control" data-show-preview="false">
+                        </div>
+                    </div>
 
                     <!-- Button -->
                     <div class="col-md-8">
@@ -156,6 +174,8 @@
 
 <jsp:include page="footer.jsp" />
 
+</body>
+
 <script src="javascript/jquery-1.10.2.js"></script>
 <script src="javascript/jquery-ui.js"></script>
 <script src="javascript/form.js"></script>
@@ -172,6 +192,11 @@
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
 
+<script src="javascript/jquery.js"></script>
+<script src="javascript/jquery.datetimepicker.full.js"></script>
 
-</body>
+<script>
+    $('#datetimepicker_dark').datetimepicker({theme:'dark'});
+//    $('#datetimepicker_dark2').datetimepicker({theme:'dark'});
+</script>
 </html>

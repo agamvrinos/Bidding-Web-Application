@@ -6,17 +6,18 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="myprofile.jsp"><i class="fa fa-user"></i> My Account</a></li>
+                            <li><a href="myprofile.jsp"><i class="fa fa-user"></i>Το Προφίλ μου</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
                             <% if (request.getSession().getAttribute("user")==null){ %>
-                            <li><a href="login.jsp" id="login_button"><i class="fa fa-user"></i> Login</a></li>
-                            <li><a href="register.jsp" id="register_button"><i class="fa fa-user"></i> Register</a></li>
+                                <li><a href="login.jsp" id="login_button"><i class="fa fa-user"></i>Σύνδεση</a></li>
+                                <li><a href="register.jsp" id="register_button"><i class="fa fa-user"></i>Εγγραφή</a></li>
                             <% }
                             else {
                             %>
-                            <li><a href="/Logout" id="logout_button"><i class="fa fa-user"></i> Logout</a></li>
+                            <li><a href="myauctions.jsp" id="my_auctions"><i class="fa fa-user"></i>Διαχείριση Δημοπρασιών</a></li>
+                            <li><a href="/Logout" id="logout_button"><i class="fa fa-user"></i>Αποσύνδεση</a></li>
                             <%
                                 }
                             %>
