@@ -42,10 +42,14 @@
     <div class="container">
         <div class="row">
 
-            <form class="form-horizontal" action="createItem" method="post" id="createitem">
+            <form class="form-horizontal" action="Create" method="post" id="createitem">
 
                 </br><h3>Δημιουργία Νέας Δημοπρασίας</h3>
                 <br>
+                <%  if (request.getAttribute("item-creation-error") != null) { %>
+                <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> <%=request.getAttribute("item-creation-error")%></div>
+                <br>
+                <% } %>
 
                 <fieldset>
                     <!-- title input-->
@@ -75,7 +79,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="first-bid">Αρχική Τιμή</label>
                         <div class="col-md-2">
-                            <input id="first-bid" name="first-bid" class="form-control input-md" min="0.01" required type="number">
+                            <input id="first-bid" name="first-bid" class="form-control input-md" min="0.01" step="0.01" required type="number">
                         </div>
                     </div>
 
@@ -83,7 +87,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="buyout">Τιμή Εξαγοράς*</label>
                         <div class="col-md-2">
-                            <input id="buyout" name="buyout" class="form-control input-md" min="0.01" type="number">
+                            <input id="buyout" name="buyout" class="form-control input-md" min="0.01" step="0.01" type="number">
                         </div>
                     </div>
 

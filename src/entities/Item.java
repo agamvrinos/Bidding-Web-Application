@@ -8,6 +8,7 @@ public class Item {
     private Integer id;
     private String name;
     private Double currently;
+    private Double first_bid;
     private Double buy_price;
     private String country;
     private String location;
@@ -18,8 +19,27 @@ public class Item {
     private Date ends;
     private String seller;
     private String desc;
-    private String[] categories;
+    private List<String> categories;
     private List<Bid> bids;
+
+    public Item(Integer id, String name, Double currently, Double first_bid, Double buy_price, String country, String location, Double latitude, Double longitude, Date creation, Date starts, Date ends, String seller, String desc, List<String> categories, List<Bid> bids) {
+        this.id = id;
+        this.name = name;
+        this.currently = currently;
+        this.first_bid = first_bid;
+        this.buy_price = buy_price;
+        this.country = country;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.creation = creation;
+        this.starts = starts;
+        this.ends = ends;
+        this.seller = seller;
+        this.desc = desc;
+        this.categories = categories;
+        this.bids = bids;
+    }
 
     public Integer getId() {
         return id;
@@ -43,6 +63,14 @@ public class Item {
 
     public void setCurrently(Double currently) {
         this.currently = currently;
+    }
+
+    public Double getFirst_bid() {
+        return first_bid;
+    }
+
+    public void setFirst_bid(Double first_bid) {
+        this.first_bid = first_bid;
     }
 
     public Double getBuy_price() {
@@ -125,11 +153,11 @@ public class Item {
         this.desc = desc;
     }
 
-    public String[] getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(String[] categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
