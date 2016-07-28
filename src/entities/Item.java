@@ -21,6 +21,7 @@ public class Item {
     private String desc;
     private List<String> categories;
     private List<Bid> bids;
+    private Integer state;
 
     public Item(Integer id, String name, Double currently, Double first_bid, Double buy_price, String country, String location, Double latitude, Double longitude, Date creation, Date starts, Date ends, String seller, String desc, List<String> categories, List<Bid> bids) {
         this.id = id;
@@ -39,6 +40,14 @@ public class Item {
         this.desc = desc;
         this.categories = categories;
         this.bids = bids;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Integer getId() {
