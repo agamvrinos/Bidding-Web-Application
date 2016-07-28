@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="entities.User" %>
 
+<%--TODO: Uncomment user check meta --%>
 <%--<%  User sessionUser = (User) request.getSession().getAttribute("user");--%>
     <%--if(sessionUser==null || sessionUser.getRole()!=0)--%>
         <%--response.sendRedirect("index.jsp");--%>
@@ -37,10 +38,18 @@
             <div class="container">
 
                 </br><h3>Οι Δημοπρασίες Μου</h3></br>
-                <hr style="border-top: 1px solid #1abc9c">
 
+                <% if (request.getAttribute("auction-creation-success") == "yes") { %>
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Eπιτυχία!</strong>Η Δημοπρασία σας δημιουργήθηκε!
+                </div>
+                <% } %>
+
+                <hr style="border-top: 1px solid #1abc9c">
                 <div class="row">
                     <div class="col-sm-3 col-xs-3 col-md-3">
+                        <%--TODO:Psisou na ftiaksoume to center --%>
                         <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="50%" height="50%">
                     </div>
                     <div class="col-sm-7 col-xs-7 col-md-7">

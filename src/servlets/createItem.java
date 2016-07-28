@@ -98,8 +98,9 @@ public class createItem extends HttpServlet {
         ItemDAO dao = new ItemDAO(true);
         dao.insertItem(item);
 
-        //TODO: MAPA! na se petaei sto myauction.jsp tou xristi
-        response.sendRedirect("index.jsp");
+        request.setAttribute("auction-creation-success","yes");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("myauctions.jsp");
+        dispatcher.forward(request, response);
     }
 
 }
