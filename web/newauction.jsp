@@ -64,7 +64,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="categories">Κατηγορία</label>
                         <div class="col-md-4">
-                            <select id="categories" name="categories" required multiple size="3">
+                            <select id="categories" name="categories"  multiple size="3">
                                 <%  ItemDAO dao = new ItemDAO(true);
                                     List<String> cat = dao.getCategories();
                                     for(int i=0;i<cat.size();i++){    %>

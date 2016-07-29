@@ -132,11 +132,11 @@
                         <%--Activate Button Section--%>
                         <div class="col-sm-1 col-xs-1 col-md-1">
                             <% if (userAuctions.get(i).getState() == -1){%>
-                                <a href="newauction.jsp" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
+                                <a href="#" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
                             <%}else if (userAuctions.get(i).getState() == 0){%>
-                                <a href="newauction.jsp" class="btn btn-success" role="button">Eνεργοποίηση</a>
+                                <a href="ActivateAuction?id=<%=userAuctions.get(i).getId()%>" class="btn btn-success" role="button">Eνεργοποίηση</a>
                             <%}else if (userAuctions.get(i).getState() == 1){%>
-                                <a href="newauction.jsp" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
+                                <a href="#" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
                             <%}%>
 
                         </div>

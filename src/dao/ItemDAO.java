@@ -13,6 +13,7 @@ public class ItemDAO {
     private static final String SQL_MATCH_ITEM_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (?, ?)";
     private static final String SQL_GET_USER_AUCTIONS = "SELECT * FROM items WHERE items.seller = (?)";
     private static final String SQL_GET_ITEM_CATEGORIES = "SELECT * FROM item_categories WHERE item_categories.id = (?)";
+    private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
 
     private ConnectionFactory factory;
 
@@ -143,4 +144,19 @@ public class ItemDAO {
         }
     }
 
+    public boolean activateAuction(String id){
+
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ACTIVATE_AUCTION, false, id);
+
+            statement.executeUpdate();
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 }
