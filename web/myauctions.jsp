@@ -65,7 +65,7 @@
                         <%--Image Section--%>
                         <div class="col-sm-3 col-xs-3 col-md-3">
                             <%--TODO:Psisou na ftiaksoume to center --%>
-                            <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" >
+                            <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="70%">
                         </div>
 
                         <%--Info Section--%>
