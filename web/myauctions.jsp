@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="entities.User" %>
+<%@ page import="entities.Item" %>
+<%@ page import="dao.ItemDAO" %>
+<%@ page import="java.util.*" %>
 
-<%--TODO: Uncomment user check meta --%>
-<%--<%  User sessionUser = (User) request.getSession().getAttribute("user");--%>
-    <%--if(sessionUser==null || sessionUser.getRole()!=0)--%>
-        <%--response.sendRedirect("index.jsp");--%>
-<%--%>--%>
+<%  User sessionUser = (User) request.getSession().getAttribute("user");
+    if(sessionUser==null || sessionUser.getRole()!=0)
+        response.sendRedirect("index.jsp");
+%>
 
 <html>
 <head>
@@ -40,105 +42,111 @@
                 </br><h3>Οι Δημοπρασίες Μου</h3></br>
 
                 <% if (request.getAttribute("auction-creation-success") == "yes") { %>
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Eπιτυχία!</strong>Η Δημοπρασία σας δημιουργήθηκε!
-                </div>
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Eπιτυχία!</strong>Η Δημοπρασία σας δημιουργήθηκε!
+                    </div>
                 <% } %>
 
                 <hr style="border-top: 1px solid #1abc9c">
-                <div class="row">
-                    <div class="col-sm-3 col-xs-3 col-md-3">
-                        <%--TODO:Psisou na ftiaksoume to center --%>
-                        <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="50%" height="50%">
-                    </div>
-                    <div class="col-sm-7 col-xs-7 col-md-7">
 
-                        <table id="userlist-table" class="table table-hover table-striped table-condensed">
-                            <tbody>
-                            <tr>
-                                <th>Τίτλος</th>
-                                <td>Nokia 3110</td>
-                            </tr>
-                            <tr>
-                                <th>Κατηγορία/ες</th>
-                                <td>Ηλεκτρονικά</td>
-                            </tr>
-                            <tr>
-                                <th>Τρέχουσα προσφορά</th>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <th>Τιμή Αγοράς</th>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th>Αρχική Προσφορά</th>
-                                <td>25</td>
-                            </tr>
-                            <tr>
-                                <th>Ημερομηνία/Ώρα Λήξης</th>
-                                <td>2016-07-23 16:29:53</td>
-                            </tr>
-                            <tr>
-                                <th>Κατάσταση</th>
-                                <td style="color: red">Μη Δημοσιευμένη</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <%
+                if (sessionUser != null) {
+                    String username = sessionUser.getUsername();
+                    ItemDAO dao = new ItemDAO(true);
 
-                    <div class="col-sm-1 col-xs-1 col-md-1">
-                        <a href="newauction.jsp" class="btn btn-success" role="button">Eνεργοποίηση</a>
+                    // Get the auctions that belong to this user
+                    List<Item> userAuctions = dao.getUserAuctions(username);
+
+                    for (int i = 0; i < userAuctions.size(); i++) {%>
+
+                    <div class="row">
+
+                        <%--Image Section--%>
+                        <div class="col-sm-3 col-xs-3 col-md-3">
+                            <%--TODO:Psisou na ftiaksoume to center --%>
+                            <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" >
+                        </div>
+
+                        <%--Info Section--%>
+                        <div class="col-sm-7 col-xs-7 col-md-7">
+
+                            <table style="table-layout:fixed; word-wrap: break-word;" id="userlist-table" class="table table-hover table-striped table-condensed ">
+                                <tbody>
+                                <tr>
+                                    <th>Τίτλος</th>
+                                    <td><%=userAuctions.get(i).getName()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Κατηγορία/ες</th>
+                                    <%  List<String> categories = userAuctions.get(i).getCategories();
+                                        String total = "";
+                                        if (categories != null){
+                                            for(int j = 0; j < categories.size(); j++){
+                                                if (j == categories.size() - 1)
+                                                    total += categories.get(j);
+                                                else
+                                                    total += categories.get(j) + ",";%>
+                                            <%}
+                                        }%>
+                                    <td><%=total%></td>
+
+                                </tr>
+                                <tr>
+                                    <th>Τρέχουσα προσφορά</th>
+                                    <td><%=userAuctions.get(i).getCurrently()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Τιμή Αγοράς</th>
+                                    <%if(userAuctions.get(i).getBuy_price() == null){%>
+                                        <td>Δεν έχει οριστεί</td>
+                                    <%}else{%>
+                                        <td><%=userAuctions.get(i).getBuy_price()%></td>
+                                    <%}%>
+                                </tr>
+                                <tr>
+                                    <th>Αρχική Προσφορά</th>
+                                    <td><%=userAuctions.get(i).getFirst_bid()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Ημερομηνία/Ώρα Λήξης</th>
+                                    <td><%=userAuctions.get(i).getEnds()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Κατάσταση</th>
+
+                                    <% if (userAuctions.get(i).getState() == -1){%>
+                                        <td style="color: red">Ανενεργή</td>
+                                    <%}else if (userAuctions.get(i).getState() == 0){%>
+                                        <td style="color: orange">Μη Δημοσιευμένη</td>
+                                    <%}else if (userAuctions.get(i).getState() == 1){%>
+                                        <td style="color: green">Δημοσιευμένη</td>
+                                    <%}%>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <%--TODO: FIX Button functionality--%>
+                        <%--Activate Button Section--%>
+                        <div class="col-sm-1 col-xs-1 col-md-1">
+                            <% if (userAuctions.get(i).getState() == -1){%>
+                                <a href="newauction.jsp" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
+                            <%}else if (userAuctions.get(i).getState() == 0){%>
+                                <a href="newauction.jsp" class="btn btn-success" role="button">Eνεργοποίηση</a>
+                            <%}else if (userAuctions.get(i).getState() == 1){%>
+                                <a href="newauction.jsp" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
+                            <%}%>
+
+                        </div>
                     </div>
-                </div>
 
                 <hr style="border-top: 1px solid #1abc9c">
 
-                <div class="row">
-                    <div class="col-sm-3 col-xs-3 col-md-3">
-                        <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="50%" height="50%">
-                    </div>
-                    <div class="col-sm-7 col-xs-7 col-md-7">
-                        <table id="userlist-table" class="table table-hover table-striped table-condensed">
-                            <tbody>
-                            <tr>
-                                <th>Τίτλος</th>
-                                <td>Nokia 3110</td>
-                            </tr>
-                            <tr>
-                                <th>Κατηγορία/ες</th>
-                                <td>Ηλεκτρονικά</td>
-                            </tr>
-                            <tr>
-                                <th>Τρέχουσα προσφορά</th>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <th>Τιμή Αγοράς</th>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th>Αρχική Προσφορά</th>
-                                <td>25</td>
-                            </tr>
-                            <tr>
-                                <th>Ημερομηνία/Ώρα Λήξης</th>
-                                <td>2016-07-23 16:29:53</td>
-                            </tr>
-                            <tr>
-                                <th>Κατάσταση</th>
-                                <td style="color: green">Δημοσιευμένη</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-1 col-xs-1 col-md-1">
-                        <a href="newauction.jsp" class="btn btn-danger" role="button">Eνεργοποίηση</a>
-                    </div>
-                </div>
-
-                <hr style="border-top: 1px solid #1abc9c">
+                <%}
+                }
+                %>
 
                 <div class="row">
                     <br>

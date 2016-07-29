@@ -93,7 +93,7 @@ public class createItem extends HttpServlet {
 
 
         Item item = new Item(null, title, first_bid_number, first_bid_number, buyout_number, country, location,
-                latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, null);
+                latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, null, 0);
 
         ItemDAO dao = new ItemDAO(true);
         dao.insertItem(item);

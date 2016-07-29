@@ -1,10 +1,6 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DAOUtil {
 	public static PreparedStatement prepareStatement(Connection connection, String sql, boolean returnGeneratedKeys,
@@ -25,5 +21,9 @@ public class DAOUtil {
 		return (date != null) ? new Date(date.getTime()) : null;
 	}
 
+	static public Double getDouble(ResultSet rs, String strColName) throws SQLException {
+        Double nValue = rs.getDouble(strColName);
+		return rs.wasNull() ? null : nValue;
+	}
 
 }
