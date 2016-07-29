@@ -4,7 +4,7 @@
 <%@ page import="entities.User" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null || sessionUser.getRole()!=0)
+    if(sessionUser==null)
         response.sendRedirect("index.jsp");
 %>
 
