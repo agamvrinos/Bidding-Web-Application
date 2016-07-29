@@ -44,9 +44,16 @@
                 <% if (request.getAttribute("auction-creation-success") == "yes") { %>
                     <div class="alert alert-success">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Eπιτυχία!</strong>Η Δημοπρασία σας δημιουργήθηκε!
+                        <strong>Eπιτυχία! </strong>Η Δημοπρασία σας δημιουργήθηκε!
                     </div>
                 <% } %>
+
+                <select id="dropDown">
+                    <option value="2">Όλες</option>
+                    <option value="1">Δημοσιευμένες</option>
+                    <option value="0">Μη Δημοσιευμένες</option>
+                    <option value="-1">Ανενεργές</option>
+                </select>
 
                 <hr style="border-top: 1px solid #1abc9c">
 
@@ -59,8 +66,10 @@
                     List<Item> userAuctions = dao.getUserAuctions(username);
 
                     for (int i = 0; i < userAuctions.size(); i++) {%>
+                <div class="<%=userAuctions.get(i).getState()%>">
 
-                    <div class="row">
+
+                    <div class="row" >
 
                         <%--Image Section--%>
                         <div class="col-sm-3 col-xs-3 col-md-3">
@@ -142,8 +151,8 @@
                         </div>
                     </div>
 
-                <hr style="border-top: 1px solid #1abc9c">
-
+                    <hr style="border-top: 1px solid #1abc9c">
+                </div>
                 <%}
                 }
                 %>
@@ -160,6 +169,8 @@
 
 
 </body>
+
+
 
 <!-- jQuery -->
 <script src="javascript/jquery-1.10.2.js"></script>
@@ -178,4 +189,23 @@
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dropDown').change(function () {
+            $(this).find("option").each(function () {
+
+                $('.' + this.value).hide();
+            });
+            $('.' + this.value).show();
+
+            if (this.value == '2')
+            {
+                $('.' + '0').show();
+                $('.' + '1').show();
+                $('.' + '-1').show();
+            }
+
+        });
+    });
+</script>
 </html>
