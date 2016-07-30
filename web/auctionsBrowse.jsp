@@ -1,10 +1,7 @@
-<%@ page import="dao.ItemDAO" %>
-<%@ page import="java.util.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
-    <title>Κατηγορίες Δημοπρασιών</title>
+    <title>Δημοπρασίες</title>
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -32,19 +29,10 @@
         <div class="container">
 
             </br><h3>Κατηγορίες Δημοπρασιών</h3>
-            <%
-                ItemDAO dao = new ItemDAO(true);
-                List<String> categories = dao.getCategories();
 
-                for (int i = 0; i < categories.size(); i ++)
-                {
-            %>
-                    <div class="row">
-                        <a href="#"><%=categories.get(i)%></a>
-                    </div>
-            <%
-                }
-            %>
+            <div class="row">
+
+            </div>
         </div>
     </div>
 
