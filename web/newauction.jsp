@@ -154,7 +154,7 @@
                     <div class="form-group">
                         <label class="col-md-4  control-label">Επιλογή Φωτογραφίας</label>
                         <div class="col-md-4">
-                            <input id="input-1a" type="file" class="file form-control" data-show-preview="false">
+                            <input id="input-1a" type="file" class="file form-control" data-show-preview="false" style="border:0; box-shadow: none; margin-left:-11px;">
                         </div>
                     </div>
 

@@ -104,11 +104,11 @@
                         <li><a href="single-product.html">Single product</a></li>
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="#">Category</a></li>
-                        <li><a href="#">Others</a></li>
+                        <li><a href="categories.jsp">Categories</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div> <!-- End mainmenu area -->
+

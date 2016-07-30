@@ -66,8 +66,8 @@
                     List<Item> userAuctions = dao.getUserAuctions(username);
 
                     for (int i = 0; i < userAuctions.size(); i++) {%>
-                <div class="<%=userAuctions.get(i).getState()%>">
 
+                <div class="<%=userAuctions.get(i).getState()%>">
 
                     <div class="row" >
 
