@@ -1,10 +1,12 @@
 package dao;
 
+import entities.Bid;
 import entities.Item;
 
+import javax.xml.transform.Result;
 import java.sql.*;
-import java.util.List;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.*;
 
 public class ItemDAO {
 
@@ -14,6 +16,7 @@ public class ItemDAO {
     private static final String SQL_GET_USER_AUCTIONS = "SELECT * FROM items WHERE items.seller = (?)";
     private static final String SQL_GET_ITEM_CATEGORIES = "SELECT * FROM item_categories WHERE item_categories.id = (?)";
     private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
+    private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
 
     private ConnectionFactory factory;
 
@@ -158,5 +161,51 @@ public class ItemDAO {
             return false;
         }
         return true;
+    }
+
+    public List<Bid> getItemBids(Integer id){
+        //TODO: PREPEI NA PAIKSW BALITSA ME TH VASOULA KAI TA BIDS
+        return new ArrayList<Bid>();
+    }
+
+    public Item getItemByID(Integer id){
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM, false, id);
+            ResultSet result = statement.executeQuery();
+
+            if(result.next()){
+
+                Item item = new Item(id, result.getString("name"), result.getDouble("currently"), result.getDouble("first_bid"),
+                        result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
+                        result.getDouble("latitude"), result.getDouble("longitude"), result.getDate("creation"),
+                        result.getDate("starts"), result.getDate("ends"), result.getString("seller"), result.getString("description"),
+                        null, getItemBids(id), result.getInt("state"));
+
+                statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
+                ResultSet results = statement.executeQuery();
+
+                List<String> categories = new ArrayList<>();
+
+                while(results.next()) {
+                    categories.add(results.getString("category"));
+                }
+
+                item.setCategories(categories);
+
+                return item;
+
+            }
+            else{
+                return null;
+            }
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
+
+
     }
 }

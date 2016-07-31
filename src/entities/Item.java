@@ -23,7 +23,10 @@ public class Item {
     private List<Bid> bids;
     private Integer state;
 
-    public Item(Integer id, String name, Double currently, Double first_bid, Double buy_price, String country, String location, Double latitude, Double longitude, Date creation, Date starts, Date ends, String seller, String desc, List<String> categories, List<Bid> bids, Integer state) {
+    public Item(Integer id, String name, Double currently, Double first_bid, Double buy_price, String country,
+                String location, Double latitude, Double longitude, Date creation, Date starts, Date ends,
+                String seller, String desc, List<String> categories, List<Bid> bids, Integer state) {
+
         this.id = id;
         this.name = name;
         this.currently = currently;
