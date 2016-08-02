@@ -681,6 +681,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     font-weight: 700;
     margin-right: 10px;
     text-decoration: none;
+    font-size: large;
 }
 .quantity {
     float: left;

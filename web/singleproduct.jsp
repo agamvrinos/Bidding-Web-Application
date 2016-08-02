@@ -32,6 +32,14 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -96,11 +104,11 @@
 
             <div class="col-md-8">
                 <div class="product-content-right">
-                    <div class="product-breadcroumb">
-                        <a href="">Home</a>
-                        <a href="">Category Name</a>
-                        <a href="">Sony Smart TV - 2015</a>
-                    </div>
+                    <%--<div class="product-breadcroumb">--%>
+                        <%--<a href="index.jsp">Αρχή</a>--%>
+                        <%--<a href="">Category Name</a>--%>
+                        <%--<a href="">Sony Smart TV - 2015</a>--%>
+                    <%--</div>--%>
 
                     <div class="row">
                         <div class="col-sm-6">
@@ -120,53 +128,50 @@
 
                         <div class="col-sm-6">
                             <div class="product-inner">
-                                <h2 class="product-name">Sony Smart TV - 2015</h2>
+                                <h2 class="product-name"><%=item.getName()%></h2>
+                                <% if(item.getBuy_price()!=null){ %>
                                 <div class="product-inner-price">
-                                    <ins>$700.00</ins> <del>$800.00</del>
+                                    <ins>$<%=item.getBuy_price()%></ins> <a href="#" class="btn btn-primary">ΑΜΕΣΗ ΑΓΟΡΑ</a>
                                 </div>
+                                <% } %>
 
                                 <form action="" class="cart">
-                                    <div class="quantity">
-                                        <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                    <%--<div class="quantity">--%>
+                                        <%--<input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">--%>
+                                    <%--</div>--%>
+                                    <div class="col-sm-2">
+                                        <b>$<%=item.getCurrently()%></b>
                                     </div>
-                                    <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                    <div class="col-sm-4">
+                                        <input id="bid" name="bid" class="form-control input-md" type="text">
+                                    </div>
+                                    <button class="add_to_cart_button" type="submit">ΥΠΟΒΟΛΗ</button>
                                 </form>
 
                                 <div class="product-inner-category">
-                                    <p>Category: <a href="">Summer</a>. Tags: <a href="">awesome</a>, <a href="">best</a>, <a href="">sale</a>, <a href="">shoes</a>. </p>
+                                    <p>Κατηγορίες:
+                                    <% for(int i=0; i<item.getCategories().size(); i++){%>
+                                    <%=item.getCategories().get(i)%>
+                                        <% if (i<item.getCategories().size()-1){%>
+                                        ,
+                                        <%}else{%>
+                                        .
+                                        <%}%>
+                                    <%}%>
+                                    </p>
                                 </div>
 
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
-                                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a></li>
-                                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+                                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Περιγραφή</a></li>
+                                        <li role="presentation"><a href="#maps" id="gmaps" aria-controls="gmaps" role="tab" data-toggle="tab">Χάρτης</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            <h2>Product Description</h2>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
-
-                                            <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
+                                            <p><%=item.getDesc()%></p>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="profile">
-                                            <h2>Reviews</h2>
-                                            <div class="submit-review">
-                                                <p><label for="name">Name</label> <input name="name" type="text"></p>
-                                                <p><label for="email">Email</label> <input name="email" type="email"></p>
-                                                <div class="rating-chooser">
-                                                    <p>Your rating</p>
-
-                                                    <div class="rating-wrap-post">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p><label for="review">Your review</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                <p><input type="submit" value="Submit"></p>
-                                            </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="maps">
+                                            <div id="map"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -295,6 +300,27 @@
 
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
+
+<%-- GOOGLE MAPS --%>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn22YCesLQ6cAqQavGhd1lmwCIVUCZalo&callback=initialize">
+</script>
+<script>
+
+    $(document).ready(function(){
+        $("#gmaps").on('shown.bs.tab', function() {
+            var mapProp = {
+                center:new google.maps.LatLng(<%=item.getLatitude()%>,<%=item.getLongitude()%>),
+                zoom:7,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+            var map=new google.maps.Map(document.getElementById("map"),mapProp);
+        });
+    });
+
+
+</script>
+
 
 </body>
 </html>
