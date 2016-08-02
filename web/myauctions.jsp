@@ -137,7 +137,6 @@
                             </table>
                         </div>
 
-                        <%--TODO: FIX Button functionality--%>
                         <%--Activate Button Section--%>
                         <div class="col-sm-1 col-xs-1 col-md-1">
                             <% if (userAuctions.get(i).getState() == -1){%>

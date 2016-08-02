@@ -203,8 +203,3 @@ div.coupon input[type="text"] {
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
 }
-
-.cat {
-  background-color: rgb(80, 216, 189);  !important;
-  border-color: rgb(58, 129, 115);  !important;
-}

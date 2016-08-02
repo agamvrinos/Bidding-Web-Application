@@ -1,4 +1,21 @@
+<%@ page import="dao.ItemDAO" %>
+<%@ page import="entities.Item" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    String category = request.getParameter("category");
+
+    // If url is typed without category parameter then send him to index
+    if (category == null) {
+        response.sendRedirect("index.jsp");
+    }
+    ItemDAO dao = new ItemDAO(true);
+
+    // Get all active auctions
+    List<Item> auctions = dao.getAuctionsByCategory(category);
+%>
+
 <html>
 <head>
     <title>Δημοπρασίες</title>
@@ -27,12 +44,102 @@
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
-
-            </br><h3>Κατηγορίες Δημοπρασιών</h3>
+            </br>
+            </br>
+            </br>
 
             <div class="row">
-
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input id="searchbox" type="text" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">Αναζήτηση</button>
+                    </span>
+                    </div>
+                </div>
             </div>
+
+            </br>
+
+            <h4>Κατηγορία: <%=category%> | <%=auctions.size()%> αποτελέσματα βρέθηκαν</h4>
+
+            <hr style="border-top: 1px solid #1abc9c">
+
+            <%
+                for (int i = 0; i < auctions.size(); i++) {%>
+
+                    <div class="row" >
+
+                        <%--Image Section--%>
+                        <div class="col-sm-3 col-xs-3 col-md-3">
+                            <%--TODO:Psisou na ftiaksoume to center --%>
+                            <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="70%">
+                        </div>
+
+                        <%--Info Section--%>
+                        <div class="col-sm-9 col-xs-9 col-md-9">
+
+                            <table style="table-layout:fixed; word-wrap: break-word;" id="userlist-table" class="table table-hover table-striped table-condensed ">
+                                <tbody>
+                                <div id="title" style="font-size: 25px; text-decoration: underline; font-weight: 600;">
+                                    <a href="#" style="color:#333333;"><%=auctions.get(i).getName()%></a>
+                                </div>
+                                <tr>
+                                    <th>Κατηγορία/ες</th>
+                                    <%  List<String> categories = auctions.get(i).getCategories();
+                                        String total = "";
+                                        if (categories != null){
+                                            for(int j = 0; j < categories.size(); j++){
+                                                if (j == categories.size() - 1)
+                                                    total += categories.get(j);
+                                                else
+                                                    total += categories.get(j) + ",";%>
+                                    <%}
+                                    }%>
+                                    <td><%=total%></td>
+
+                                </tr>
+                                <tr>
+                                    <th>Τρέχουσα προσφορά</th>
+                                    <td><%=auctions.get(i).getCurrently()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Τιμή Αγοράς</th>
+                                    <%if(auctions.get(i).getBuy_price() == null){%>
+                                    <td>Δεν έχει οριστεί</td>
+                                    <%}else{%>
+                                    <td><%=auctions.get(i).getBuy_price()%></td>
+                                    <%}%>
+                                </tr>
+                                <tr>
+                                    <th>Αρχική Προσφορά</th>
+                                    <td><%=auctions.get(i).getFirst_bid()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Ημερομηνία/Ώρα Λήξης</th>
+                                    <td><%=auctions.get(i).getEnds()%></td>
+                                </tr>
+                                <tr>
+                                    <th>Κατάσταση</th>
+
+                                    <% if (auctions.get(i).getState() == -1){%>
+                                    <td style="color: red">Ανενεργή</td>
+                                    <%}else if (auctions.get(i).getState() == 0){%>
+                                    <td style="color: orange">Μη Δημοσιευμένη</td>
+                                    <%}else if (auctions.get(i).getState() == 1){%>
+                                    <td style="color: green">Δημοσιευμένη</td>
+                                    <%}%>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <hr style="border-top: 1px solid #1abc9c">
+                <%}%>
+
         </div>
     </div>
 

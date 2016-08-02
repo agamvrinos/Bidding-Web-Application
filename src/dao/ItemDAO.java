@@ -17,6 +17,7 @@ public class ItemDAO {
     private static final String SQL_GET_ITEM_CATEGORIES = "SELECT * FROM item_categories WHERE item_categories.id = (?)";
     private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
+    private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND items.state=1 AND item_categories.category = (?)";
 
     private ConnectionFactory factory;
 
@@ -55,22 +56,22 @@ public class ItemDAO {
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
 
-                System.out.println("id = " + id);
-                System.out.println("TITLE = " + title);
-                System.out.println("current = " + current);
-                System.out.println("buy_price = " + buy_price);
-                System.out.println("first_bid = " + first_bid);
-                System.out.println("country = " + country);
-                System.out.println("location = " + location);
-                System.out.println("latitude = " + latitude);
-                System.out.println("longitude = " + longitude);
-                System.out.println("creation = " + creation);
-                System.out.println("starts = " + starts);
-                System.out.println("ends = " + ends);
-                System.out.println("seller = " + seller);
-                System.out.println("description = " + description);
-                System.out.println("state = " + state);
-                System.out.println("=============================================");
+//                System.out.println("id = " + id);
+//                System.out.println("TITLE = " + title);
+//                System.out.println("current = " + current);
+//                System.out.println("buy_price = " + buy_price);
+//                System.out.println("first_bid = " + first_bid);
+//                System.out.println("country = " + country);
+//                System.out.println("location = " + location);
+//                System.out.println("latitude = " + latitude);
+//                System.out.println("longitude = " + longitude);
+//                System.out.println("creation = " + creation);
+//                System.out.println("starts = " + starts);
+//                System.out.println("ends = " + ends);
+//                System.out.println("seller = " + seller);
+//                System.out.println("description = " + description);
+//                System.out.println("state = " + state);
+//                System.out.println("=============================================");
 
                 PreparedStatement statement2 = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results2 = statement2.executeQuery();
@@ -95,6 +96,61 @@ public class ItemDAO {
 
         return userAuctions;
     }
+
+    public List<Item> getAuctionsByCategory(String category){
+
+        List<Item> auctions = new ArrayList<>();
+
+        try {
+
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_AUCTIONS_BY_CAT, false, category);
+            ResultSet results = statement.executeQuery();
+
+            while(results.next()){
+
+                Integer id = results.getInt("id");
+                String title = results.getString("name");       //done
+                Double current = results.getDouble("currently");
+                Double buy_price = DAOUtil.getDouble(results, "buy_price");
+                Double first_bid = results.getDouble("first_bid");
+                String country = results.getString("country");  //done
+                String location = results.getString("location");//done
+                Double latitude = DAOUtil.getDouble(results, "latitude");
+                Double longitude = DAOUtil.getDouble(results, "longitude");
+                Date creation = results.getDate("creation");
+                Date starts = results.getDate("starts");
+                Date ends = results.getDate("ends");
+                String seller = results.getString("seller");            //done
+                String description = results.getString("description");  //done
+                Integer state = results.getInt("state");
+
+
+                PreparedStatement statement2 = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
+                ResultSet results2 = statement2.executeQuery();
+
+                List<String> categories = new ArrayList<>();
+
+                while(results2.next()) {
+                    System.out.print("Category: " + results2.getString("category"));
+                    categories.add(results2.getString("category"));
+                }
+
+                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state);
+
+                auctions.add(item);
+            }
+
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            return null;
+        }
+
+        return auctions;
+    }
+
 
     public List<String> getCategories(){
 
