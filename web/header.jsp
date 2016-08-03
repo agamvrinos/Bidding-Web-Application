@@ -7,15 +7,16 @@
                     <div class="user-menu">
                         <ul>
                             <li><a href="myprofile.jsp"><i class="fa fa-user"></i>Το Προφίλ μου</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
+                            <%--<li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>--%>
+                            <%--<li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>--%>
+                            <%--<li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>--%>
                             <% if (request.getSession().getAttribute("user")==null){ %>
                                 <li><a href="login.jsp" id="login_button"><i class="fa fa-user"></i>Σύνδεση</a></li>
                                 <li><a href="register.jsp" id="register_button"><i class="fa fa-user"></i>Εγγραφή</a></li>
                             <% }
                             else {
                             %>
+                            <li><a href="#" ><i class="fa fa-envelope"></i>Μηνύματα</a></li>
                             <li><a href="myauctions.jsp" id="my_auctions"><i class="fa fa-user"></i>Διαχείριση Δημοπρασιών</a></li>
                             <li><a href="/Logout" id="logout_button"><i class="fa fa-user"></i>Αποσύνδεση</a></li>
                             <%
@@ -30,9 +31,9 @@
 
                         <ul class="list-unstyled list-inline">
                             <li>
-                                Hello,
+                                Καλώς ήρθες,
                                 <% if (request.getSession().getAttribute("user")==null){ %>
-                                guest!
+                                επισκέπτη!
                                 <% }
                                    else {
                                     User user = (User) request.getSession().getAttribute("user");
@@ -54,7 +55,7 @@
                             <%--</li>--%>
 
                             <li class="dropdown dropdown-small">
-                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">language :</span><span class="value">English </span><b class="caret"></b></a>
+                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Γλώσσα: </span><span class="value">Ελληνικά </span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">English</a></li>
                                     <li><a href="#">French</a></li>
@@ -99,13 +100,11 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">Home</a></li>
-                        <li><a href="shop.html">Shop page</a></li>
-                        <li><a href="single-product.html">Single product</a></li>
-                        <li><a href="cart.html">Cart</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="categories.jsp">Categories</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li class="active"><a href="index.jsp">Αρχικη</a></li>
+                        <li><a href="#">Γενικα</a></li>
+                        <li><a href="categories.jsp">Κατηγοριες</a></li>
+                        <li><a href="#">Βοηθεια</a></li>
+                        <li><a href="#">Επικοινωνια</a></li>
                     </ul>
                 </div>
             </div>

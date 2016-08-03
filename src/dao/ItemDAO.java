@@ -5,7 +5,8 @@ import entities.Item;
 
 import javax.xml.transform.Result;
 import java.sql.*;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.*;
 
 public class ItemDAO {
@@ -49,9 +50,9 @@ public class ItemDAO {
                 String location = results.getString("location");//done
                 Double latitude = DAOUtil.getDouble(results, "latitude");
                 Double longitude = DAOUtil.getDouble(results, "longitude");
-                Date creation = results.getDate("creation");
-                Date starts = results.getDate("starts");
-                Date ends = results.getDate("ends");
+                Date creation = results.getTimestamp("creation");
+                Date starts = results.getTimestamp("starts");
+                Date ends = results.getTimestamp("ends");
                 String seller = results.getString("seller");            //done
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
@@ -79,7 +80,7 @@ public class ItemDAO {
                 List<String> categories = new ArrayList<>();
 
                 while(results2.next()) {
-                    System.out.print("Category: " + results2.getString("category"));
+//                    System.out.print("Category: " + results2.getString("category"));
                     categories.add(results2.getString("category"));
                 }
 
@@ -119,13 +120,16 @@ public class ItemDAO {
                 String location = results.getString("location");//done
                 Double latitude = DAOUtil.getDouble(results, "latitude");
                 Double longitude = DAOUtil.getDouble(results, "longitude");
-                Date creation = results.getDate("creation");
-                Date starts = results.getDate("starts");
-                Date ends = results.getDate("ends");
+                Date creation = results.getTimestamp("creation");
+                Date starts = results.getTimestamp("starts");
+                Date ends = results.getTimestamp("ends");
                 String seller = results.getString("seller");            //done
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
 
+//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+//                String ends2 = formatter.format(ends);
+//                System.out.println("ENDS " + ends);
 
                 PreparedStatement statement2 = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results2 = statement2.executeQuery();
@@ -133,7 +137,7 @@ public class ItemDAO {
                 List<String> categories = new ArrayList<>();
 
                 while(results2.next()) {
-                    System.out.print("Category: " + results2.getString("category"));
+//                    System.out.print("Category: " + results2.getString("category"));
                     categories.add(results2.getString("category"));
                 }
 

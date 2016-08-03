@@ -45,20 +45,16 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             </br>
-            </br>
-            </br>
+            <hr>
+            <h4>Αναζήτηση Δημοπρασίας</h4>
 
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="input-group">
-                        <input id="searchbox" type="text" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button">Αναζήτηση</button>
-                    </span>
-                    </div>
-                </div>
+            <div class="input-group col-xs-9 col-lg-9 col-md-9">
+                <input type="text" id="searchb" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
+                <span class="input-group-btn">
+                    <input type="submit" value="Αναζήτηση" class="form-control" style="line-height: 1px; text-transform: capitalize;">
+                </span>
             </div>
-
+            <hr>
             </br>
 
             <h4>Κατηγορία: <%=category%> | <%=auctions.size()%> αποτελέσματα βρέθηκαν</h4>
@@ -120,15 +116,8 @@
                                     <td><%=auctions.get(i).getEnds()%></td>
                                 </tr>
                                 <tr>
-                                    <th>Κατάσταση</th>
-
-                                    <% if (auctions.get(i).getState() == -1){%>
-                                    <td style="color: red">Ανενεργή</td>
-                                    <%}else if (auctions.get(i).getState() == 0){%>
-                                    <td style="color: orange">Μη Δημοσιευμένη</td>
-                                    <%}else if (auctions.get(i).getState() == 1){%>
-                                    <td style="color: green">Δημοσιευμένη</td>
-                                    <%}%>
+                                    <th>Πωλητής</th>
+                                    <td><%=auctions.get(i).getSeller()%></td>
 
                                 </tr>
                                 </tbody>
