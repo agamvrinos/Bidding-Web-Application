@@ -120,7 +120,11 @@ public class createItem extends HttpServlet {
                         if(image != null && !image.equals("")){
 
                             File uniqueFile = File.createTempFile("img", ".png", files_dir);
-                            System.out.println("Random filename: " + uniqueFile.getName());
+
+                            System.out.println("Submitted Img name: " + image);
+                            System.out.println("Generated Img name: " + uniqueFile.getName());
+
+                            image = uniqueFile.getName();
 
                             FileOutputStream os = new FileOutputStream(uniqueFile);
                             os.write(b);
@@ -144,7 +148,6 @@ public class createItem extends HttpServlet {
         System.out.println("location: " + location);
         System.out.println("date: " + date);
         System.out.println("desc: " + desc);
-        System.out.println("Image: " + image);
 
         Double first_bid_number = null;
         Double buyout_number = null;
@@ -152,7 +155,6 @@ public class createItem extends HttpServlet {
         Double longitude_number = null;
 
         try {
-            System.out.println("First_bid2: " + first_bid);
             first_bid_number = Double.parseDouble(first_bid);
 
             if (!latitude.equals("") && !longitude.equals("")) {

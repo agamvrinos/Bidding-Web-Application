@@ -12,7 +12,7 @@ import java.util.*;
 public class ItemDAO {
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
-    private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_MATCH_ITEM_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (?, ?)";
     private static final String SQL_GET_USER_AUCTIONS = "SELECT * FROM items WHERE items.seller = (?)";
     private static final String SQL_GET_ITEM_CATEGORIES = "SELECT * FROM item_categories WHERE item_categories.id = (?)";
@@ -157,7 +157,6 @@ public class ItemDAO {
         return auctions;
     }
 
-
     public List<String> getCategories(){
 
         List<String> list = new ArrayList<String>();
@@ -187,7 +186,7 @@ public class ItemDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_ADD_NEW_ITEM, true, item.getName(),
                     item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
                     item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
-                    item.getDesc());
+                    item.getDesc(), item.getImage());
 
             if (statement.executeUpdate()==0)
                 System.err.println("Creating item failed, no rows affected.");
