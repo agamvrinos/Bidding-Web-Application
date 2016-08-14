@@ -43,11 +43,14 @@
     <div class="container">
         <div class="row">
 
-            <form class="form-horizontal" action="Create" method="post" id="createitem">
+            <form class="form-horizontal" action="Create" method="post" id="createitem" encType="multipart/form-data">
 
                 </br><h3>Δημιουργία Νέας Δημοπρασίας</h3></br>
                 <%  if (request.getAttribute("item-creation-error") != null) { %>
-                <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> <%=request.getAttribute("item-creation-error")%></div>
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Προσοχή! </strong><%=request.getAttribute("item-creation-error")%>
+                    </div>
                 <br>
                 <% } %>
 
@@ -56,7 +59,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="title">Τίτλος</label>
                         <div class="col-md-4">
-                                <input id="title" name="title" placeholder="Τίτλος Δημοπρασίας" class="form-control input-md" required="" type="text">
+                                <input id="title" name="title" placeholder="Τίτλος Δημοπρασίας" class="form-control input-md" required type="text">
                         </div>
                     </div>
 
@@ -64,7 +67,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="categories">Κατηγορία</label>
                         <div class="col-md-4">
-                            <select id="categories" name="categories"  multiple size="3" class="form-control input-md">
+                            <select id="categories" name="categories"  multiple size="3" class="form-control input-md" required>
                                 <%  ItemDAO dao = new ItemDAO(true);
                                     List<String> cat = dao.getCategories();
                                     for(int i=0;i<cat.size();i++){    %>
@@ -87,7 +90,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="first-bid">Αρχική Προσφορά</label>
                         <div class="col-md-4">
-                            <input id="first-bid" name="first-bid" placeholder="Αρχική Προσφορά" class="form-control input-md" required="" type="text">
+                            <input id="first-bid" name="first-bid" placeholder="Αρχική Προσφορά" class="form-control input-md" required type="text">
                         </div>
                     </div>
 
@@ -95,7 +98,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="country">Χώρα</label>
                         <div class="col-md-4">
-                            <input id="country" name="country" placeholder="π.χ Ελλάδα" class="form-control input-md" required="" type="text">
+                            <input id="country" name="country" placeholder="π.χ Ελλάδα" class="form-control input-md" required type="text">
                         </div>
                     </div>
 
@@ -103,7 +106,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="location">Περιοχή</label>
                         <div class="col-md-4">
-                            <input id="location" name="location" placeholder="π.χ Αθήνα" class="form-control input-md" required="" type="text">
+                            <input id="location" name="location" placeholder="π.χ Αθήνα" class="form-control input-md" required type="text">
                         </div>
                     </div>
 
@@ -134,7 +137,7 @@
                         <label class="col-md-4 control-label" for="datetimepicker_dark">Ημερομηνία/Ώρα λήξης</label>
                         <div class="col-md-4">
                             <div class="input-group date" >
-                                <input name="date" id="datetimepicker_dark" type="text" placeholder="Ημερομηνία/Ώρα λήξης" class="form-control" />
+                                <input name="date" id="datetimepicker_dark" type="text" placeholder="Ημερομηνία/Ώρα λήξης" class="form-control" required/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                     </span>
@@ -146,7 +149,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="desc">Περιγραφή</label>
                         <div class="col-md-4">
-                            <textarea class="form-control" rows="8" id="desc" name="desc" placeholder="Δώστε μια περιγραφή για το αντικείμενο."></textarea>
+                            <textarea class="form-control" rows="8" id="desc" name="desc" placeholder="Δώστε μια περιγραφή για το αντικείμενο." required></textarea>
                         </div>
                     </div>
 
@@ -154,7 +157,7 @@
                     <div class="form-group">
                         <label class="col-md-4  control-label">Επιλογή Φωτογραφίας</label>
                         <div class="col-md-4">
-                            <input id="input-1a" type="file" class="file form-control" data-show-preview="false" style="border:0; box-shadow: none; margin-left:-11px;">
+                            <input id="input-1a" name="image" type="file" class="file form-control" data-show-preview="false" style="border:0; box-shadow: none; margin-left:-11px;">
                         </div>
                     </div>
 

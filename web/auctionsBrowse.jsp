@@ -78,7 +78,7 @@
                             <table style="table-layout:fixed; word-wrap: break-word;" id="userlist-table" class="table table-hover table-striped table-condensed ">
                                 <tbody>
                                 <div id="title" style="font-size: 25px; text-decoration: underline; font-weight: 600;">
-                                    <a href="#" style="color:#333333;"><%=auctions.get(i).getName()%></a>
+                                    <a href="singleproduct.jsp?id=<%=auctions.get(i).getId()%>" style="color:#333333;"><%=auctions.get(i).getName()%></a>
                                 </div>
                                 <tr>
                                     <th>Κατηγορία/ες</th>

@@ -56,6 +56,7 @@ public class ItemDAO {
                 String seller = results.getString("seller");            //done
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
+                String image = results.getString("image");            //done
 
 //                System.out.println("id = " + id);
 //                System.out.println("TITLE = " + title);
@@ -84,7 +85,7 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state);
+                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image);
 
                 userAuctions.add(item);
             }
@@ -126,6 +127,7 @@ public class ItemDAO {
                 String seller = results.getString("seller");            //done
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
+                String image = results.getString("image");
 
 //                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 //                String ends2 = formatter.format(ends);
@@ -141,7 +143,7 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state);
+                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image);
 
                 auctions.add(item);
             }
@@ -240,7 +242,7 @@ public class ItemDAO {
                         result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
                         result.getDouble("latitude"), result.getDouble("longitude"), result.getDate("creation"),
                         result.getDate("starts"), result.getDate("ends"), result.getString("seller"), result.getString("description"),
-                        null, getItemBids(id), result.getInt("state"));
+                        null, getItemBids(id), result.getInt("state"), result.getString("image"));
 
                 statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results = statement.executeQuery();
