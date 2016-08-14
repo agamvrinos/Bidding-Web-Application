@@ -41,10 +41,16 @@
                 </br><h3>Σύνδεση Χρήστη</h3>
 
                 <% if (request.getAttribute("login-error") == "yes") { %>
-                    <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> Error! Username or Password invalid. Try Again!</div>
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Προσοχή! </strong>Λάθος εισαγωγή στοιχειών. Ξαναπροσπαθήστε.
+                    </div>
                 <% }
                    if (request.getAttribute("nologgedin") == "no") { %>
-                    <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> You need to be logged in to access your profile!</div>
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Προσοχή! </strong>Απαιτείται σύνδεση για την συγκεκριμένη λειτουργία.
+                    </div>
                 <% }%>
 
 

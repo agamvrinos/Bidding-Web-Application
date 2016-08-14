@@ -38,10 +38,18 @@
                     Integer value = (Integer)request.getAttribute("register-error");
                     // Username already exists error
                     if (value != null && value == -2) {%>
-                        <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true"></span> Username already exists! Please try again with a different one.</div><%  }
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Προσοχή! </strong>Το όνομα χρήστη υπάρχει ήδη. Προσπαθήστε ξανά με διαφορετικό.
+                        </div>
+                    <%}
                     // Other error
                     else if (value != null && value == -1){%>
-                        <div class ="alert alert-danger"><span class="fa fa-times" aria-hidden="true" style="font-size:1.2em;"></span> An error occurred! Please try again.</div><%  }%>
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Προσοχή! </strong>Υπήρξε ένα πρόβλημα κατά την εγγραφή. Προσπαθήστε ξανά.
+                        </div><%
+                    }%>
 
                 <fieldset>
                     <!-- Text input-->

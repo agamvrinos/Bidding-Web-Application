@@ -74,7 +74,7 @@ body { font-family: 'Titillium Web', sans-serif; }
     text-align: center;
 }
 
-.mainmenu-area {background: none repeat scroll 0 0 #1abc9c;
+.mainmenu-area {background: none repeat scroll 0 0 #2fa08a;
 font-family: "Roboto Condensed",sans-serif;
 text-transform: uppercase;
 width: 100%;
@@ -165,7 +165,7 @@ z-index: 999;}
 .slide-text {display: table-cell;vertical-align: middle}
 
 .zigzag-bottom {
-background: none repeat scroll 0 0 #1abc9c;
+background: none repeat scroll 0 0 #2fa08a;
 bottom: -80px;
 height: 165px;
 left: -5%;
@@ -230,13 +230,13 @@ z-index: 9;
 
 
 .promo-area {
-  background: none repeat scroll 0 0 #1abc9c;
+  background: none repeat scroll 0 0 #2fa08a;
   color: #fff;
   padding: 77px 0 200px;
 }
 
 .brands-area {
-  background: none repeat scroll 0 0 #1abc9c;
+  background: none repeat scroll 0 0 #2fa08a;
   color: #fff;
   padding: 0px 0 200px;
 }
