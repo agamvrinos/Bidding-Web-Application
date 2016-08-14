@@ -22,12 +22,10 @@ public class ImageLoader extends HttpServlet {
     private String filePath;
 
     public void init() throws ServletException {
-
         this.filePath = "files";
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("================In do get==================");
 
         // Get requested file by path info.
         String requestedFile = request.getPathInfo();
@@ -35,8 +33,6 @@ public class ImageLoader extends HttpServlet {
 
         // Check if file is actually supplied to the request URI.
         if (requestedFile == null) {
-            // Do your thing if the file is not supplied to the request URI.
-            // Throw an exception, or send 404, or show default/warning page, or just ignore it.
             response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
             return;
         }
@@ -50,8 +46,6 @@ public class ImageLoader extends HttpServlet {
         // Check if file actually exists in filesystem.
         if (!file.exists()) {
             System.out.println("DOES NOT EXIST");
-            // Do your thing if the file appears to be non-existing.
-            // Throw an exception, or send 404, or show default/warning page, or just ignore it.
             response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
             return;
         }
@@ -60,8 +54,6 @@ public class ImageLoader extends HttpServlet {
         String contentType = getServletContext().getMimeType(file.getName());
 
         // If content type is unknown, then set the default value.
-        // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
-        // To add new content types, add new mime-mapping entry in web.xml.
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
@@ -89,7 +81,7 @@ public class ImageLoader extends HttpServlet {
                 output.write(buffer, 0, length);
             }
         } finally {
-            // Gently close streams.
+            // Close streams.
             close(output);
             close(input);
         }

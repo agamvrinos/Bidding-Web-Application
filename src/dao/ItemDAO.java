@@ -58,30 +58,12 @@ public class ItemDAO {
                 Integer state = results.getInt("state");
                 String image = results.getString("image");            //done
 
-//                System.out.println("id = " + id);
-//                System.out.println("TITLE = " + title);
-//                System.out.println("current = " + current);
-//                System.out.println("buy_price = " + buy_price);
-//                System.out.println("first_bid = " + first_bid);
-//                System.out.println("country = " + country);
-//                System.out.println("location = " + location);
-//                System.out.println("latitude = " + latitude);
-//                System.out.println("longitude = " + longitude);
-//                System.out.println("creation = " + creation);
-//                System.out.println("starts = " + starts);
-//                System.out.println("ends = " + ends);
-//                System.out.println("seller = " + seller);
-//                System.out.println("description = " + description);
-//                System.out.println("state = " + state);
-//                System.out.println("=============================================");
-
                 PreparedStatement statement2 = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results2 = statement2.executeQuery();
 
                 List<String> categories = new ArrayList<>();
 
                 while(results2.next()) {
-//                    System.out.print("Category: " + results2.getString("category"));
                     categories.add(results2.getString("category"));
                 }
 
