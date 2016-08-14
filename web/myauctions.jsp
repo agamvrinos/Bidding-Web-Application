@@ -73,8 +73,17 @@
 
                         <%--Image Section--%>
                         <div class="col-sm-3 col-xs-3 col-md-3">
-                            <%--TODO:Psisou na ftiaksoume to center --%>
-                                <img class="img-responsive center-block" src="http://www.freeiconspng.com/uploads/-png-keywords-books-icons-icons-icons-psd-files-size-5-54mb-zip-license-14.png" width="200px" height="200px">
+
+                            <%String image = userAuctions.get(i).getImage();
+
+                            // If there is an image uploaded for this item
+                            if (image != null) {%>
+                                <img class="img-responsive center-block" src="files/<%=image%>" style="height: 200px; width: 200px">
+                            <%}
+                            // Else use the default image
+                            else {%>
+                                <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
+                            <%}%>
                         </div>
 
                         <%--Info Section--%>
