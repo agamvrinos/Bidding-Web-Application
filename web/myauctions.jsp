@@ -129,7 +129,9 @@
                                 </tr>
                                 <tr>
                                     <th>Ημερομηνία/Ώρα Λήξης</th>
-                                    <td><%=userAuctions.get(i).getEnds()%></td>
+                                    <td>
+                                        <%=userAuctions.get(i).getEnds()%>
+                                    </td>
                                 </tr>
                                 <%--Countdown timer if auction is published--%>
                                 <%if (userAuctions.get(i).getState() ==1) {
@@ -151,11 +153,7 @@
                                     <tr>
                                         <th>Χρόνος που Απομένει</th>
                                         <td>
-                                            <div id="clockdiv">
-                                                <div>
-                                                    Blabla xronos
-                                                </div>
-                                            </div>
+                                            <div class="timer"></div>
                                         </td>
                                     </tr>
                                 <%}%>
@@ -214,7 +212,6 @@
 <script src="javascript/jquery-ui.js"></script>
 <script src="javascript/form.js"></script>
 <script src="javascript/bootstrap.min.js"></script>
-
 
 <!-- jQuery sticky menu -->
 <script src="javascript/owl.carousel.min.js"></script>

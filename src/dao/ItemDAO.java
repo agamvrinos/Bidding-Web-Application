@@ -165,6 +165,9 @@ public class ItemDAO {
 
             Connection connection = factory.getConnection();
 
+            if (item.getImage().equals(""))
+                item.setImage(null);
+
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_ADD_NEW_ITEM, true, item.getName(),
                     item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
                     item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
