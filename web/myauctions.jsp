@@ -3,6 +3,7 @@
 <%@ page import="entities.Item" %>
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.util.concurrent.TimeUnit" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)
@@ -130,6 +131,34 @@
                                     <th>Ημερομηνία/Ώρα Λήξης</th>
                                     <td><%=userAuctions.get(i).getEnds()%></td>
                                 </tr>
+                                <%--Countdown timer if auction is published--%>
+                                <%if (userAuctions.get(i).getState() ==1) {
+                                    Date end_time = userAuctions.get(i).getEnds();
+                                    Date cur_time = new Date();
+
+                                    long diff  = end_time.getTime() - cur_time.getTime();
+
+                                    long diffSeconds = diff / 1000 % 60;
+                                    long diffMinutes = diff / (60 * 1000) % 60;
+                                    long diffHours = diff / (60 * 60 * 1000) % 24;
+                                    long diffDays = diff / (24 * 60 * 60 * 1000);
+
+                                    System.out.println(diffDays + " days, ");
+                                    System.out.println(diffHours + " hours, ");
+                                    System.out.println(diffMinutes + " minutes, ");
+                                    System.out.println(diffSeconds + " seconds.");
+                                %>
+                                    <tr>
+                                        <th>Χρόνος που Απομένει</th>
+                                        <td>
+                                            <div id="clockdiv">
+                                                <div>
+                                                    Blabla xronos
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <%}%>
                                 <tr>
                                     <th>Κατάσταση</th>
 
@@ -216,4 +245,5 @@
         });
     });
 </script>
+
 </html>
