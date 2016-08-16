@@ -3,13 +3,63 @@
 <%@ page import="entities.Item" %>
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.util.concurrent.TimeUnit" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)
         response.sendRedirect("index.jsp");
 %>
+<script>
 
+
+    function CountDownTimer(dt, id)
+    {
+        var end = new Date(dt);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementsByClassName(id)[0].innerHTML = 'Η Δημοπρασία έληξε!';
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+
+            if (String(hours).length < 2){
+                hours = 0 + String(hours);
+            }
+            if (String(minutes).length < 2){
+                minutes = 0 + String(minutes);
+            }
+            if (String(seconds).length < 2){
+                seconds = 0 + String(seconds);
+            }
+
+
+            var datestr = days + ' days ' +
+                    hours + ' hrs ' +
+                    minutes + ' mins ' +
+                    seconds + ' secs';
+
+            document.getElementsByClassName(id)[0].innerHTML = datestr;
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    }
+</script>
 <html>
 <head>
     <title>Οι Δημοπρασίες Μου</title>
@@ -136,24 +186,19 @@
                                 <%--Countdown timer if auction is published--%>
                                 <%if (userAuctions.get(i).getState() ==1) {
                                     Date end_time = userAuctions.get(i).getEnds();
-                                    Date cur_time = new Date();
+                                    System.out.println(end_time);
+                                    SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                                    String end = endformat.format(end_time);
 
-                                    long diff  = end_time.getTime() - cur_time.getTime();
-
-                                    long diffSeconds = diff / 1000 % 60;
-                                    long diffMinutes = diff / (60 * 1000) % 60;
-                                    long diffHours = diff / (60 * 60 * 1000) % 24;
-                                    long diffDays = diff / (24 * 60 * 60 * 1000);
-
-                                    System.out.println(diffDays + " days, ");
-                                    System.out.println(diffHours + " hours, ");
-                                    System.out.println(diffMinutes + " minutes, ");
-                                    System.out.println(diffSeconds + " seconds.");
+                                    System.out.println("END: " + end);
                                 %>
                                     <tr>
                                         <th>Χρόνος που Απομένει</th>
                                         <td>
-                                            <div class="timer"></div>
+                                            <div class="countdown-<%=userAuctions.get(i).getId()%>"></div>
+                                            <script>
+                                                CountDownTimer('<%=end%>', 'countdown-<%=userAuctions.get(i).getId()%>');
+                                            </script>
                                         </td>
                                     </tr>
                                 <%}%>
@@ -242,5 +287,6 @@
         });
     });
 </script>
+
 
 </html>
