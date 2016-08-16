@@ -72,6 +72,7 @@ public class ItemDAO {
 
                 userAuctions.add(item);
             }
+            connection.close();
 
         }
         catch (SQLException ex){
@@ -130,7 +131,7 @@ public class ItemDAO {
 
                 auctions.add(item);
             }
-
+            connection.close();
         }
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
@@ -152,7 +153,7 @@ public class ItemDAO {
             while(results.next()){
                 list.add(results.getString("category"));
             }
-
+            connection.close();
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
@@ -187,6 +188,7 @@ public class ItemDAO {
                 statement.executeUpdate();
             }
 
+            connection.close();
         }
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
@@ -201,6 +203,7 @@ public class ItemDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ACTIVATE_AUCTION, false, id);
 
             statement.executeUpdate();
+            connection.close();
 
         }
         catch (SQLException e){
@@ -217,6 +220,7 @@ public class ItemDAO {
 
             statement.executeUpdate();
 
+            connection.close();
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
@@ -254,10 +258,12 @@ public class ItemDAO {
 
                 item.setCategories(categories);
 
+                connection.close();
                 return item;
 
             }
             else{
+                connection.close();
                 return null;
             }
 
