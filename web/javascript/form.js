@@ -13,3 +13,16 @@ function usernameAvailability() {
         }
     });
 }
+
+function disableEndedAuction(auction_id) {
+
+    jQuery.ajax({
+        url : "DisableEndedAuction",
+        method: "GET",
+        type : "JSON",
+        data : "&id="+auction_id ,   // query parameters 1st
+        success : function(){
+            location.reload();
+        }
+    });
+}

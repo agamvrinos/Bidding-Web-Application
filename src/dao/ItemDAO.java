@@ -17,6 +17,7 @@ public class ItemDAO {
     private static final String SQL_GET_USER_AUCTIONS = "SELECT * FROM items WHERE items.seller = (?)";
     private static final String SQL_GET_ITEM_CATEGORIES = "SELECT * FROM item_categories WHERE item_categories.id = (?)";
     private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
+    private static final String SQL_DISABLE_AUCTION = "UPDATE items SET state=-1 WHERE id= ?";
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
     private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND items.state=1 AND item_categories.category = (?)";
 
@@ -207,6 +208,20 @@ public class ItemDAO {
             return false;
         }
         return true;
+    }
+
+    public void disableAuction(String id){
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_DISABLE_AUCTION, false, id);
+
+            statement.executeUpdate();
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public List<Bid> getItemBids(Integer id){

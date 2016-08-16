@@ -12,7 +12,7 @@
 <script>
 
 
-    function CountDownTimer(dt, id)
+    function CountDownTimer(dt, class_name, auction_id)
     {
         var end = new Date(dt);
 
@@ -28,7 +28,8 @@
             if (distance < 0) {
 
                 clearInterval(timer);
-                document.getElementsByClassName(id)[0].innerHTML = 'Η Δημοπρασία έληξε!';
+                document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
+                disableEndedAuction(auction_id);
 
                 return;
             }
@@ -48,13 +49,12 @@
                 seconds = 0 + String(seconds);
             }
 
-
             var datestr = days + ' days ' +
                     hours + ' hrs ' +
                     minutes + ' mins ' +
                     seconds + ' secs';
 
-            document.getElementsByClassName(id)[0].innerHTML = datestr;
+            document.getElementsByClassName(class_name)[0].innerHTML = datestr;
         }
 
         timer = setInterval(showRemaining, 1000);
@@ -197,7 +197,7 @@
                                         <td>
                                             <div class="countdown-<%=userAuctions.get(i).getId()%>"></div>
                                             <script>
-                                                CountDownTimer('<%=end%>', 'countdown-<%=userAuctions.get(i).getId()%>');
+                                                CountDownTimer('<%=end%>', 'countdown-<%=userAuctions.get(i).getId()%>', '<%=userAuctions.get(i).getId()%>');
                                             </script>
                                         </td>
                                     </tr>
