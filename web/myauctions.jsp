@@ -180,13 +180,17 @@
                                 <tr>
                                     <th>Ημερομηνία/Ώρα Λήξης</th>
                                     <td>
-                                        <%=userAuctions.get(i).getEnds()%>
+                                        <%
+                                            Date end_t = userAuctions.get(i).getEnds();
+                                            SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                                            String ended = end_format.format(end_t);
+                                        %>
+                                        <%=ended%>
                                     </td>
                                 </tr>
                                 <%--Countdown timer if auction is published--%>
-                                <%if (userAuctions.get(i).getState() ==1) {
+                                <%if (userAuctions.get(i).getState() == 1) {
                                     Date end_time = userAuctions.get(i).getEnds();
-                                    System.out.println(end_time);
                                     SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                                     String end = endformat.format(end_time);
 
@@ -220,13 +224,28 @@
 
                         <%--Activate Button Section--%>
                         <div class="col-sm-1 col-xs-1 col-md-1">
-                            <% if (userAuctions.get(i).getState() == -1){%>
-                                <a href="#" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
-                            <%}else if (userAuctions.get(i).getState() == 0){%>
-                                <a href="ActivateAuction?id=<%=userAuctions.get(i).getId()%>" class="btn btn-success" role="button">Eνεργοποίηση</a>
-                            <%}else if (userAuctions.get(i).getState() == 1){%>
-                                <a href="#" class="btn btn-danger disabled" role="button">Eνεργοποίηση</a>
-                            <%}%>
+                            <div class="btn-group btn-group-vertical">
+                                <% if (userAuctions.get(i).getState() == -1){%>
+                                    <a href="#" class="btn btn-success disabled" role="button">Eνεργοποίηση</a>
+                                <%}else if (userAuctions.get(i).getState() == 0){%>
+                                    <a href="ActivateAuction?id=<%=userAuctions.get(i).getId()%>" class="btn btn-success" role="button">Eνεργοποίηση</a>
+                                <%}else if (userAuctions.get(i).getState() == 1){%>
+                                    <a href="#" class="btn btn-success disabled" role="button">Eνεργοποίηση</a>
+                                <%}%>
+                                <br>
+
+                                <% if (userAuctions.get(i).getState() == -1){%>
+                                <a href="#" class="btn btn-warning disabled" role="button">Τροποποίηση</a>
+                                <%}else if (userAuctions.get(i).getState() == 0){%>
+                                <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                <%}else if (userAuctions.get(i).getState() == 1){%>
+                                <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                <%}%>
+
+                                <br>
+
+                                <a href="#" class="btn btn-danger" role="button">Διαγραφή</a>
+                            </div>
 
                         </div>
                     </div>
