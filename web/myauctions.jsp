@@ -8,6 +8,7 @@
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)
         response.sendRedirect("index.jsp");
+
 %>
 <script>
 
@@ -97,6 +98,12 @@
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Eπιτυχία! </strong>Η Δημοπρασία σας δημιουργήθηκε!
                     </div>
+                <% } %>
+                <% if (request.getAttribute("auction-edit-success") == "yes") { %>
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Eπιτυχία! </strong>Η Δημοπρασία σας τροποποιήθηκε!
+                </div>
                 <% } %>
 
                 <select id="dropDown">
@@ -241,7 +248,6 @@
                                 <%}else if (userAuctions.get(i).getState() == 1){%>
                                 <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
                                 <%}%>
-
                                 <br>
 
                                 <a href="#" class="btn btn-danger" role="button">Διαγραφή</a>

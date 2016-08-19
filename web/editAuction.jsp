@@ -9,6 +9,11 @@
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)
         response.sendRedirect("index.jsp");
+
+    String id = request.getParameter("id");
+    ItemDAO dao2 = new ItemDAO(true);
+    Item item = dao2.getItemByID(Integer.valueOf(id));
+
 %>
 
 <html>
@@ -44,29 +49,18 @@
     <div class="container">
         <div class="row">
 
-            <form class="form-horizontal" action="Create" method="post" id="editAuction" encType="multipart/form-data">
+            <form class="form-horizontal" action="EditAuction" method="post" id="editAuction" encType="multipart/form-data">
 
 
                 </br><h3>Επεξεργασία Δημοπρασίας</h3></br>
                 <%  if (request.getAttribute("item-creation-error") != null) { %>
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Προσοχή! </strong><%=request.getAttribute("item-creation-error")%>
-                </div>
-                <br>
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Προσοχή! </strong><%=request.getAttribute("item-creation-error")%>
+                    </div>
+                    <br>
                 <% } %>
 
-                <%
-                    String id = request.getParameter("id");
-                    ItemDAO dao2 = new ItemDAO(true);
-                    Item item = dao2.getItemByID(Integer.valueOf(id));
-
-                    if (item == null) {
-                        request.setAttribute("item-creation-error","Η Δημοπρασία δεν βρέθηκε!");
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("editAuction.jsp");
-                        dispatcher.forward(request, response);
-                    }
-                %>
                 <fieldset>
                     <!-- Auction Title -->
                     <div class="form-group required">
@@ -75,6 +69,8 @@
                             <input value="<%=item.getName()%>" id="title" name="title" placeholder="Τίτλος Δημοπρασίας" class="form-control input-md" required type="text">
                         </div>
                     </div>
+
+                    <input type="hidden" name="id" value="<%=id%>">
 
                     <!-- Category Multiple Choice-->
                     <div class="form-group required">
@@ -95,7 +91,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="buyout">Τιμή Άμεσης Αγοράς</label>
                         <div class="col-md-4">
-                            <input <%if (item.getBuy_price() == 0.0){%> value="" <%}else{%> value="<%=item.getBuy_price()%><%}%>"id="buyout" name="buyout" placeholder="Τιμή Άμεσης Αγοράς" class="form-control input-md" type="text">
+                            <input <%if (item.getBuy_price() == 0.0){%> value="" <%}else{%> value="<%=item.getBuy_price()%><%}%>" id="buyout" name="buyout" placeholder="Τιμή Άμεσης Αγοράς" class="form-control input-md" type="text">
                         </div>
                     </div>
 
@@ -104,7 +100,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="first-bid">Αρχική Προσφορά</label>
                         <div class="col-md-4">
-                            <input value="<%=item.getFirst_bid()%>"id="first-bid" name="first-bid" placeholder="Αρχική Προσφορά" class="form-control input-md" required type="text">
+                            <input value="<%=item.getFirst_bid()%>" id="first-bid" name="first-bid" placeholder="Αρχική Προσφορά" class="form-control input-md" required type="text">
                         </div>
                     </div>
 
@@ -131,7 +127,7 @@
                             <input <%if (item.getLatitude() == 0.0){%> value="" <%}else{%>value="<%=item.getLatitude()%>"<%}%> id="latitude" name="latitude" placeholder="Latitude" class="form-control input-md" type="text">
                         </div>
                         <div class="col-md-2">
-                            <input v<%if (item.getLongitude() == 0.0){%> value="" <%}else{%>value="<%=item.getLongitude()%>"<%}%> id="longitude" name="longitude" placeholder="Longitude" class="form-control input-md" type="text">
+                            <input <%if (item.getLongitude() == 0.0){%> value="" <%}else{%>value="<%=item.getLongitude()%>"<%}%> id="longitude" name="longitude" placeholder="Longitude" class="form-control input-md" type="text">
                         </div>
                     </div>
 
@@ -208,5 +204,4 @@
 <script>
     $('#datetimepicker_dark').datetimepicker({theme:'dark'});
 </script>
-</body>
 </html>

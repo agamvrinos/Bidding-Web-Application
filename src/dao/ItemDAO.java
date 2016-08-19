@@ -14,12 +14,16 @@ public class ItemDAO {
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_MATCH_ITEM_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (?, ?)";
+    private static final String SQL_DEL_OLD_CATEGORY = "DELETE FROM item_categories WHERE id = (?) AND category = (?)";
     private static final String SQL_GET_USER_AUCTIONS = "SELECT * FROM items WHERE items.seller = (?)";
     private static final String SQL_GET_ITEM_CATEGORIES = "SELECT * FROM item_categories WHERE item_categories.id = (?)";
     private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
     private static final String SQL_DISABLE_AUCTION = "UPDATE items SET state=-1 WHERE id= ?";
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
     private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND items.state=1 AND item_categories.category = (?)";
+    private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
+            " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
+            " ends = (?), seller = (?), description = (?), Image = (?) WHERE id = (?)";
 
     private ConnectionFactory factory;
 
@@ -196,6 +200,39 @@ public class ItemDAO {
         }
     }
 
+    public boolean updateItem(Item item, Item old){
+        try {
+            Connection connection = factory.getConnection();
+
+            if (item.getImage().equals(""))
+                item.setImage(null);
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_ITEM, true, item.getName(),
+                    item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
+                    item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
+                    item.getDesc(), item.getImage(), item.getId());
+
+            Integer id = item.getId();
+            statement.executeUpdate();
+
+            for(int i = 0; i < old.getCategories().size(); i++) {
+                statement = DAOUtil.prepareStatement(connection, SQL_DEL_OLD_CATEGORY, false, id, old.getCategories().get(i));
+                statement.executeUpdate();
+            }
+            for(int i = 0; i < item.getCategories().size(); i++) {
+                statement = DAOUtil.prepareStatement(connection, SQL_MATCH_ITEM_CATEGORY, false, id, item.getCategories().get(i));
+                statement.executeUpdate();
+            }
+
+            connection.close();
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR2: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public boolean activateAuction(String id){
 
         try{
@@ -275,4 +312,8 @@ public class ItemDAO {
 
 
     }
+
+//    public boolean itemBelongsToUser(String id){
+//        return true;
+//    }
 }
