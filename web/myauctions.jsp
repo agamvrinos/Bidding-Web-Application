@@ -250,7 +250,7 @@
                                 <%}%>
                                 <br>
 
-                                <a href="#" class="btn btn-danger" role="button">Διαγραφή</a>
+                                <a href="DeleteAuction?id=<%=userAuctions.get(i).getId()%>" onclick="return confirm('Είστε σίγουροι για την διαγραφή της δημοπρασίας?');" class="btn btn-danger" role="button">Διαγραφή</a>
                             </div>
 
                         </div>

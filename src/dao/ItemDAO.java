@@ -13,6 +13,7 @@ public class ItemDAO {
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_DELETE_ITEM = "DELETE FROM items WHERE id = (?)";
     private static final String SQL_MATCH_ITEM_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (?, ?)";
     private static final String SQL_DEL_OLD_CATEGORY = "DELETE FROM item_categories WHERE id = (?) AND category = (?)";
     private static final String SQL_GET_USER_AUCTIONS = "SELECT * FROM items WHERE items.seller = (?)";
@@ -228,6 +229,32 @@ public class ItemDAO {
         }
         catch (SQLException ex){
             System.out.println("ERROR2: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteItem(Integer id){
+
+        ItemDAO dao = new ItemDAO(true);
+        Item item_to_del = dao.getItemByID(id);
+
+        List<String> categories = item_to_del.getCategories();
+
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_DELETE_ITEM, false, id);
+            statement.executeUpdate();
+
+            for(int i = 0; i < categories.size(); i++) {
+                statement = DAOUtil.prepareStatement(connection, SQL_DEL_OLD_CATEGORY, false, id, categories.get(i));
+                statement.executeUpdate();
+            }
+            connection.close();
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
             return false;
         }
         return true;
