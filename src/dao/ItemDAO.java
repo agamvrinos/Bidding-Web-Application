@@ -3,9 +3,7 @@ package dao;
 import entities.Bid;
 import entities.Item;
 
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 
@@ -24,7 +22,7 @@ public class ItemDAO {
     private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND items.state=1 AND item_categories.category = (?)";
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
-            " ends = (?), seller = (?), description = (?), Image = (?) WHERE id = (?)";
+            " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
 
     private ConnectionFactory factory;
 
@@ -63,6 +61,7 @@ public class ItemDAO {
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
                 String image = results.getString("image");            //done
+                Integer total_offers = results.getInt("total_offers");
 
                 PreparedStatement statement2 = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results2 = statement2.executeQuery();
@@ -73,7 +72,7 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image);
+                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image, total_offers);
 
                 userAuctions.add(item);
             }
@@ -117,6 +116,7 @@ public class ItemDAO {
                 String description = results.getString("description");  //done
                 Integer state = results.getInt("state");
                 String image = results.getString("image");
+                Integer total_offers = results.getInt("total_offers");
 
 //                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 //                String ends2 = formatter.format(ends);
@@ -132,7 +132,7 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image);
+                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image, total_offers);
 
                 auctions.add(item);
             }
@@ -197,7 +197,6 @@ public class ItemDAO {
         }
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
-            return;
         }
     }
 
@@ -211,7 +210,7 @@ public class ItemDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_ITEM, true, item.getName(),
                     item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
                     item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
-                    item.getDesc(), item.getImage(), item.getId());
+                    item.getDesc(), item.getImage(), item.getTotal_offers(), item.getId());
 
             Integer id = item.getId();
             statement.executeUpdate();
@@ -309,7 +308,7 @@ public class ItemDAO {
                         result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
                         result.getDouble("latitude"), result.getDouble("longitude"), result.getDate("creation"),
                         result.getDate("starts"), result.getDate("ends"), result.getString("seller"), result.getString("description"),
-                        null, getItemBids(id), result.getInt("state"), result.getString("image"));
+                        null, getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));
 
                 statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results = statement.executeQuery();

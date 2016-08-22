@@ -23,11 +23,12 @@ public class Item {
     private List<Bid> bids;
     private Integer state;
     private String image;
+    private Integer total_offers;
 
 
     public Item(Integer id, String name, Double currently, Double first_bid, Double buy_price, String country,
                 String location, Double latitude, Double longitude, Date creation, Date starts, Date ends,
-                String seller, String desc, List<String> categories, List<Bid> bids, Integer state, String image) {
+                String seller, String desc, List<String> categories, List<Bid> bids, Integer state, String image, Integer total_offers) {
 
         this.id = id;
         this.name = name;
@@ -47,6 +48,7 @@ public class Item {
         this.bids = bids;
         this.state = state;
         this.image = image;
+        this.total_offers = total_offers;
     }
 
     public Integer getId() {
@@ -192,5 +194,13 @@ public class Item {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Integer getTotal_offers() {
+        return total_offers;
+    }
+
+    public void setTotal_offers(Integer total_offers) {
+        this.total_offers = total_offers;
     }
 }

@@ -242,11 +242,15 @@
                                 <br>
 
                                 <% if (userAuctions.get(i).getState() == -1){%>
-                                <a href="#" class="btn btn-warning disabled" role="button">Τροποποίηση</a>
+                                    <a href="#" class="btn btn-warning disabled" role="button">Τροποποίηση</a>
                                 <%}else if (userAuctions.get(i).getState() == 0){%>
-                                <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
-                                <%}else if (userAuctions.get(i).getState() == 1){%>
-                                <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                    <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                <%}else if (userAuctions.get(i).getState() == 1 ){
+                                    if (userAuctions.get(i).getTotal_offers() == 0){%>
+                                        <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                    <%}else{%>
+                                        <a href="#" class="btn btn-warning disabled" role="button">Τροποποίηση</a>
+                                    <%}%>
                                 <%}%>
                                 <br>
 
