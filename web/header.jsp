@@ -33,13 +33,12 @@
                             <li>
                                 Καλώς ήρθες,
                                 <% if (request.getSession().getAttribute("user")==null){ %>
-                                επισκέπτη!
-                                <% }
-                                   else {
+                                    επισκέπτη!
+                                <% } else {
                                     User user = (User) request.getSession().getAttribute("user");
                                     String username = user.getUsername();
                                 %>
-                                <%=username%>!
+                                    <%=username%>!
                                 <%
                                     }
                                 %>

@@ -1,6 +1,8 @@
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="entities.Item" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -15,6 +17,58 @@
     // Get all active auctions
     List<Item> auctions = dao.getAuctionsByCategory(category);
 %>
+
+<script>
+
+
+    function CountDownTimer(dt, class_name, auction_id)
+    {
+        var end = new Date(dt);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
+//                disableEndedAuction(auction_id);
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+
+            if (String(hours).length < 2){
+                hours = 0 + String(hours);
+            }
+            if (String(minutes).length < 2){
+                minutes = 0 + String(minutes);
+            }
+            if (String(seconds).length < 2){
+                seconds = 0 + String(seconds);
+            }
+
+            var datestr = days + ' days ' +
+                    hours + ' hrs ' +
+                    minutes + ' mins ' +
+                    seconds + ' secs';
+
+            document.getElementsByClassName(class_name)[0].innerHTML = datestr;
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    }
+</script>
 
 <html>
 <head>
@@ -122,6 +176,21 @@
                                 <tr>
                                     <th>Ημερομηνία/Ώρα Λήξης</th>
                                     <td><%=auctions.get(i).getEnds()%></td>
+                                </tr>
+                                <%--Countdown timer if auction is published--%>
+                                <%
+                                    Date end_time = auctions.get(i).getEnds();
+                                    SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                                    String end = endformat.format(end_time);
+                                %>
+                                <tr>
+                                    <th>Χρόνος που Απομένει</th>
+                                    <td>
+                                        <div class="countdown-<%=auctions.get(i).getId()%>"></div>
+                                        <script>
+                                            CountDownTimer('<%=end%>', 'countdown-<%=auctions.get(i).getId()%>', '<%=auctions.get(i).getId()%>');
+                                        </script>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Πωλητής</th>
