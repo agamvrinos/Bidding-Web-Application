@@ -594,7 +594,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     padding: 10px;
 }
 input[type="submit"], button[type=submit] {
-    background: none repeat scroll 0 0 #1abc9c;
+    background: none repeat scroll 0 0 #377d70;
     border: medium none;
     color: #fff;
     padding: 11px 20px;

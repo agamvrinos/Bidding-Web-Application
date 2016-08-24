@@ -72,9 +72,9 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <span class="visible-xs navbar-brand">Sidebar menu</span>
+                            <span class="visible-xs navbar-brand">Μενού</span>
                         </div>
-                        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                        <div class="navbar-collapse collapse sidebar-navbar-collapse" style="background-color: white;">
                             <ul class="nav navbar-nav">
 
                                 <li class="active"><a href="#">Εισερχόμενα</a></li>
@@ -98,7 +98,11 @@
                 </div>
             </div>
             <div class="col-sm-9">
-                Main content goes here
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in consequat turpis, efficitur porta lectus. Aliquam sit amet auctor ante. Nullam interdum non tellus in iaculis. Ut id consectetur ipsum, in consectetur nisl. Mauris dui tellus, porttitor ac nisi nec, molestie cursus nisl. Suspendisse et odio quis est porta suscipit eu a urna. Phasellus eget lectus nec elit consequat efficitur. In auctor nisi non vulputate aliquam. Suspendisse aliquam pellentesque faucibus. Vestibulum urna mi, imperdiet in commodo eget, hendrerit vel dui. Cras id arcu pellentesque, luctus urna at, accumsan nibh.
+
+                Nullam est leo, elementum mattis lectus sit amet, mollis rutrum ante. Mauris vestibulum volutpat volutpat. Suspendisse at magna urna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque in augue tristique, mattis arcu ut, rutrum urna. Etiam nec massa at libero pharetra suscipit. In mi risus, feugiat ut nisl in, pretium molestie lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ac ex ut felis pulvinar rutrum eget sit amet turpis. Nulla lacinia tempus neque, ac vulputate est aliquet nec. Mauris tincidunt egestas mauris, et aliquet augue iaculis ut. Sed tincidunt eget est ac gravida. Vestibulum in eros et nulla convallis blandit.
+
+                Morbi auctor, purus in commodo dapibus, est lectus tincidunt elit, sit amet efficitur dui nibh et ex. Curabitur ornare malesuada turpis, sed sodales lectus condimentum quis. Nunc dictum pellentesque ipsum, vel accumsan ex posuere non. Sed nec vulputate ligula, ut egestas lacus. Donec dapibus elit id ipsum bibendum, quis varius purus lacinia. Nullam finibus ac enim sed dignissim. Suspendisse sollicitudin efficitur nulla laoreet convallis. Nunc iaculis ipsum tempor, lobortis risus sed, porta urna. Cras quis ex vitae augue eleifend ornare eu sed dui. Suspendisse a suscipit sem. Donec gravida convallis mi ut ornare. Nullam magna dui, congue et eros vitae, tincidunt fermentum purus. Pellentesque sagittis est eget diam dignissim, quis dictum urna dignissim. Suspendisse massa ante, tempus vitae quam eget, imperdiet volutpat odio. Aliquam in imperdiet felis. Nunc mauris tortor, consequat in diam ut, porta pellentesque magna.
             </div>
         </div>
     </div>
