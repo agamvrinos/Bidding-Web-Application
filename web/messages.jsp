@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
@@ -50,6 +51,7 @@
 
         }
     </style>
+
 </head>
 <body>
 
@@ -89,9 +91,6 @@
                                     </ul>
                                 </li>
 
-                                <%--<li><a href="#">Menu Item 4</a></li>--%>
-
-                                <%--<li><a href="#">Reviews <span class="badge">1,118</span></a></li>--%>
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>
@@ -125,5 +124,8 @@
 
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
+
 </body>
+
+
 </html>

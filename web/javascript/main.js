@@ -72,7 +72,12 @@ jQuery(document).ready(function($){
     $('.navbar-nav li a, .scroll-to-up').bind('click', function(event) {
         var $anchor = $(this);
         var headerH = $('.header-area').outerHeight();
-        $('html, body').stop().animate({
+        var s = ($($anchor.attr('href')).offset());
+        if (isNaN(s)){
+            return;
+        }
+
+            $('html, body').stop().animate({
             scrollTop : $($anchor.attr('href')).offset().top - headerH + "px"
         }, 1200, 'easeInOutExpo');
 
