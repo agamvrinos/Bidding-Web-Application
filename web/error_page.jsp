@@ -23,7 +23,8 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+    <jsp:include page="header.jsp" />
+
     <%--TODO: Na to modaroume sto telos tis erg (dynamic)--%>
     <br><h3 style="text-align: center;">Σφάλμα 404! Drakos Not FOUND!</h3><br>
 
@@ -33,7 +34,7 @@
         <a href="index.jsp">Επιστροφή στην Αρχική</a><br><br><br>
     </div>
 
-<jsp:include page="footer.jsp" />
+    <jsp:include page="footer.jsp" />
 
 </body>
 </html>
