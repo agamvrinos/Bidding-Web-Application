@@ -26,15 +26,3 @@ function disableEndedAuction(auction_id) {
         }
     });
 }
-
-$(document).ready(function () {
-    $('.sidebar-nav .navbar-nav li a').click(function(e) {
-        $('.sidebar-nav .navbar-nav li').removeClass('active');
-
-        var $parent = $(this).parent();
-        if (!$parent.hasClass('active')) {
-            $parent.addClass('active');
-        }
-        e.preventDefault();
-    });
-});

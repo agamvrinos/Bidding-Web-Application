@@ -49,6 +49,10 @@
                 background-color: #157d69;
             }
 
+            .hide{
+                display: none;
+            }
+
         }
     </style>
 
@@ -79,12 +83,15 @@
                         <div class="navbar-collapse collapse sidebar-navbar-collapse" style="background-color: white;">
                             <ul class="nav navbar-nav">
 
-                                <li class="active"><a href="#">Εισερχόμενα</a></li>
-                                <li><a href="#">Εξερχόμενα</a></li>
-                                <li><a href="#">Διεγραμμένα &nbsp<span class="badge">10</span></a></li>
-
+                                <%--Received--%>
+                                <li class="active"><a href="#received">Εισερχόμενα</a></li>
+                                <%--Sent--%>
+                                <li><a class="link" href="#sent">Εξερχόμενα</a></li>
+                                <%--Deleted--%>
+                                <li><a class="link" href="#others">Διεγραμμένα &nbsp<span class="badge">10</span></a></li>
+                                <%--Others--%>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Περισσότερα <b class="caret"></b></a>
+                                    <a href="#" rel="others" class="dropdown-toggle link" data-toggle="dropdown">Περισσότερα <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Σημαντικά</a></li>
                                         <li><a href="#">Πρόχειρα</a></li>
@@ -96,12 +103,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-9">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in consequat turpis, efficitur porta lectus. Aliquam sit amet auctor ante. Nullam interdum non tellus in iaculis. Ut id consectetur ipsum, in consectetur nisl. Mauris dui tellus, porttitor ac nisi nec, molestie cursus nisl. Suspendisse et odio quis est porta suscipit eu a urna. Phasellus eget lectus nec elit consequat efficitur. In auctor nisi non vulputate aliquam. Suspendisse aliquam pellentesque faucibus. Vestibulum urna mi, imperdiet in commodo eget, hendrerit vel dui. Cras id arcu pellentesque, luctus urna at, accumsan nibh.
+            <div class="col-sm-9 content-container">
+                <div id = "received" class="active">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in consequat turpis, efficitur porta lectus. Aliquam sit amet auctor ante. Nullam interdum non tellus in iaculis. Ut id consectetur ipsum, in consectetur nisl. Mauris dui tellus, porttitor ac nisi nec, molestie cursus nisl. Suspendisse et odio quis est porta suscipit eu a urna. Phasellus eget lectus nec elit consequat efficitur. In auctor nisi non vulputate aliquam. Suspendisse aliquam pellentesque faucibus. Vestibulum urna mi, imperdiet in commodo eget, hendrerit vel dui. Cras id arcu pellentesque, luctus urna at, accumsan nibh.
 
-                Nullam est leo, elementum mattis lectus sit amet, mollis rutrum ante. Mauris vestibulum volutpat volutpat. Suspendisse at magna urna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque in augue tristique, mattis arcu ut, rutrum urna. Etiam nec massa at libero pharetra suscipit. In mi risus, feugiat ut nisl in, pretium molestie lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ac ex ut felis pulvinar rutrum eget sit amet turpis. Nulla lacinia tempus neque, ac vulputate est aliquet nec. Mauris tincidunt egestas mauris, et aliquet augue iaculis ut. Sed tincidunt eget est ac gravida. Vestibulum in eros et nulla convallis blandit.
+                    Nullam est leo, elementum mattis lectus sit amet, mollis rutrum ante. Mauris vestibulum volutpat volutpat. Suspendisse at magna urna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque in augue tristique, mattis arcu ut, rutrum urna. Etiam nec massa at libero pharetra suscipit. In mi risus, feugiat ut nisl in, pretium molestie lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ac ex ut felis pulvinar rutrum eget sit amet turpis. Nulla lacinia tempus neque, ac vulputate est aliquet nec. Mauris tincidunt egestas mauris, et aliquet augue iaculis ut. Sed tincidunt eget est ac gravida. Vestibulum in eros et nulla convallis blandit.
 
-                Morbi auctor, purus in commodo dapibus, est lectus tincidunt elit, sit amet efficitur dui nibh et ex. Curabitur ornare malesuada turpis, sed sodales lectus condimentum quis. Nunc dictum pellentesque ipsum, vel accumsan ex posuere non. Sed nec vulputate ligula, ut egestas lacus. Donec dapibus elit id ipsum bibendum, quis varius purus lacinia. Nullam finibus ac enim sed dignissim. Suspendisse sollicitudin efficitur nulla laoreet convallis. Nunc iaculis ipsum tempor, lobortis risus sed, porta urna. Cras quis ex vitae augue eleifend ornare eu sed dui. Suspendisse a suscipit sem. Donec gravida convallis mi ut ornare. Nullam magna dui, congue et eros vitae, tincidunt fermentum purus. Pellentesque sagittis est eget diam dignissim, quis dictum urna dignissim. Suspendisse massa ante, tempus vitae quam eget, imperdiet volutpat odio. Aliquam in imperdiet felis. Nunc mauris tortor, consequat in diam ut, porta pellentesque magna.
+                    Morbi auctor, purus in commodo dapibus, est lectus tincidunt elit, sit amet efficitur dui nibh et ex. Curabitur ornare malesuada turpis, sed sodales lectus condimentum quis. Nunc dictum pellentesque ipsum, vel accumsan ex posuere non. Sed nec vulputate ligula, ut egestas lacus. Donec dapibus elit id ipsum bibendum, quis varius purus lacinia. Nullam finibus ac enim sed dignissim. Suspendisse sollicitudin efficitur nulla laoreet convallis. Nunc iaculis ipsum tempor, lobortis risus sed, porta urna. Cras quis ex vitae augue eleifend ornare eu sed dui. Suspendisse a suscipit sem. Donec gravida convallis mi ut ornare. Nullam magna dui, congue et eros vitae, tincidunt fermentum purus. Pellentesque sagittis est eget diam dignissim, quis dictum urna dignissim. Suspendisse massa ante, tempus vitae quam eget, imperdiet volutpat odio. Aliquam in imperdiet felis. Nunc mauris tortor, consequat in diam ut, porta pellentesque magna.
+
+                </div>
+                <div id = "sent" class="hide">
+                    Loreal2222 ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in consequat turpis, efficitur porta lectus. Aliquam sit amet auctor ante. Nullam interdum non tellus in iaculis. Ut id consectetur ipsum, in consectetur nisl. Mauris dui tellus, porttitor ac nisi nec, molestie cursus nisl. Suspendisse et odio quis est porta suscipit eu a urna. Phasellus eget lectus nec elit consequat efficitur. In auctor nisi non vulputate aliquam. Suspendisse aliquam pellentesque faucibus. Vestibulum urna mi, imperdiet in commodo eget, hendrerit vel dui. Cras id arcu pellentesque, luctus urna at, accumsan nibh.
+
+                    Nullam est leo, elementum mattis lectus sit amet, mollis rutrum ante. Mauris vestibulum volutpat volutpat. Suspendisse at magna urna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque in augue tristique, mattis arcu ut, rutrum urna. Etiam nec massa at libero pharetra suscipit. In mi risus, feugiat ut nisl in, pretium molestie lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec ac ex ut felis pulvinar rutrum eget sit amet turpis. Nulla lacinia tempus neque, ac vulputate est aliquet nec. Mauris tincidunt egestas mauris, et aliquet augue iaculis ut. Sed tincidunt eget est ac gravida. Vestibulum in eros et nulla convallis blandit.
+
+                    Morbi auctor, purus in commodo dapibus, est lectus tincidunt elit, sit amet efficitur dui nibh et ex. Curabitur ornare malesuada turpis, sed sodales lectus condimentum quis. Nunc dictum pellentesque ipsum, vel accumsan ex posuere non. Sed nec vulputate ligula, ut egestas lacus. Donec dapibus elit id ipsum bibendum, quis varius purus lacinia. Nullam finibus ac enim sed dignissim. Suspendisse sollicitudin efficitur nulla laoreet convallis. Nunc iaculis ipsum tempor, lobortis risus sed, porta urna. Cras quis ex vitae augue eleifend ornare eu sed dui. Suspendisse a suscipit sem. Donec gravida convallis mi ut ornare. Nullam magna dui, congue et eros vitae, tincidunt fermentum purus. Pellentesque sagittis est eget diam dignissim, quis dictum urna dignissim. Suspendisse massa ante, tempus vitae quam eget, imperdiet volutpat odio. Aliquam in imperdiet felis. Nunc mauris tortor, consequat in diam ut, porta pellentesque magna.
+
+                </div>
+                <div id="others" class="hide"></div>
+
             </div>
         </div>
     </div>
@@ -125,6 +145,33 @@
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
 
+<script>
+    $(document).ready(function() {
+        $('.sidebar-nav .navbar-nav li a').click(function(event){
+            event.preventDefault();//stop browser to take action for clicked anchor
+
+            //get displaying tab content jQuery selector
+            var active_tab_selector = $('.sidebar-nav .navbar-nav > li.active > a').attr('href');
+
+            //find actived navigation and remove 'active' css
+            var actived_nav = $('.sidebar-nav .navbar-nav > li.active');
+            actived_nav.removeClass('active');
+
+            //add 'active' css into clicked navigation
+            $(this).parents('li').addClass('active');
+
+            //hide displaying tab content
+            $(active_tab_selector).removeClass('active');
+            $(active_tab_selector).addClass('hide');
+
+            //show target tab content
+            var target_tab_selector = $(this).attr('href');
+            $(target_tab_selector).removeClass('hide');
+            $(target_tab_selector).addClass('active');
+        });
+    });
+
+</script>
 </body>
 
 
