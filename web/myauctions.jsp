@@ -30,7 +30,7 @@
 
                 clearInterval(timer);
                 document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
-                disableEndedAuction(auction_id);
+//                disableEndedAuction(auction_id);
 
                 return;
             }

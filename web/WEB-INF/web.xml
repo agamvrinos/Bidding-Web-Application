@@ -23,4 +23,8 @@
         <exception-type>javax.servlet.ServletException</exception-type>
         <location>/ExceptionHandler</location>
     </error-page>
+
+    <listener>
+        <listener-class>Listener</listener-class>
+    </listener>
 </web-app>
