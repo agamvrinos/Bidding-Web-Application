@@ -198,7 +198,7 @@
                                 <%--Countdown timer if auction is published--%>
                                 <%if (userAuctions.get(i).getState() == 1) {
                                     Date end_time = userAuctions.get(i).getEnds();
-                                    SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                                    SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
                                     String end = endformat.format(end_time);
 
                                     System.out.println("END: " + end);

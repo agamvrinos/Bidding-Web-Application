@@ -19,6 +19,7 @@ public class ItemDAO {
     private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
     private static final String SQL_DISABLE_AUCTION = "UPDATE items SET state=-1 WHERE id= ?";
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
+    private static final String SQL_CHANGE_ITEM_STATE = "UPDATE items SET state=-1 WHERE state=1 AND ends<=NOW()";
     private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND items.state=1 AND item_categories.category = (?)";
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
@@ -342,4 +343,32 @@ public class ItemDAO {
 //    public boolean itemBelongsToUser(String id){
 //        return true;
 //    }
+
+    public void updateExpiredItems(){
+
+        try {
+
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_CHANGE_ITEM_STATE, true);
+
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+
+            int i=0;
+
+            while (rs.next()){
+                i++;
+            }
+
+            //test
+            System.out.println(i);
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

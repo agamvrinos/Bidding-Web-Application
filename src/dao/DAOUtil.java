@@ -26,7 +26,4 @@ public class DAOUtil {
 		return rs.wasNull() ? null : nValue;
 	}
 
-	public static void updateExpiredItems(){
-		System.out.println("test");
-	}
 }

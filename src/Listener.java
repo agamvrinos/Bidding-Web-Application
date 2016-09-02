@@ -3,6 +3,7 @@
  */
 
 import dao.DAOUtil;
+import dao.ItemDAO;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -32,12 +33,12 @@ public class Listener implements ServletContextListener,
          You can initialize servlet context related data here.
       */
 
-        DAOUtil.updateExpiredItems();
+        new ItemDAO(true).updateExpiredItems();
 
         TimerTask task = new TimerTask() {
             @Override
             public void run () {
-                DAOUtil.updateExpiredItems();
+                new ItemDAO(true).updateExpiredItems();
             }
         };
         Timer timer = new Timer();
