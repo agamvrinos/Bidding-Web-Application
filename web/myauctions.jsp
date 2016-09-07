@@ -189,7 +189,7 @@
                                     <td>
                                         <%
                                             Date end_t = userAuctions.get(i).getEnds();
-                                            SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                                            SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
                                             String ended = end_format.format(end_t);
                                         %>
                                         <%=ended%>

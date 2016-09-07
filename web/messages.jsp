@@ -58,6 +58,17 @@
                 background-color: #2f9a86;
             }
 
+            tr {
+                cursor: pointer;
+            }
+
+            .is_read-1 {
+                background-color: #c1c1c1;
+                color: black;
+                font-weight: 600;
+            }
+
+
         }
     </style>
 
@@ -106,7 +117,73 @@
             </div>
             <div class="col-sm-9 content-container">
                 <div id = "received" class="active">
-                    <span style="font-size: 25px; font-weight: bold;">Received Messages</span>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class='clickable-row is_read-1' data-href='index.html'>
+                            <td>
+                                <input type="checkbox" id="checkbox3">
+                                <label for="checkbox3"></label>
+                            </td>
+                            <td>Yannis Smaragdakis</td>
+                            <td>[K31: Compilers] Φωτογραφίες</td>
+                            <td>15/03/2017 16:40</td>
+                        </tr>
+                        <tr class='clickable-row is_read-0' data-href='index.html'>
+                            <td>
+                                <input type="checkbox" id="checkbox4">
+                                <label for="checkbox4"></label>
+                            </td>
+                            <td>Yannis Smaragdakis</td>
+                            <td>[K31: Compilers] Φωτογραφίες</td>
+                            <td>15/03/2017 16:40</td>
+                        </tr>
+                        <tr class='clickable-row is_read-0' data-href='index.html'>
+                            <td>
+                                <input type="checkbox" id="checkbox5">
+                                <label for="checkbox5"></label>
+                            </td>
+                            <td>Yannis Smaragdakis</td>
+                            <td>[K31: Compilers] Φωτογραφίες</td>
+                            <td>15/03/2017 16:40</td>
+                        </tr>
+                        <tr class='clickable-row is_read-0' data-href='index.html'>
+                            <td>
+                                <input type="checkbox" id="checkbox2">
+                                <label for="checkbox2"></label>
+                            </td>
+                            <td>Yannis Smaragdakis</td>
+                            <td>[K31: Compilers] Φωτογραφίες</td>
+                            <td>15/03/2017 16:40</td>
+                        </tr>
+                        <tr class='clickable-row is_read-0' data-href='index.html'>
+                            <td>
+                                <input type="checkbox" id="checkbox2">
+                                <label for="checkbox2"></label>
+                            </td>
+                            <td>Yannis Smaragdakis</td>
+                            <td>[K31: Compilers] Φωτογραφίες</td>
+                            <td>15/03/2017 16:40</td>
+                        </tr>
+                        <tr class='clickable-row is_read-0' data-href='index.html'>
+                            <td>
+                                <input type="checkbox" id="checkbox2">
+                                <label for="checkbox2"></label>
+                            </td>
+                            <td>Yannis Smaragdakis</td>
+                            <td>[K31: Compilers] Φωτογραφίες</td>
+                            <td>15/03/2017 16:40</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
                 </div>
                 <div id = "sent" class="hide">
                     <span style="font-size: 25px; font-weight: bold;">Sent Messages</span>
@@ -166,7 +243,14 @@
             $(target_tab_selector).addClass('active');
         });
     });
+</script>
 
+<script>
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.document.location = $(this).data("href");
+        });
+    });
 </script>
 </body>
 
