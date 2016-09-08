@@ -17,22 +17,30 @@ public class MessageDAO {
 
     private ConnectionFactory factory;
 
-    public MessageDAO(boolean pool)
-    {
+    public MessageDAO(boolean pool) {
         factory = ConnectionFactory.getInstance(pool);
     }
 
-    public List<Message> getReceivedMessages(Integer user_id){
+    public List<Message> getMessages(Integer user_id, Integer operation) {
+        // operation = 0 -> Get Received Messages
+        // operation = 1 -> Get Send Messages
 
-        List<Message> sentMessages = new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
 
         try {
             Connection connection = factory.getConnection();
 
-            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_RECEIVED_MSGS, false, user_id);
+            PreparedStatement statement = null;
+            if (operation == 0)
+                statement = DAOUtil.prepareStatement(connection, SQL_GET_RECEIVED_MSGS, false, user_id);
+            else if (operation == 1)
+                statement = DAOUtil.prepareStatement(connection, SQL_GET_SENT_MSGS, false, user_id);
+            else
+                throw new RuntimeException("Wrong Operation Given");
+
             ResultSet results = statement.executeQuery();
 
-            while(results.next()){
+            while (results.next()) {
                 Integer id = results.getInt("id");
                 Integer sender_id = results.getInt("sender_id");
                 Integer receiver_id = results.getInt("receiver_id");
@@ -43,20 +51,15 @@ public class MessageDAO {
 
                 Message message = new Message(id, sender_id, receiver_id, message_title, message_content, is_read, date);
 
-                sentMessages.add(message);
+                messages.add(message);
             }
             connection.close();
 
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());
             return null;
         }
 
-        return sentMessages;
-    }
-
-    public List<Message> getSentMessages(){
-        return null;
+        return messages;
     }
 }

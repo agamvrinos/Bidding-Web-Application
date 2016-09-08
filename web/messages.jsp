@@ -10,7 +10,7 @@
 
 <%--Make sure user is logged in--%>
 <%
-    User sessionUser = null;
+    User sessionUser;
     if (request.getSession().getAttribute("user")==null) {
         request.setAttribute("nologgedin","no");
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
@@ -93,7 +93,7 @@
             .is_read-0 {
                 background-color: #c1c1c1;
                 color: black;
-                font-weight: 600;
+                font-weight: bold;
             }
 
 
@@ -157,7 +157,9 @@
                         <tbody>
                         <%
                         MessageDAO dao = new MessageDAO(true);
-                        List<Message> received = dao.getReceivedMessages(sessionUser.getId());
+                        List<Message> received = dao.getMessages(sessionUser.getId(), 0);
+                        List<Message> sent = dao.getMessages(sessionUser.getId(), 1);
+
                         for (Message msg : received){
                             Date end_t = msg.getDate();
                             SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
@@ -166,14 +168,14 @@
                             String sender_fullname = sender.getFullname();
 
                         %>
-                            <tr class='clickable-row is_read-<%=msg.getIs_read()%>' data-href='index.html'>
+                            <tr class='is_read-<%=msg.getIs_read()%>' data-href='index.html'>
                                 <td>
                                     <input type="checkbox" id="checkbox3">
                                     <label for="checkbox3"></label>
                                 </td>
-                                <td><%=sender_fullname%></td>
-                                <td><%=msg.getTitle()%></td>
-                                <td><%=ended%></td>
+                                <td class='clickable-row'><%=sender_fullname%></td>
+                                <td class='clickable-row'><%=msg.getTitle()%></td>
+                                <td class='clickable-row'><%=ended%></td>
                             </tr>
                         <%}%>
                         </tbody>
@@ -181,7 +183,38 @@
 
                 </div>
                 <div id = "sent" class="hide">
-                    <span style="font-size: 25px; font-weight: bold;">Sent Messages</span>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+
+                        for (Message msg : sent){
+                            Date end_t = msg.getDate();
+                            SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                            String ended = end_format.format(end_t);
+                            User receiver = new UserDAO(true).getUserbyID(msg.getReceiver_id());
+                            String receiver_fullname = receiver.getFullname();
+
+                        %>
+                            <tr data-href='index.html'>
+                                <td>
+                                    <input type="checkbox" id="checkbox4">
+                                    <label for="checkbox4"></label>
+                                </td>
+                                <td class='clickable-row'><%=receiver_fullname%></td>
+                                <td class='clickable-row'><%=msg.getTitle()%></td>
+                                <td class='clickable-row'><%=ended%></td>
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
                 </div>
                 <div id="deleted" class="hide">
                     <span style="font-size: 25px; font-weight: bold;">Deleted Messages</span>
