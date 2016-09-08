@@ -2,6 +2,7 @@ package dao;
 
 import entities.Bid;
 import entities.Item;
+import entities.Message;
 
 import java.sql.*;
 import java.util.Date;
@@ -24,6 +25,8 @@ public class ItemDAO {
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
             " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
+
+
 
     private ConnectionFactory factory;
 
@@ -349,11 +352,8 @@ public class ItemDAO {
         try {
 
             Connection connection = factory.getConnection();
-
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_CHANGE_ITEM_STATE, true);
-
             statement.executeUpdate();
-
             ResultSet rs = statement.getGeneratedKeys();
 
             int i=0;
@@ -362,8 +362,9 @@ public class ItemDAO {
                 i++;
             }
 
-            //test
             System.out.println(i);
+
+            connection.close();
 
         }
         catch (SQLException e){
@@ -371,4 +372,8 @@ public class ItemDAO {
             e.printStackTrace();
         }
     }
+
+
+
+
 }

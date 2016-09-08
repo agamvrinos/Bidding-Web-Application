@@ -1,4 +1,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="entities.User" %>
+<%@ page import="entities.Message" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="dao.MessageDAO" %>
+<%@ page import="dao.UserDAO" %>
+
+
+<%--Make sure user is logged in--%>
+<%
+    User sessionUser = null;
+    if (request.getSession().getAttribute("user")==null) {
+        request.setAttribute("nologgedin","no");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+        dispatcher.forward(request, response);
+        return;
+    }
+    else {
+        sessionUser = (User) request.getSession().getAttribute("user");
+    }
+
+%>
+
 <html>
 <head>
 
@@ -58,11 +82,15 @@
                 background-color: #2f9a86;
             }
 
+            .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+                background-color: #c1c1c1;
+            }
+
             tr {
                 cursor: pointer;
             }
 
-            .is_read-1 {
+            .is_read-0 {
                 background-color: #c1c1c1;
                 color: black;
                 font-weight: 600;
@@ -119,68 +147,35 @@
                 <div id = "received" class="active">
                     <table class="table table-hover">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class='clickable-row is_read-1' data-href='index.html'>
-                            <td>
-                                <input type="checkbox" id="checkbox3">
-                                <label for="checkbox3"></label>
-                            </td>
-                            <td>Yannis Smaragdakis</td>
-                            <td>[K31: Compilers] Φωτογραφίες</td>
-                            <td>15/03/2017 16:40</td>
-                        </tr>
-                        <tr class='clickable-row is_read-0' data-href='index.html'>
-                            <td>
-                                <input type="checkbox" id="checkbox4">
-                                <label for="checkbox4"></label>
-                            </td>
-                            <td>Yannis Smaragdakis</td>
-                            <td>[K31: Compilers] Φωτογραφίες</td>
-                            <td>15/03/2017 16:40</td>
-                        </tr>
-                        <tr class='clickable-row is_read-0' data-href='index.html'>
-                            <td>
-                                <input type="checkbox" id="checkbox5">
-                                <label for="checkbox5"></label>
-                            </td>
-                            <td>Yannis Smaragdakis</td>
-                            <td>[K31: Compilers] Φωτογραφίες</td>
-                            <td>15/03/2017 16:40</td>
-                        </tr>
-                        <tr class='clickable-row is_read-0' data-href='index.html'>
-                            <td>
-                                <input type="checkbox" id="checkbox2">
-                                <label for="checkbox2"></label>
-                            </td>
-                            <td>Yannis Smaragdakis</td>
-                            <td>[K31: Compilers] Φωτογραφίες</td>
-                            <td>15/03/2017 16:40</td>
-                        </tr>
-                        <tr class='clickable-row is_read-0' data-href='index.html'>
-                            <td>
-                                <input type="checkbox" id="checkbox2">
-                                <label for="checkbox2"></label>
-                            </td>
-                            <td>Yannis Smaragdakis</td>
-                            <td>[K31: Compilers] Φωτογραφίες</td>
-                            <td>15/03/2017 16:40</td>
-                        </tr>
-                        <tr class='clickable-row is_read-0' data-href='index.html'>
-                            <td>
-                                <input type="checkbox" id="checkbox2">
-                                <label for="checkbox2"></label>
-                            </td>
-                            <td>Yannis Smaragdakis</td>
-                            <td>[K31: Compilers] Φωτογραφίες</td>
-                            <td>15/03/2017 16:40</td>
-                        </tr>
+                        <%
+                        MessageDAO dao = new MessageDAO(true);
+                        List<Message> received = dao.getReceivedMessages(sessionUser.getId());
+                        for (Message msg : received){
+                            Date end_t = msg.getDate();
+                            SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                            String ended = end_format.format(end_t);
+                            User sender = new UserDAO(true).getUserbyID(msg.getSender_id());
+                            String sender_fullname = sender.getFullname();
+
+                        %>
+                            <tr class='clickable-row is_read-<%=msg.getIs_read()%>' data-href='index.html'>
+                                <td>
+                                    <input type="checkbox" id="checkbox3">
+                                    <label for="checkbox3"></label>
+                                </td>
+                                <td><%=sender_fullname%></td>
+                                <td><%=msg.getTitle()%></td>
+                                <td><%=ended%></td>
+                            </tr>
+                        <%}%>
                         </tbody>
                     </table>
 
