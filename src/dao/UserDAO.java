@@ -30,29 +30,30 @@ public class UserDAO {
                 , userInfo.getPhone(), userInfo.getCountry(), userInfo.getCity(), userInfo.getAddress(), userInfo.getAfm(),
                 userInfo.getRole()};
 
-        try (
-                Connection connection = factory.getConnection();
-                PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ADD_NEW_USER, false, values);)
-        {
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ADD_NEW_USER, false, values);
+
             int affectedRows = statement.executeUpdate();
             System.out.println("Affected Rows: " + affectedRows);
             ret = affectedRows;
 
             if (ret == 0) {
                 System.err.println("Creating user failed, no rows affected.");
+                connection.close();
                 return ret;
             }
 
         } catch (SQLIntegrityConstraintViolationException e1){
             return  USERNAME_EXISTS_ERROR;
 
-        }
-         catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
             return ret;
         }
 
         ret = 1;
+
         return ret;
     }
 
@@ -64,8 +65,10 @@ public class UserDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_SEARCH_USER, false, username, password);
             ResultSet results = statement.executeQuery();
 
-            if(!results.next())
+            if(!results.next()) {
+                connection.close();
                 return null;
+            }
             else{
                 User user = new User(results.getString("fullname"), results.getString("username"), null,
                         results.getString("email"), results.getString("phone"), results.getString("country"), results.getString("city"),
@@ -73,7 +76,7 @@ public class UserDAO {
 
                 user.setId(results.getInt("id"));
                 user.setValidated(results.getInt("validated"));
-
+                connection.close();
                 return user;
 
             }
@@ -105,12 +108,11 @@ public class UserDAO {
 
                 userlist.add(user);
             }
-
+            connection.close();
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
         }
-
         return userlist;
     }
 
@@ -122,8 +124,10 @@ public class UserDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_SEARCH_USER_BY_ID, false, id);
             ResultSet results = statement.executeQuery();
 
-            if(!results.next())
+            if(!results.next()) {
+                connection.close();
                 return null;
+            }
             else{
                 User user = new User(results.getString("fullname"), results.getString("username"), null,
                         results.getString("email"), results.getString("phone"), results.getString("country"), results.getString("city"),
@@ -132,6 +136,7 @@ public class UserDAO {
                 user.setId(results.getInt("id"));
                 user.setValidated(results.getInt("validated"));
 
+                connection.close();
                 return user;
             }
 
@@ -149,18 +154,20 @@ public class UserDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_EXISTS_USER, false, username);
             ResultSet results = statement.executeQuery();
 
-            if (!results.isBeforeFirst())
+            if (!results.isBeforeFirst()){
                 // Username does not exist
+                connection.close();
                 return false;
-            else
+            }
+            else {
                 // Username exists
+                connection.close();
                 return true;
-
+            }
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
             return false;
-
         }
     }
 
@@ -169,7 +176,7 @@ public class UserDAO {
             Connection connection = factory.getConnection();
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_VALIDATE_USER, false, id);
             statement.executeUpdate();
-
+            connection.close();
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
