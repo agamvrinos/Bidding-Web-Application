@@ -20,9 +20,7 @@ import java.util.TimerTask;
 public class Listener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
 
-    // Public constructor is required by servlet spec
-    public Listener() {
-    }
+    public Listener() {}
 
     // -------------------------------------------------------
     // ServletContextListener implementation
@@ -47,43 +45,21 @@ public class Listener implements ServletContextListener,
         timer.scheduleAtFixedRate (task, 1000*(60 - sec), 1000*60);
     }
 
-    public void contextDestroyed(ServletContextEvent sce) {
-      /* This method is invoked when the Servlet Context 
-         (the Web application) is undeployed or 
-         Application Server shuts down.
-      */
-    }
+    public void contextDestroyed(ServletContextEvent sce) {}
 
     // -------------------------------------------------------
     // HttpSessionListener implementation
     // -------------------------------------------------------
-    public void sessionCreated(HttpSessionEvent se) {
-      /* Session is created. */
-    }
+    public void sessionCreated(HttpSessionEvent se) {}
 
-    public void sessionDestroyed(HttpSessionEvent se) {
-      /* Session is destroyed. */
-    }
+    public void sessionDestroyed(HttpSessionEvent se) {}
 
     // -------------------------------------------------------
     // HttpSessionAttributeListener implementation
     // -------------------------------------------------------
+    public void attributeAdded(HttpSessionBindingEvent sbe) {}
 
-    public void attributeAdded(HttpSessionBindingEvent sbe) {
-      /* This method is called when an attribute 
-         is added to a session.
-      */
-    }
+    public void attributeRemoved(HttpSessionBindingEvent sbe) {}
 
-    public void attributeRemoved(HttpSessionBindingEvent sbe) {
-      /* This method is called when an attribute
-         is removed from a session.
-      */
-    }
-
-    public void attributeReplaced(HttpSessionBindingEvent sbe) {
-      /* This method is invoked when an attibute
-         is replaced in a session.
-      */
-    }
+    public void attributeReplaced(HttpSessionBindingEvent sbe) {}
 }

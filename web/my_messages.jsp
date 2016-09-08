@@ -20,11 +20,11 @@
     else {
         sessionUser = (User) request.getSession().getAttribute("user");
     }
-
 %>
 
 <html>
 <head>
+    <title>Τα Μηνυματά Μου</title>
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -168,14 +168,14 @@
                             String sender_fullname = sender.getFullname();
 
                         %>
-                            <tr class='is_read-<%=msg.getIs_read()%>' data-href='index.html'>
+                            <tr class='is_read-<%=msg.getIs_read()%>' >
                                 <td>
                                     <input type="checkbox" id="checkbox3">
                                     <label for="checkbox3"></label>
                                 </td>
-                                <td class='clickable-row'><%=sender_fullname%></td>
-                                <td class='clickable-row'><%=msg.getTitle()%></td>
-                                <td class='clickable-row'><%=ended%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=sender_fullname%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=msg.getTitle()%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=ended%></td>
                             </tr>
                         <%}%>
                         </tbody>
@@ -203,14 +203,14 @@
                             String receiver_fullname = receiver.getFullname();
 
                         %>
-                            <tr data-href='index.html'>
+                            <tr data-href='message.jsp?id=<%=msg.getId()%>'>
                                 <td>
                                     <input type="checkbox" id="checkbox4">
                                     <label for="checkbox4"></label>
                                 </td>
-                                <td class='clickable-row'><%=receiver_fullname%></td>
-                                <td class='clickable-row'><%=msg.getTitle()%></td>
-                                <td class='clickable-row'><%=ended%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=receiver_fullname%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=msg.getTitle()%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=ended%></td>
                             </tr>
                         <%}%>
                         </tbody>

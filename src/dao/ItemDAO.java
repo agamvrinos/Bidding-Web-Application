@@ -362,7 +362,7 @@ public class ItemDAO {
                 i++;
             }
 
-            System.out.println(i);
+//            System.out.println(i);
 
             connection.close();
 
