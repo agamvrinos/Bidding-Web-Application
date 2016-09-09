@@ -1056,6 +1056,10 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     font-size: 20px;
 }
 
+#msg-header span {
+    color: #266357;
+}
+
 #msg-content {
     text-align: justify;
 }

@@ -14,6 +14,7 @@ public class MessageDAO {
 
     private static final String SQL_GET_RECEIVED_MSGS = "SELECT * FROM messages WHERE receiver_id = (?)";
     private static final String SQL_GET_SENT_MSGS = "SELECT * FROM messages WHERE sender_id = (?)";
+    private static final String SQL_GET_MSG_BY_ID = "SELECT * FROM messages WHERE id = (?)";
 
     private ConnectionFactory factory;
 
@@ -61,5 +62,41 @@ public class MessageDAO {
         }
 
         return messages;
+    }
+
+    public Message getMessageById(Integer message_id){
+
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = null;
+            statement = DAOUtil.prepareStatement(connection, SQL_GET_MSG_BY_ID, false, message_id);
+
+            ResultSet results = statement.executeQuery();
+
+            if(results.next()) {
+
+                Integer id = results.getInt("id");
+                Integer sender_id = results.getInt("sender_id");
+                Integer receiver_id = results.getInt("receiver_id");
+                String message_title = results.getString("message_title");
+                String message_content = results.getString("message_content");
+                Integer is_read = results.getInt("is_read");
+                Date date = results.getTimestamp("date_sent");
+
+                Message message = new Message(id, sender_id, receiver_id, message_title, message_content, is_read, date);
+
+                connection.close();
+
+                return message;
+            }
+            else {
+                connection.close();
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("ERRORI: " + ex.getMessage());
+            return null;
+        }
     }
 }

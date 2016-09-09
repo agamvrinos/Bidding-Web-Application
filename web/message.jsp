@@ -1,19 +1,44 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="entities.User" %>
+<%@ page import="entities.Message" %>
+<%@ page import="dao.MessageDAO" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="dao.UserDAO" %>
 
-<%--Make sure user is logged in--%>
-<%--<%--%>
-    <%--User sessionUser;--%>
-    <%--if (request.getSession().getAttribute("user")==null) {--%>
-        <%--request.setAttribute("nologgedin","no");--%>
-        <%--RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");--%>
-        <%--dispatcher.forward(request, response);--%>
-        <%--return;--%>
-    <%--}--%>
-    <%--else {--%>
-        <%--sessionUser = (User) request.getSession().getAttribute("user");--%>
-    <%--}--%>
-<%--%>--%>
+<%
+    // Make sure user is logged in
+//    User sessionUser;
+//    if (request.getSession().getAttribute("user")==null) {
+//        request.setAttribute("nologgedin","no");
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+//        dispatcher.forward(request, response);
+//        return;
+//    }
+//    else {
+//        sessionUser = (User) request.getSession().getAttribute("user");
+//    }
+
+    //TODO: CHECK ID+TYPE PARAMETERS FOR EPITHETIKOUS XRISTES POU TA PIRAZOUN
+    // Get the message id passed and type of message (rec or sent)
+    Integer message_id = Integer.valueOf(request.getParameter("id"));
+    String msg_type = request.getParameter("type");
+
+    // Get full message using the id
+    MessageDAO dao = new MessageDAO(true);
+    Message message = dao.getMessageById(message_id);
+
+    // Format Date
+    Date end_t = message.getDate();
+    SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+    String date = end_format.format(end_t);
+
+    // Who sent me the message???? or to whom did I sent it????
+    User sender = new UserDAO(true).getUserbyID(message.getSender_id());
+    String sender_fullname = sender.getFullname();
+    User receiver = new UserDAO(true).getUserbyID(message.getReceiver_id());
+    String receiver_fullname = receiver.getFullname();
+%>
 <html>
 <head>
     <title>Τα Μηνυματά Μου</title>
@@ -44,17 +69,16 @@
     <div id="msg-info">
         <div id="msg-header">
             <div id="msg-title">
-                [K31: Compilers] Φωτογραφίες <br>
+                <%=message.getTitle()%><br>
             </div>
-            <i>Yannis Smaragdakis    15/05/2016 12:23</i><br><br>
+            <% if (msg_type.equals("rec")){%>
+                <i><span>Αποστολέας:</span> <%=sender_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
+            <% } else if (msg_type.equals("send")){%>
+                <i><span>Εστάλη στον:</span> <%=receiver_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
+            <% }%>
         </div>
         <div id="msg-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis felis a lectus efficitur ultrices id sit amet turpis. Nam eu ante sagittis, rutrum nisi nec, mattis est. Praesent vestibulum nunc ac dui ultrices, eu cursus risus laoreet. Praesent sagittis lorem ac risus semper finibus. Nunc consectetur eros vitae turpis iaculis, facilisis sodales ante cursus. Morbi nunc lectus, varius quis urna et, faucibus condimentum est. Nulla lectus ante, laoreet vitae euismod id, varius rutrum velit. Duis quis nulla eu lorem aliquam hendrerit pharetra a mauris. Morbi eu ipsum eget massa tristique condimentum in et diam.
-
-            Sed volutpat pharetra ornare. Nullam venenatis odio consectetur, viverra quam et, porttitor sapien. Vivamus fermentum ex id faucibus tristique. Maecenas commodo porttitor orci ut pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vestibulum maximus pulvinar. Donec tincidunt, turpis mollis facilisis egestas, eros tellus accumsan elit, at pulvinar turpis leo at nibh. Aliquam iaculis augue ac augue dapibus dictum.
-
-            Curabitur nec venenatis nisi. Mauris nibh lacus, cursus sed consectetur sed, lobortis sed lorem. Integer in porttitor nunc. Sed varius et nisi vel porta. Mauris felis ante, ornare nec aliquet a, hendrerit id nisl. Mauris consequat mauris rutrum, suscipit erat ut, sodales quam. Praesent bibendum condimentum mauris, at ultrices enim sollicitudin in. Cras semper, nisl non tempus semper, tellus leo pellentesque lorem, ut lobortis augue neque nec risus. Vivamus vel est imperdiet, facilisis tortor eget, blandit lorem. Nulla nulla purus, malesuada sit amet magna ut, tempus facilisis ex. Aenean ullamcorper nibh in quam ullamcorper, posuere gravida velit sagittis. In hac habitasse platea dictumst. Cras malesuada velit quis felis finibus pellentesque.
-
+            <%=message.getMessage()%>
         </div>
 
         <br>

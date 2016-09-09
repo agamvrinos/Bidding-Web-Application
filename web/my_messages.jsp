@@ -173,9 +173,9 @@
                                     <input type="checkbox" id="checkbox3">
                                     <label for="checkbox3"></label>
                                 </td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=sender_fullname%></td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=msg.getTitle()%></td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=ended%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=sender_fullname%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=msg.getTitle()%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=ended%></td>
                             </tr>
                         <%}%>
                         </tbody>
@@ -208,9 +208,9 @@
                                     <input type="checkbox" id="checkbox4">
                                     <label for="checkbox4"></label>
                                 </td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=receiver_fullname%></td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=msg.getTitle()%></td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>'><%=ended%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=receiver_fullname%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=msg.getTitle()%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=ended%></td>
                             </tr>
                         <%}%>
                         </tbody>
