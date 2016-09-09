@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="entities.User" %>
-<%@ page import="entities.Message" %>
 <%@ page import="dao.MessageDAO" %>
+<%@ page import="dao.UserDAO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="dao.UserDAO" %>
+<%@ page import="entities.User" %>
+<%@ page import="entities.Message" %>
 
 <%
     // Make sure user is logged in
@@ -19,29 +19,18 @@
         sessionUser = (User) request.getSession().getAttribute("user");
     }
 
-    //TODO: CHECK ID+TYPE PARAMETERS FOR EPITHETIKOUS XRISTES POU TA PIRAZOUN
-    // Get the message id passed and type of message (rec or sent)
+    //TODO: CHECK ID PARAMETER FOR EPITHETIKOUS XRISTES POU TO PIRAZOUN
+    // Get the message id passed
     Integer message_id = Integer.valueOf(request.getParameter("id"));
     String msg_type = request.getParameter("type");
 
     // Get full message using the id
     MessageDAO dao = new MessageDAO(true);
     Message message = dao.getMessageById(message_id);
-
-    // Format Date
-    Date end_t = message.getDate();
-    SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-    String date = end_format.format(end_t);
-
-    // Who sent me the message???? or to whom did I sent it????
-    User sender = new UserDAO(true).getUserbyID(message.getSender_id());
-    String sender_fullname = sender.getFullname();
-    User receiver = new UserDAO(true).getUserbyID(message.getReceiver_id());
-    String receiver_fullname = receiver.getFullname();
 %>
 <html>
 <head>
-    <title>Τα Μηνυματά Μου</title>
+    <title>Απάντηση</title>
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -66,23 +55,31 @@
 
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
-        <div id="msg-info">
-            <div id="msg-header">
-                <div id="msg-title">
-                    <%=message.getTitle()%><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <form method="get" action="SendMessage">
+                        <div class="form-group ">
+                            <input class="form-control" id="id" name="id" type="hidden" value="<%=message_id%>"/>
+                        </div>
+                        <div class="form-group ">
+                            <input class="form-control" id="type" name="type" type="hidden" value="<%=msg_type%>"/>
+                        </div>
+                        <div class="form-group ">
+                            <br>
+                            <label class="control-label " for="title">Τίτλος</label>
+                            <input class="form-control" id="title" name="title" type="text" placeholder="Τίτλος Μηνύματος" value="[Reply]: <%=message.getTitle()%>"/>
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label " for="message">Μήνυμα</label>
+                            <textarea class="form-control" cols="40" id="message" name="message" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button id="submit" name="submit" class="btn btn-primary">Αποστολή Μηνύματος</button>
+                        </div>
+                    </form>
                 </div>
-                <% if (msg_type.equals("rec")){%>
-                    <i><span>Αποστολέας:</span> <%=sender_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
-                <% } else if (msg_type.equals("send")){%>
-                    <i><span>Εστάλη στον:</span> <%=receiver_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
-                <% }%>
             </div>
-            <div id="msg-content">
-                <%=message.getMessage()%>
-            </div>
-
-            <br>
-            <a href="message_reply.jsp?id=<%=message_id%>&type=<%=msg_type%>" class="btn btn-primary" role="button">Απάντηση</a>
         </div>
     </div>
 

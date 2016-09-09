@@ -12,9 +12,10 @@ import java.util.List;
 
 public class MessageDAO {
 
-    private static final String SQL_GET_RECEIVED_MSGS = "SELECT * FROM messages WHERE receiver_id = (?)";
-    private static final String SQL_GET_SENT_MSGS = "SELECT * FROM messages WHERE sender_id = (?)";
+    private static final String SQL_GET_RECEIVED_MSGS = "SELECT * FROM messages WHERE receiver_id = (?) ORDER BY date_sent DESC";
+    private static final String SQL_GET_SENT_MSGS = "SELECT * FROM messages WHERE sender_id = (?) ORDER BY date_sent DESC";
     private static final String SQL_GET_MSG_BY_ID = "SELECT * FROM messages WHERE id = (?)";
+    private static final String SQL_SEND_REPLY = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent) VALUES (?, ?, ?, ?, ?)";
 
     private ConnectionFactory factory;
 
@@ -97,6 +98,30 @@ public class MessageDAO {
         } catch (SQLException ex) {
             System.out.println("ERRORI: " + ex.getMessage());
             return null;
+        }
+    }
+
+    public void sendReplyMessage(Message message) {
+        Integer sender_id = message.getSender_id();
+        Integer receiver_id = message.getReceiver_id();
+        String message_title = message.getTitle();
+        String message_content = message.getMessage();
+        Date date_sent = message.getDate();
+
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = null;
+            statement = DAOUtil.prepareStatement(connection, SQL_SEND_REPLY, true, sender_id, receiver_id, message_title, message_content, date_sent);
+
+            if (statement.executeUpdate() == 0)
+                throw new RuntimeException("Creating item failed, no rows affected.");
+
+            connection.close();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRORI: " + ex.getMessage());
+            throw new RuntimeException("Error at message reply");
         }
     }
 }

@@ -108,6 +108,15 @@
 <div class="maincontent-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
+
+        <% if (request.getAttribute("send-message-success") == "yes") { %>
+            <br>
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Το Μήνυμα σας στάλθηκε επιτυχώς!
+            </div>
+        <% } %>
+
         <div class="row">
             <br><h3>Τα Μηνύματα μου</h3><br>
         </div>
