@@ -78,9 +78,11 @@
                 </div>
 
                 <div class="col-sm-6">
+                    <% if (request.getSession().getAttribute("user")!=null){ %>
                     <div class="shopping-item">
-                        <a href="my_messages.jsp">Μηνύματα<i class="fa fa-envelope"></i><span class="product-count">0</span></a>
+                        <a href="my_messages.jsp">Νέα Μηνύματα<i class="fa fa-envelope"></i><span class="product-count">0</span></a>
                     </div>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -110,3 +112,46 @@
         </div>
     </div> <!-- End mainmenu area -->
 
+    <script src="javascript/jquery-1.10.2.js"></script>
+    <script src="javascript/jquery-ui.js"></script>
+
+    <%
+    // If user is logged in
+    if (request.getSession().getAttribute("user") !=null ) {
+        User sessionUser = (User) request.getSession().getAttribute("user");%>
+        <script>
+            (function(){
+                var messages = $('.product-count'),
+
+                poll = function() {
+                    console.log("Hey");
+                    jQuery.ajax({
+                        url: 'checkUserNewMessages',
+                        method: "GET",
+                        type: 'JSON',
+                        data : "&userid="+<%=sessionUser.getId()%>,// query parameters 1st
+
+                        success : function(response){
+                            if (response != 0){
+                                $('.shopping-item').css('background-color', '#377d70');
+                                $('.shopping-item a').css('color', '#222');
+                            }
+
+                            $(messages).text(response);
+                        },
+                        error : function(){
+                            console.log("ERROR at: checkUserNewMessages");
+                            clearInterval(pollInterval);
+                        }
+                    });
+                },
+
+                pollInterval = setInterval(function() {
+                    poll();
+                }, 60000);
+
+                poll();
+
+            })();
+        </script>
+    <%}%>

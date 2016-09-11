@@ -17,6 +17,7 @@ public class MessageDAO {
     private static final String SQL_GET_MSG_BY_ID = "SELECT * FROM messages WHERE id = (?)";
     private static final String SQL_SEND_REPLY = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE_ISREAD = "UPDATE messages SET is_read=1 WHERE id= ?";
+    private static final String SQL_GET_USER_NEW_MSGS = "SELECT COUNT(*) AS count FROM messages WHERE receiver_id = (?) AND is_read=0";
 
     private ConnectionFactory factory;
 
@@ -139,5 +140,31 @@ public class MessageDAO {
             System.out.println("ERRORI: " + ex.getMessage());
             throw new RuntimeException("Error at update is_read");
         }
+    }
+
+    public Integer getUserNewMessages(Integer user_id){
+        Integer counter = 0;
+
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_USER_NEW_MSGS, false, user_id);
+            ResultSet results = statement.executeQuery();
+
+            if(results.next())
+                counter = results.getInt("count");
+            else {
+                connection.close();
+                return null;
+            }
+
+            connection.close();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRORI: " + ex.getMessage());
+            throw new RuntimeException("Error at getUserNewMessages");
+        }
+
+        return counter;
     }
 }

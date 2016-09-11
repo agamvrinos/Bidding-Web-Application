@@ -26,7 +26,6 @@ public class validateUser extends HttpServlet {
         UserDAO dao = new UserDAO(true);
         dao.approveUser(request.getParameter("id"));
         response.sendRedirect("userprofile.jsp?id=" + request.getParameter("id"));
-        return;
     }
 
 }

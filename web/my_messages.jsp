@@ -155,14 +155,6 @@
             <div class="col-sm-9 content-container">
                 <div id = "received" class="active">
                     <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
                         <tbody>
                         <%
                         MessageDAO dao = new MessageDAO(true);
@@ -193,14 +185,6 @@
                 </div>
                 <div id = "sent" class="hide">
                     <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
                         <tbody>
                         <%
 
