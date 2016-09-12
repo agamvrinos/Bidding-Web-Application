@@ -110,7 +110,7 @@
                                     <% if (user.getValidated()==0){ %>
                                     <td><span style="color: red">Όχι</span>
                                         <% if (sessionUserRole == 0){ %>
-                                            <a href="/validateUser?id=<%=user.getId()%>" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Έγκριση Προφίλ</a>
+                                            <a href="ValidateUser?id=<%=user.getId()%>" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Έγκριση Προφίλ</a>
                                         <% } %>
                                     </td>
                                     <% }

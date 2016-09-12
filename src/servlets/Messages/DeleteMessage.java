@@ -1,4 +1,4 @@
-package servlets;
+package servlets.Messages;
 
 import dao.MessageDAO;
 import entities.User;
