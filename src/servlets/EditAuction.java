@@ -182,7 +182,7 @@ public class EditAuction extends HttpServlet {
         dao.updateItem(item, old_item);
 
         request.setAttribute("auction-edit-success","yes");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("myauctions.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("my_auctions.jsp");
         dispatcher.forward(request, response);
     }
 

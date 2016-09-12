@@ -31,7 +31,7 @@ public class DeleteAuction extends HttpServlet {
         if (!result)
             response.getWriter().println("Error at dao.deleteItem");
         else
-            response.sendRedirect("myauctions.jsp");
+            response.sendRedirect("my_auctions.jsp");
 
     }
 }

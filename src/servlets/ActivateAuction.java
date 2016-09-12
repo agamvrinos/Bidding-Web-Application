@@ -21,7 +21,7 @@ public class ActivateAuction extends HttpServlet {
         boolean result = dao.activateAuction(id);
 
         if (result)
-            response.sendRedirect("myauctions.jsp");
+            response.sendRedirect("my_auctions.jsp");
         else
             response.sendRedirect("FAILED");
     }

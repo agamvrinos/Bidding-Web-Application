@@ -200,7 +200,7 @@ public class createItem extends HttpServlet {
         dao.insertItem(item);
 
         request.setAttribute("auction-creation-success","yes");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("myauctions.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("my_auctions.jsp");
         dispatcher.forward(request, response);
     }
 
