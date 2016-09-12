@@ -12,12 +12,15 @@ import java.util.List;
 
 public class MessageDAO {
 
-    private static final String SQL_GET_RECEIVED_MSGS = "SELECT * FROM messages WHERE receiver_id = (?) ORDER BY date_sent DESC";
-    private static final String SQL_GET_SENT_MSGS = "SELECT * FROM messages WHERE sender_id = (?) ORDER BY date_sent DESC";
+    private static final String SQL_GET_RECEIVED_MSGS = "SELECT * FROM messages WHERE receiver_id = (?) AND receiver_deleted=0 ORDER BY date_sent DESC";
+    private static final String SQL_GET_SENT_MSGS = "SELECT * FROM messages WHERE sender_id = (?) AND sender_deleted=0 ORDER BY date_sent DESC";
     private static final String SQL_GET_MSG_BY_ID = "SELECT * FROM messages WHERE id = (?)";
     private static final String SQL_SEND_REPLY = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE_ISREAD = "UPDATE messages SET is_read=1 WHERE id= ?";
-    private static final String SQL_GET_USER_NEW_MSGS = "SELECT COUNT(*) AS count FROM messages WHERE receiver_id = (?) AND is_read=0";
+    private static final String SQL_GET_USER_NEW_MSGS = "SELECT COUNT(*) AS count FROM messages WHERE receiver_id = (?) AND is_read=0 AND receiver_deleted=0";
+    private static final String SQL_DELETE_SEND_MSG = "UPDATE messages SET sender_deleted=1 where id = (?)";
+    private static final String SQL_DELETE_REC_MSG = "UPDATE messages SET receiver_deleted=1 where id = (?)";
+    private static final String SQL_DELETE_MSG = "DELETE FROM messages WHERE id = (?) AND (sender_deleted=1 AND receiver_deleted=1)";
 
     private ConnectionFactory factory;
 
@@ -166,5 +169,36 @@ public class MessageDAO {
         }
 
         return counter;
+    }
+
+    public void deleteMessageOfUser(Integer message_id, Integer type){
+        // type = 0 -> Received
+        // type = 1 -> Sended
+
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement;
+
+            if (type == 0)  // Receiver case
+                statement = DAOUtil.prepareStatement(connection, SQL_DELETE_REC_MSG, false, message_id);
+            else if (type == 1) // Sender case
+                statement = DAOUtil.prepareStatement(connection, SQL_DELETE_SEND_MSG, false, message_id);
+            else
+                throw new RuntimeException("Wrong type value");
+
+            statement.executeUpdate();
+
+            // Clear message if deleted from both sides
+            statement = DAOUtil.prepareStatement(connection, SQL_DELETE_MSG, false, message_id);
+
+            statement.executeUpdate();
+
+            connection.close();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRORI: " + ex.getMessage());
+            throw new RuntimeException("Error at message delete");
+        }
+
     }
 }

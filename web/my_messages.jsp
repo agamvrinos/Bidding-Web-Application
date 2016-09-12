@@ -171,7 +171,7 @@
                         %>
                             <tr class='is_read-<%=msg.getIs_read()%>' >
                                 <td style="padding-top: 10px;">
-                                    <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    <a href="DeleteMessage?id=<%=msg.getId()%>&type=0" onclick="return confirm('Είστε σίγουροι για την διαγραφή?');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=sender_fullname%></td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=msg.getTitle()%></td>
@@ -196,9 +196,8 @@
 
                         %>
                             <tr data-href='message.jsp?id=<%=msg.getId()%>'>
-                                <td>
-                                    <input type="checkbox" id="checkbox4" value="Accept" >
-                                    <label for="checkbox4"></label>
+                                <td style="padding-top: 10px;">
+                                    <a href="DeleteMessage?id=<%=msg.getId()%>&type=1" onclick="return confirm('Είστε σίγουροι για την διαγραφή?');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=receiver_fullname%></td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=msg.getTitle()%></td>

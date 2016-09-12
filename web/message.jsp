@@ -39,8 +39,8 @@
     User receiver = new UserDAO(true).getUserbyID(message.getReceiver_id());
     String receiver_fullname = receiver.getFullname();
 
-    // Mark message as read
-    dao.updateIsRead(message_id);
+    if (msg_type.equals("rec"))   // Mark message as read
+        dao.updateIsRead(message_id);
 %>
 <html>
 <head>
