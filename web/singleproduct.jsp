@@ -1,5 +1,7 @@
 <%@ page import="entities.Item" %>
 <%@ page import="dao.ItemDAO" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% Item item = new ItemDAO(true).getItemByID(Integer.valueOf(request.getParameter("id")));
 
@@ -69,7 +71,6 @@
                                     <img src="img/product-thumb-1.jpg" alt="">
                                     <img src="img/product-thumb-2.jpg" alt="">
                                     <img src="img/product-thumb-3.jpg" alt="">
-                                    <img src="img/product-thumb-4.jpg" alt="">
                                 </div>
                             </div>
                         </div>
@@ -82,25 +83,38 @@
                                 <div class="auction-info">
                                     <div class="row">
                                         <div class="col-md-8 gap">
-                                            <span style="font-weight: bold;">Προσφορές: </span> 100
+                                            <span style="font-weight: bold;">Προσφορές: </span> <%=item.getTotal_offers()%>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-8 gap">
-                                            <span style="font-weight: bold;">Τιμή Αγοράς: </span> 300$
+                                            <%
+                                            Double buy_price = item.getBuy_price();
+                                            if (buy_price != 0.0){%>
+                                                <span style="font-weight: bold;">Τιμή Αγοράς: </span> <%=buy_price%>$
+                                            <%} else {%>
+                                                <span style="font-weight: bold;">Τιμή Αγοράς: </span> Δεν έχει οριστεί
+                                            <%}%>
+
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-8 gap">
-                                            <span style="font-weight: bold;">Τρέχουσα Προσφορά: </span> 12.0$
+                                            <span style="font-weight: bold;">Τρέχουσα Προσφορά: </span> <%=item.getCurrently()%>$
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-8 gap">
-                                            <span style="font-weight: bold;">Λήξη: </span> 15/03/2017 14:55
+                                            <%
+                                                Date end_t = item.getEnds();
+                                                SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+                                                String ended = end_format.format(end_t);
+                                            %>
+
+                                            <span style="font-weight: bold;">Λήξη: </span> <%=ended%>
                                         </div>
                                     </div>
 
@@ -116,7 +130,7 @@
 
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <span style="font-weight: bold;">Πωλητής: </span> <a href="#"> Yannis Smaragdakis</a>
+                                            <span style="font-weight: bold;">Πωλητής: </span> <a href="#"> <%=item.getSeller()%></a>
                                         </div>
                                     </div>
                                 </div>
@@ -143,11 +157,14 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <%--Buy Now Button--%>
-                                        <% if(item.getBuy_price()!=null){ %>
+                                        <%
+                                        if (buy_price != 0.0){%>
                                             <a href="#" class="btn btn-primary">Άμεση Αγορά</a>
-                                        <% } %>
+                                        <%}%>
                                     </div>
                                 </div>
+
+                                <br>
 
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
