@@ -706,7 +706,7 @@ form.cart {
     margin-bottom: 30px;
 }
 .product-tab {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #9c9c9c;
     list-style: outside none none;
     margin: 0 0 30px;
     padding: 0;
@@ -716,7 +716,7 @@ form.cart {
     display: inline-block;
 }
 .product-tab li.active {
-    background: none repeat scroll 0 0 #1abc9c;
+    background: none repeat scroll 0 0 #222;
 }
 .product-tab li.active a {
     color: #fff;
@@ -1063,4 +1063,13 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 #msg-content {
     text-align: justify;
     word-wrap: break-word;
+}
+
+.gap {
+    margin-bottom: 5px;
+}
+
+.auction-info {
+    background-color: #e0e0e0;
+    padding: 1em;
 }

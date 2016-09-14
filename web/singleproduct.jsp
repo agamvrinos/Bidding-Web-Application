@@ -49,58 +49,6 @@
     <%--<div class="zigzag-bottom"></div>--%>
     <div class="container">
         <div class="row">
-            <%--<div class="col-md-4">--%>
-                <%--<div class="single-sidebar">--%>
-                    <%--<h2 class="sidebar-title">Search Products</h2>--%>
-                    <%--<form action="">--%>
-                        <%--<input type="text" placeholder="Search products...">--%>
-                        <%--<input type="submit" value="Search">--%>
-                    <%--</form>--%>
-                <%--</div>--%>
-
-                <%--<div class="single-sidebar">--%>
-                    <%--<h2 class="sidebar-title">Products</h2>--%>
-                    <%--<div class="thubmnail-recent">--%>
-                        <%--<img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">--%>
-                        <%--<h2><a href="">Sony Smart TV - 2015</a></h2>--%>
-                        <%--<div class="product-sidebar-price">--%>
-                            <%--<ins>$700.00</ins> <del>$800.00</del>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="thubmnail-recent">--%>
-                        <%--<img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">--%>
-                        <%--<h2><a href="">Sony Smart TV - 2015</a></h2>--%>
-                        <%--<div class="product-sidebar-price">--%>
-                            <%--<ins>$700.00</ins> <del>$800.00</del>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="thubmnail-recent">--%>
-                        <%--<img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">--%>
-                        <%--<h2><a href="">Sony Smart TV - 2015</a></h2>--%>
-                        <%--<div class="product-sidebar-price">--%>
-                            <%--<ins>$700.00</ins> <del>$800.00</del>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="thubmnail-recent">--%>
-                        <%--<img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">--%>
-                        <%--<h2><a href="">Sony Smart TV - 2015</a></h2>--%>
-                        <%--<div class="product-sidebar-price">--%>
-                            <%--<ins>$700.00</ins> <del>$800.00</del>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-
-                <%--<div class="single-sidebar">--%>
-                    <%--<h2 class="sidebar-title">Recent Posts</h2>--%>
-                    <%--<ul>--%>
-                        <%--<li><a href="">Sony Smart TV - 2015</a></li>--%>
-                        <%--<li><a href="">Sony Smart TV - 2015</a></li>--%>
-                        <%--<li><a href="">Sony Smart TV - 2015</a></li>--%>
-                        <%--<li><a href="">Sony Smart TV - 2015</a></li>--%>
-                        <%--<li><a href="">Sony Smart TV - 2015</a></li>--%>
-                    <%--</ul>--%>
-                <%--</div>--%>
-            <%--</div>--%>
 
             <div class="col-md-12">
                 <div class="product-content-right">
@@ -129,49 +77,93 @@
                         <div class="col-sm-8">
                             <div class="product-inner">
                                 <h2 class="product-name"><%=item.getName()%></h2>
-                                <% if(item.getBuy_price()!=null){ %>
-                                <div class="product-inner-price">
-                                    <ins>$<%=item.getBuy_price()%></ins> <a href="#" class="btn btn-primary">ΑΜΕΣΗ ΑΓΟΡΑ</a>
+                                <hr>
+
+                                <div class="auction-info">
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Προσφορές: </span> 100
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Τιμή Αγοράς: </span> 300$
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Τρέχουσα Προσφορά: </span> 12.0$
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Λήξη: </span> 15/03/2017 14:55
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Κατηγορίες: </span>
+                                            <% for(int i=0; i<item.getCategories().size(); i++){%>
+                                                <%=item.getCategories().get(i)%>
+                                                <% if (i<item.getCategories().size()-1){%>,<%}%>
+                                            <%}%>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <span style="font-weight: bold;">Πωλητής: </span> <a href="#"> Yannis Smaragdakis</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <% } %>
 
-                                <form action="" class="cart">
-                                    <%--<div class="quantity">--%>
-                                        <%--<input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">--%>
-                                    <%--</div>--%>
-                                    <div class="col-sm-2">
-                                        <b>$<%=item.getCurrently()%></b>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input id="bid" name="bid" class="form-control input-md" type="text">
-                                    </div>
-                                    <button class="add_to_cart_button" type="submit">ΥΠΟΒΟΛΗ</button>
-                                </form>
+                                <br>
+                                <br>
 
-                                <div class="product-inner-category">
-                                    <p>Κατηγορίες:
-                                    <% for(int i=0; i<item.getCategories().size(); i++){%>
-                                    <%=item.getCategories().get(i)%>
-                                        <% if (i<item.getCategories().size()-1){%>
-                                        ,
-                                        <%}else{%>
-                                        .
-                                        <%}%>
-                                    <%}%>
-                                    </p>
+                                <%--Betting Field and Button--%>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><%=item.getCurrently()%>$</span>
+                                            <input id="bid" name="bid" type="text" class="form-control" placeholder="Υποβολή Προσφοράς">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="button">Υποβολή</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <%--Buy Now Button--%>
+                                        <% if(item.getBuy_price()!=null){ %>
+                                            <a href="#" class="btn btn-primary">Άμεση Αγορά</a>
+                                        <% } %>
+                                    </div>
                                 </div>
 
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
                                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Περιγραφή</a></li>
                                         <li role="presentation"><a href="#maps" id="gmaps" aria-controls="gmaps" role="tab" data-toggle="tab">Χάρτης</a></li>
+                                        <li role="presentation"><a href="#reviews" id="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Αξιολόγηση</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            <p><%=item.getDesc()%></p>
+                                            <p style="text-align: justify;"><%=item.getDesc()%></p>
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="maps">
                                             <div id="map"></div>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="reviews">
+
                                         </div>
                                     </div>
                                 </div>
