@@ -1,4 +1,4 @@
-package servlets;
+package support;
 
 import dao.UserDAO;
 

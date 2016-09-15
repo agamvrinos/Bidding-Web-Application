@@ -373,7 +373,26 @@ public class ItemDAO {
         }
     }
 
+    public boolean existsItem(Integer id){
 
+        try {
 
+            Connection connection = factory.getConnection();
 
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM, false, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next() ) {   // No auction found
+                System.out.println("no data");
+                connection.close();
+                return false;
+            }
+            connection.close();
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at existsItem");
+        }
+        return true;
+    }
 }

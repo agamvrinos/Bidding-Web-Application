@@ -102,6 +102,27 @@
             <hr>
             <h4>Αναζήτηση Δημοπρασίας</h4>
 
+            <% if (request.getAttribute("bought") == "yes") { %>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Λυπούμαστε! </strong>Το συγκεκριμένο προϊόν αγοράστηκε!
+                </div>
+            <% }%>
+
+            <% if (request.getAttribute("ended") == "yes") { %>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Λυπούμαστε! </strong>Η συγκεκριμένη δημοπρασία έχει λήξει!
+                </div>
+            <% }%>
+
+            <% if (request.getAttribute("success") == "yes") { %>
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Συγχαρητήρια! </strong>Η αγορά σας ολοκληρώθηκε!
+            </div>
+            <% }%>
+
             <div class="input-group col-xs-9 col-lg-9 col-md-9">
                 <input type="text" id="searchb" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
                 <span class="input-group-btn">
@@ -140,7 +161,7 @@
                             <table style="table-layout:fixed; word-wrap: break-word;" id="userlist-table" class="table table-hover table-striped table-condensed ">
                                 <tbody>
                                 <div id="title" style="font-size: 25px; text-decoration: underline; font-weight: 600;">
-                                    <a href="singleproduct.jsp?id=<%=auctions.get(i).getId()%>" style="color:#333333;"><%=auctions.get(i).getName()%></a>
+                                    <a href="singleproduct.jsp?id=<%=auctions.get(i).getId()%>&category=<%=category%>" style="color:#333333;"><%=auctions.get(i).getName()%></a>
                                 </div>
                                 <tr>
                                     <th>Κατηγορία/ες</th>

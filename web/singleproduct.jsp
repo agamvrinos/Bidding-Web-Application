@@ -3,14 +3,18 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% Item item = new ItemDAO(true).getItemByID(Integer.valueOf(request.getParameter("id")));
 
-//TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW
+<%--TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW--%>
+    <%
+        Integer auction_id = Integer.valueOf(request.getParameter("id"));
+        String chosen_category = request.getParameter("category");
 
-    if(item==null || item.getState()!=1) { //if not valid, error page
-        response.sendRedirect("index.jsp");
-        return;
-    }
+        Item item = new ItemDAO(true).getItemByID(auction_id);
+
+        if(item == null || item.getState()!=1) { //if not valid, error page
+            response.sendRedirect("index.jsp");
+            return;
+        }
 %>
 
 <html>
@@ -159,7 +163,7 @@
                                         <%--Buy Now Button--%>
                                         <%
                                         if (buy_price != 0.0){%>
-                                            <a href="#" class="btn btn-primary">Άμεση Αγορά</a>
+                                            <a href="BuyAuction?id=<%=auction_id%>&category=<%=chosen_category%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
                                         <%}%>
                                     </div>
                                 </div>
