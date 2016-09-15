@@ -62,8 +62,12 @@ public class BetOffer extends HttpServlet {
             return;
         }
 
-        //TODO: NOT DONE
-        //TODO: Check if bet is smaller than current
+        // If i get here, the bid is valid
+        //TODO: Call "BetAuction" method of ItemDAO and
+        //TODO: 1) Check if bid is smaller than current
+        //TODO: 2) Update Bid data structure in order to store info for the bidder
+        //TODO: 3) Update total_offers
+        //TODO: 4) Update current_bet
         response.getWriter().print("hahah");
     }
 
