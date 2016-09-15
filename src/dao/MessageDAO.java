@@ -201,4 +201,27 @@ public class MessageDAO {
         }
 
     }
+
+    // This function is used to send an auto message from the Seller to
+    // the user that bought the item or made the biggest bid
+    public void autoSuccessMessage (Integer sender_id, Integer receiver_id, Date date_sent){
+
+        String message_title = "Συγχαρητήρια για την αγορά";
+        String message_content = "Έχει δρομολογηθεί η διαδικασία αποστολής του Προϊόντος. Για " +
+                "οποιαδήποτε απορία επικοινωνήστε μαζί μας";
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_SEND_REPLY, true, sender_id, receiver_id, message_title, message_content, date_sent);
+
+            if (statement.executeUpdate() == 0)
+                throw new RuntimeException("Creating Auto Message Failed");
+
+            connection.close();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRORI: " + ex.getMessage());
+            throw new RuntimeException("Error at auto message");
+        }
+    }
 }

@@ -10,6 +10,8 @@ import java.util.*;
 
 public class ItemDAO {
 
+    private final Integer LOW_BET = -1;
+
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_DELETE_ITEM = "DELETE FROM items WHERE id = (?)";
@@ -26,6 +28,8 @@ public class ItemDAO {
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
             " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
 
+    private static final String SQL_UPDATE_OFFERS = "";
+    private static final String SQL_UPDATE_CURR_BID = "";
 
 
     private ConnectionFactory factory;
@@ -394,5 +398,20 @@ public class ItemDAO {
             throw new RuntimeException("Error at existsItem");
         }
         return true;
+    }
+
+    public Integer BetAuction(Integer id, Double bid_value){
+
+        Item item = getItemByID(id);
+
+        Integer current_offers = item.getTotal_offers();
+        Double current_bid = item.getCurrently();
+
+        // User should bit more than the current bid
+        if (bid_value < current_bid){
+            return LOW_BET;
+        }
+
+        return null;
     }
 }

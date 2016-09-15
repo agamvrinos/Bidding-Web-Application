@@ -10,6 +10,7 @@ public class UserDAO {
     private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SEARCH_USER = "SELECT * FROM users WHERE username = ? AND password = MD5(?) ";
     private static final String SQL_SEARCH_USER_BY_ID = "SELECT * FROM users WHERE id = ? ";
+    private static final String SQL_SEARCH_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ? ";
     private static final String SQL_EXISTS_USER = "SELECT 1 FROM users WHERE username = ?";
     private static final String SQL_GET_USER_LIST = "SELECT * FROM users";
     private static final String SQL_VALIDATE_USER = "UPDATE users SET validated=1 WHERE id= ?";
@@ -58,7 +59,6 @@ public class UserDAO {
     }
 
     public User getUser(String username, String password){
-
 
         try{
             Connection connection = factory.getConnection();
@@ -144,6 +144,37 @@ public class UserDAO {
         catch (SQLException e){
             System.err.println(e.getMessage());
             return null;
+        }
+    }
+
+    public User getUserbyName(String username){
+
+        try{
+
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_SEARCH_USER_BY_USERNAME, false, username);
+            ResultSet results = statement.executeQuery();
+
+            if(!results.next()) {
+                connection.close();
+                throw new RuntimeException("No results at getUserByName");
+            }
+            else{
+                User user = new User(results.getString("fullname"), results.getString("username"), null,
+                        results.getString("email"), results.getString("phone"), results.getString("country"), results.getString("city"),
+                        results.getString("address"), results.getString("afm"), results.getInt("role"));
+
+                user.setId(results.getInt("id"));
+                user.setValidated(results.getInt("validated"));
+
+                connection.close();
+                return user;
+            }
+
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+            throw new RuntimeException("ERROR at getUserByName");
         }
     }
 

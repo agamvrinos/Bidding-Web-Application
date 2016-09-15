@@ -53,16 +53,18 @@
 
 <div class="single-product-area">
     <%--<div class="zigzag-bottom"></div>--%>
+
     <div class="container">
         <div class="row">
 
             <div class="col-md-12">
+                <% if (request.getAttribute("wrong_input") == "yes") { %>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Προσοχή! </strong>Το πεδίο προσφοράς πρέπει να είναι αριθμός!
+                </div>
+                <% }%>
                 <div class="product-content-right">
-                    <%--<div class="product-breadcroumb">--%>
-                        <%--<a href="index.jsp">Αρχή</a>--%>
-                        <%--<a href="">Category Name</a>--%>
-                        <%--<a href="">Sony Smart TV - 2015</a>--%>
-                    <%--</div>--%>
 
                     <div class="row">
                         <div class="col-sm-4">
@@ -145,24 +147,29 @@
                                 <%--Betting Field and Button--%>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><%=item.getCurrently()%>$</span>
-                                            <input id="bid" name="bid" type="text" class="form-control" placeholder="Υποβολή Προσφοράς">
+                                        <form action="BetOffer" method="get">
+
+                                            <input type="hidden" name="id" value="<%=auction_id%>">
+                                            <input type="hidden" name="category" value="<%=chosen_category%>">
+
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><%=item.getCurrently()%>$</span>
+                                                <input id="bid" name="bid" type="text" class="form-control" value="0.0">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="button">Υποβολή</button>
+                                                <button id="register" name="register" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την Υποβολή Προσφοράς?');">Υποβολή</button>
                                             </span>
-                                        </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
 
                                 <br>
                                 <br>
 
+                                <%--Buy Now Button--%>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <%--Buy Now Button--%>
-                                        <%
-                                        if (buy_price != 0.0){%>
+                                        <%if (buy_price != 0.0){%>
                                             <a href="BuyAuction?id=<%=auction_id%>&category=<%=chosen_category%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
                                         <%}%>
                                     </div>
