@@ -28,8 +28,9 @@ public class ItemDAO {
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
             " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
 
-    private static final String SQL_UPDATE_OFFERS = "";
+    private static final String SQL_UPDATE_TOTAL_BIDS = "";
     private static final String SQL_UPDATE_CURR_BID = "";
+    private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
 
 
     private ConnectionFactory factory;
@@ -400,17 +401,36 @@ public class ItemDAO {
         return true;
     }
 
-    public Integer BetAuction(Integer id, Double bid_value){
+    public Integer BetAuction(Integer id, Double bid_value, String username){
 
         Item item = getItemByID(id);
 
         Integer current_offers = item.getTotal_offers();
         Double current_bid = item.getCurrently();
 
-        // User should bit more than the current bid
+        // User should bid more than the current bid
         if (bid_value < current_bid){
             return LOW_BET;
         }
+
+        Bid bid = new Bid(null, username, null, null, null, new Date(), bid_value);
+
+        try{
+
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_INSERT_NEW_BID, false, id, bid.getUsername(), bid.getTime(), bid.getAmount());
+
+            if(statement.executeUpdate()==0)
+                throw new SQLException();
+
+            connection.close();
+
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at BetAuction");
+        }
+
 
         return null;
     }

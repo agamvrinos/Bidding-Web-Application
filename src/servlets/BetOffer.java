@@ -1,6 +1,8 @@
 package servlets;
 
 import dao.ItemDAO;
+import dao.UserDAO;
+import entities.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -61,6 +63,11 @@ public class BetOffer extends HttpServlet {
             dispatcher2.forward(request, response);
             return;
         }
+
+        UserDAO udao = new UserDAO(true);
+        User bidder = (User) request.getSession().getAttribute("user");
+        bidder.getUsername();
+        //TODO: check if user is logged in
 
         // If i get here, the bid is valid
         //TODO: Call "BetAuction" method of ItemDAO and

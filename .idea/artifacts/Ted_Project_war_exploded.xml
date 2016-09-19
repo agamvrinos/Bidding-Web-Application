@@ -7,6 +7,38 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Ted_Project" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql-connector-java-5.1" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/el-api.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/jasper.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/ecj-4.5.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/jsp-api.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/catalina.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/jasper-el.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-api.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-jni.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/catalina-ha.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/servlet-api.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-dbcp.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-jdbc.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-util.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/catalina-ant.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-coyote.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/websocket-api.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/commons-io-2.5.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-i18n-es.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-i18n-fr.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-i18n-ja.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/annotations-api.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/catalina-tribes.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-util-scan.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/tomcat-websocket.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/commons-lang3-3.4.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/catalina-storeconfig.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/commons-io-2.5-javadoc.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/commons-fileupload-1.3.1.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/tomcat8/lib/commons-lang3-3.4-javadoc.jar" />
+        </element>
       </element>
     </root>
   </artifact>
