@@ -441,14 +441,12 @@ public class ItemDAO {
 
 
             connection.close();
+            return 0;
 
         }
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at BetAuction");
         }
-
-
-        return null;
     }
 }

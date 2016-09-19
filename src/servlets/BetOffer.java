@@ -74,7 +74,11 @@ public class BetOffer extends HttpServlet {
         }
 
         //place bid
-        dao.BetAuction(auction_id, bid, bidder.getUsername());
+        if (dao.BetAuction(auction_id, bid, bidder.getUsername()) == -1){
+            request.setAttribute("error-message","Το ποσό που προσφέρετε είναι μικρότερο από το ήδη υπάρχον.");
+            dispatcher2.forward(request, response);
+            return;
+        }
 
         //return to the same item page
         dispatcher2.forward(request, response);
