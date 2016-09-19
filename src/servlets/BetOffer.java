@@ -40,7 +40,7 @@ public class BetOffer extends HttpServlet {
 
         // This means the item has been bought
         if (!exists){
-            request.setAttribute("bought","yes");
+            request.setAttribute("error-message","Το αντικείμενο έχει πουληθεί σε κάποιον άλλον χρήστη.");
             dispatcher.forward(request, response);
             return;
         }
@@ -50,14 +50,14 @@ public class BetOffer extends HttpServlet {
         Date ends = dao.getItemByID(auction_id).getEnds();
 
         if (now.compareTo(ends) > 0){
-            request.setAttribute("ended","yes");
+            request.setAttribute("error-message","Η δημοπρασία έληξε!");
             dispatcher.forward(request, response);
             return;
         }
 
         // Check if bet is not numeric
         if (bid == null){
-            request.setAttribute("wrong_input","yes");
+            request.setAttribute("error-message","Το ποσό που προσφέρετε δεν είναι έγκυρο.");
             dispatcher2.forward(request, response);
             return;
         }
