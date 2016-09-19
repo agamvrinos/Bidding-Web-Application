@@ -1,44 +1,28 @@
-$( document ).ready(function(){
-    $(".se-pre-con").fadeOut("slow");
-    
-    // Register Popup
-    regdialog = $( "#regdialog-form" ).dialog({
-        autoOpen: false,
-        height: 600,
-        width: 600,
-        modal: true,
-        draggable: false,
-        resizable: false,
-        buttons: {
-            Ακυρωση: function() {
-                regdialog.dialog( "close" );
-            }
+
+function usernameAvailability() {
+    var userName = jQuery("#username").val();
+
+    jQuery.ajax({
+        url : "UsernameAvailability",
+        method: "GET",
+        type : "JSON",
+        data : "&username="+userName,// query parameters 1st
+        success : function(response){
+            $('#ajaxGetUserServletResponse').text(response);
+
         }
     });
+}
 
+function disableEndedAuction(auction_id) {
 
-    $( "#register_button" ).on( "click", function() {
-        regdialog.dialog( "open" );
-    });
-
-
-    // Login Popup
-    logdialog = $( "#logdialog-form" ).dialog({
-        autoOpen: false,
-        height: 370,
-        width: 300,
-        modal: true,
-        draggable: false,
-        resizable: false,
-        buttons: {
-            Ακυρωση: function() {
-                logdialog.dialog( "close" );
-            }
+    jQuery.ajax({
+        url : "DisableEndedAuction",
+        method: "GET",
+        type : "JSON",
+        data : "&id="+auction_id ,   // query parameters 1st
+        success : function(){
+            location.reload();
         }
     });
-    $( "#login_button" ).on( "click", function() {
-        logdialog.dialog( "open" );
-    });
-
-
-});
+}

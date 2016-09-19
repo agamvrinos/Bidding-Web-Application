@@ -13,6 +13,7 @@ public class User {
     private String address;
     private String afm;
     private Integer role;
+    private Integer validated;
 
 
     public User (String fullname, String username, String password, String email, String phone,
@@ -116,5 +117,13 @@ public class User {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+
+    public Integer getValidated() {
+        return validated;
+    }
+
+    public void setValidated(Integer validated) {
+        this.validated = validated;
     }
 }

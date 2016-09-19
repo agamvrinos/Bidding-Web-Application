@@ -74,7 +74,7 @@ body { font-family: 'Titillium Web', sans-serif; }
     text-align: center;
 }
 
-.mainmenu-area {background: none repeat scroll 0 0 #1abc9c;
+.mainmenu-area {background: none repeat scroll 0 0 #2fa08a;
 font-family: "Roboto Condensed",sans-serif;
 text-transform: uppercase;
 width: 100%;
@@ -91,7 +91,7 @@ z-index: 999;}
 }
 .logo h1 a:hover {text-decoration: none;opacity: .7}
 .logo h1 a span {
-    color: #1abc9c;
+    color: #377d70;
 }
 .shopping-item {
     border: 1px solid #ddd;
@@ -165,7 +165,7 @@ z-index: 999;}
 .slide-text {display: table-cell;vertical-align: middle}
 
 .zigzag-bottom {
-background: none repeat scroll 0 0 #1abc9c;
+background: none repeat scroll 0 0 #2fa08a;
 bottom: -80px;
 height: 165px;
 left: -5%;
@@ -230,13 +230,13 @@ z-index: 9;
 
 
 .promo-area {
-  background: none repeat scroll 0 0 #1abc9c;
+  background: none repeat scroll 0 0 #2fa08a;
   color: #fff;
   padding: 77px 0 200px;
 }
 
 .brands-area {
-  background: none repeat scroll 0 0 #1abc9c;
+  background: none repeat scroll 0 0 #2fa08a;
   color: #fff;
   padding: 0px 0 200px;
 }
@@ -594,7 +594,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     padding: 10px;
 }
 input[type="submit"], button[type=submit] {
-    background: none repeat scroll 0 0 #1abc9c;
+    background: none repeat scroll 0 0 #377d70;
     border: medium none;
     color: #fff;
     padding: 11px 20px;
@@ -681,6 +681,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     font-weight: 700;
     margin-right: 10px;
     text-decoration: none;
+    font-size: large;
 }
 .quantity {
     float: left;
@@ -705,7 +706,7 @@ form.cart {
     margin-bottom: 30px;
 }
 .product-tab {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #9c9c9c;
     list-style: outside none none;
     margin: 0 0 30px;
     padding: 0;
@@ -715,7 +716,7 @@ form.cart {
     display: inline-block;
 }
 .product-tab li.active {
-    background: none repeat scroll 0 0 #1abc9c;
+    background: none repeat scroll 0 0 #222;
 }
 .product-tab li.active a {
     color: #fff;
@@ -1002,4 +1003,73 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 
 .pagination > li > a, .pagination > li > span {
   color: #1abc9c;
+}
+
+.user-row {
+    margin-bottom: 14px;
+}
+
+.user-row:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-user {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
+}
+
+.dropdown-user:hover {
+    cursor: pointer;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:20px;
+}
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}
+
+#msg-info {
+    border: 1px solid #d4d4d4;
+    background-color: #f5f5f5;
+    padding: 4em;
+    margin: 2em;
+}
+
+#msg-header #msg-title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#msg-header span {
+    color: #266357;
+}
+
+#msg-content {
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+.gap {
+    margin-bottom: 5px;
+}
+
+.auction-info {
+    background-color: #e0e0e0;
+    padding: 1em;
 }
