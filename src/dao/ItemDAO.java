@@ -28,8 +28,8 @@ public class ItemDAO {
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
             " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
 
-    private static final String SQL_UPDATE_TOTAL_BIDS = "";
-    private static final String SQL_UPDATE_CURR_BID = "";
+    private static final String SQL_GET_TOTAL_BIDS = "SELECT total_offers FROM items WHERE id = (?)";
+    private static final String SQL_UPDATE_ITEM_BIDS = "UPDATE items SET total_offers = (?), currently = (?) WHERE id = (?)";
     private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
 
 
@@ -418,10 +418,27 @@ public class ItemDAO {
         try{
 
             Connection connection = factory.getConnection();
+
+            //insert new bid
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_INSERT_NEW_BID, false, id, bid.getUsername(), bid.getTime(), bid.getAmount());
 
             if(statement.executeUpdate()==0)
                 throw new SQLException();
+
+            //get total offers
+            statement = DAOUtil.prepareStatement(connection, SQL_GET_TOTAL_BIDS, false, id);
+            ResultSet result = statement.executeQuery();
+
+            result.next();
+            Integer total = result.getInt("total_offers");
+            total++;
+
+            //update total_offers and current bid
+            statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_ITEM_BIDS, false, total, bid_value, id);
+
+            if(statement.executeUpdate()==0)
+                throw new SQLException();
+
 
             connection.close();
 

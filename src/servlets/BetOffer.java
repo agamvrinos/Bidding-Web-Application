@@ -34,6 +34,7 @@ public class BetOffer extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("auctionsBrowse.jsp?category=" + chosen_category);
         RequestDispatcher dispatcher2 = request.getRequestDispatcher("singleproduct.jsp?id=" + auction_id + "&" + chosen_category);
+        RequestDispatcher dispatcher3 = request.getRequestDispatcher("login.jsp");
 
         ItemDAO dao = new ItemDAO(true);
 
@@ -66,16 +67,18 @@ public class BetOffer extends HttpServlet {
 
         UserDAO udao = new UserDAO(true);
         User bidder = (User) request.getSession().getAttribute("user");
-        bidder.getUsername();
-        //TODO: check if user is logged in
+        if (bidder == null){
+            request.setAttribute("error-message","Πρέπει να είστε συνδεδεμένος για να υποβάλετε προσφορά.");
+            dispatcher3.forward(request, response);
+            return;
+        }
 
-        // If i get here, the bid is valid
-        //TODO: Call "BetAuction" method of ItemDAO and
-        //TODO: 1) Check if bid is smaller than current
-        //TODO: 2) Update Bid data structure in order to store info for the bidder
-        //TODO: 3) Update total_offers
-        //TODO: 4) Update current_bet
-        response.getWriter().print("hahah");
+        //place bid
+        dao.BetAuction(auction_id, bid, bidder.getUsername());
+
+        //return to the same item page
+        dispatcher2.forward(request, response);
+        return;
     }
 
     private Double isNumeric(String str)
