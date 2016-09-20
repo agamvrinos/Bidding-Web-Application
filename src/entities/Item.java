@@ -12,7 +12,7 @@ public class Item {
     private String name;
     private List<String> categories;
     private String currently;
-    private Double buy_price;
+    private String buy_price;
     private String first_bid;
     private Integer total_offers;
 
@@ -30,7 +30,7 @@ public class Item {
 
     //TODO: I changed Dates from Date to String in order to parse it
     //TODO: Need to change the String type of seller and make it of type Seller
-    public Item(Integer id, String name, String currently, String first_bid, Double buy_price, String country, Location location, String creation, String starts, String ends, String seller, String desc, List<String> categories, List<Bid> bids, Integer state, String image, Integer total_offers) {
+    public Item(Integer id, String name, String currently, String first_bid, String buy_price, String country, Location location, String creation, String starts, String ends, String seller, String desc, List<String> categories, List<Bid> bids, Integer state, String image, Integer total_offers) {
         this.id = id;
         this.name = name;
         this.currently = currently;
@@ -86,10 +86,10 @@ public class Item {
     }
 
     @XmlElement(name = "Buy_Price")
-    public Double getBuy_price() {
+    public String getBuy_price() {
         return buy_price;
     }
-    public void setBuy_price(Double buy_price) {
+    public void setBuy_price(String buy_price) {
         this.buy_price = buy_price;
     }
 

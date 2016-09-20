@@ -6,6 +6,7 @@ import entities.Location;
 import entities.Message;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 
@@ -82,7 +83,13 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, new Location(location, latitude, longitude), creation, starts, ends, seller, description, categories, null, state, image, total_offers);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+                String creation_s = sdf.format(creation);
+                String starts_s = sdf.format(starts);
+                String ends_s = sdf.format(ends);
+
+                Item item = new Item(id, title, current.toString(), first_bid.toString(), buy_price.toString(), country, new Location(location, latitude, longitude), creation_s, starts_s, ends_s, seller, description, categories, null, state, image, total_offers);
 
                 userAuctions.add(item);
             }
@@ -142,7 +149,13 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, new Location(location, latitude, longitude), creation, starts, ends, seller, description, categories, null, state, image, total_offers);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+                String creation_s = sdf.format(creation);
+                String starts_s = sdf.format(starts);
+                String ends_s = sdf.format(ends);
+
+                Item item = new Item(id, title, current.toString(), first_bid.toString(), buy_price.toString(), country, new Location(location, latitude, longitude), creation_s, starts_s, ends_s, seller, description, categories, null, state, image, total_offers);
 
                 auctions.add(item);
             }
@@ -314,9 +327,27 @@ public class ItemDAO {
 
             if(result.next()){
 
-                Item item = new Item(id, result.getString("name"), result.getDouble("currently"), result.getDouble("first_bid"),
-                        result.getDouble("buy_price"), result.getString("country"), new Location(result.getString("location"), result.getDouble("latitude"), result.getDouble("longitude")), result.getDate("creation"),
-                        result.getDate("starts"), result.getDate("ends"), result.getString("seller"), result.getString("description"),
+                Double current = result.getDouble("currently");
+                Double buy_price = DAOUtil.getDouble(result, "buy_price");
+                Double first_bid = result.getDouble("first_bid");
+                Date creation = result.getTimestamp("creation");
+                Date starts = result.getTimestamp("starts");
+                Date ends = result.getTimestamp("ends");
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+                String creation_s = sdf.format(creation);
+                String starts_s = sdf.format(starts);
+                String ends_s = sdf.format(ends);
+
+                String buy_pr = "";
+
+                if (buy_price != null)
+                    buy_pr = buy_price.toString();
+
+                Item item = new Item(id, result.getString("name"), current.toString(), first_bid.toString(),
+                        buy_pr, result.getString("country"), new Location(result.getString("location"), result.getDouble("latitude"), result.getDouble("longitude")), creation_s,
+                        starts_s, ends_s, result.getString("seller"), result.getString("description"),
                         null, getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));
 
                 statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
@@ -406,10 +437,12 @@ public class ItemDAO {
         Item item = getItemByID(id);
 
         Integer current_offers = item.getTotal_offers();
-        Double current_bid = item.getCurrently();
+        String current_bid = item.getCurrently();
+
+        Double current = Double.valueOf(current_bid);
 
         // User should bid more than the current bid
-        if (bid_value < current_bid){
+        if (bid_value < current){
             return LOW_BET;
         }
 
