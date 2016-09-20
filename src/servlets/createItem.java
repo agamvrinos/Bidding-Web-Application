@@ -2,7 +2,6 @@ package servlets;
 
 import dao.ItemDAO;
 import entities.Item;
-import entities.Location;
 import entities.User;
 import support.ImageValidator;
 
@@ -147,8 +146,6 @@ public class createItem extends HttpServlet {
         System.out.println("buyout: " + buyout);
         System.out.println("country: " + country);
         System.out.println("location: " + location);
-        System.out.println("latitude: " + latitude);
-        System.out.println("longitude: " + longitude);
         System.out.println("date: " + date);
         System.out.println("desc: " + desc);
 
@@ -177,11 +174,9 @@ public class createItem extends HttpServlet {
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        Date datetime2;
-        String datetime;
+        Date datetime;
         try {
-            datetime2 = sdf.parse(date);
-            datetime = sdf.format(datetime2);
+            datetime = sdf.parse(date);
         }
         catch (ParseException ex){
             //TODO: Den xreiazetai me to new calendar mallon
@@ -197,9 +192,9 @@ public class createItem extends HttpServlet {
             cat.add(temp);
         }
 
-        Date now = new Date();
-        String now_s = sdf.format(now);
-        Item item = new Item(null, title, first_bid, first_bid, buyout, country, new Location(location,latitude_number,longitude_number), now_s, null, datetime, user.getUsername(), desc, cat, null, 0, image, 0);
+
+        Item item = new Item(null, title, first_bid_number, first_bid_number, buyout_number, country, location,
+                latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, null, 0, image, 0);
 
         ItemDAO dao = new ItemDAO(true);
         dao.insertItem(item);

@@ -2,7 +2,6 @@ package servlets;
 
 import dao.ItemDAO;
 import entities.Item;
-import entities.Location;
 import entities.User;
 import support.ImageValidator;
 
@@ -158,11 +157,9 @@ public class EditAuction extends HttpServlet {
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        Date datetime2;
-        String datetime;
+        Date datetime;
         try {
-            datetime2 = sdf.parse(date);
-            datetime = sdf.format(datetime2);
+            datetime = sdf.parse(date);
         }
         catch (ParseException ex){
             request.setAttribute("item-creation-error","Κάτι πήγε στραβά με την ημερομηνία που συμπληρώσατε! Προσπαθήστε ξανά!");
@@ -177,10 +174,9 @@ public class EditAuction extends HttpServlet {
             cat.add(temp);
         }
 
-        Date now = new Date();
-        String now_s = sdf.format(now);
 
-        Item item = new Item(Integer.valueOf(id), title, first_bid, first_bid, buyout, country, new Location(location, latitude_number, longitude_number), now_s, null, datetime, user.getUsername(), desc, cat, old_item.getBids(), old_item.getState(), image, old_item.getTotal_offers());
+        Item item = new Item(Integer.valueOf(id), title, first_bid_number, first_bid_number, buyout_number, country, location,
+                latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, old_item.getBids(), old_item.getState(), image, old_item.getTotal_offers());
 
         // Update item values
         dao.updateItem(item, old_item);

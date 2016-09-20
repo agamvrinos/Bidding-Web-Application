@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,22 +46,10 @@ public class BuyAuction extends HttpServlet {
         }
 
         // Check if in the meantime the auction has ended
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        Date now = new Date();
+        Date ends = dao.getItemByID(auction_id).getEnds();
 
-        String now = sdf.format(new Date());
-        String ends = dao.getItemByID(auction_id).getEnds();
-
-        Date now_d;
-        Date end_d;
-        try {
-            now_d = sdf.parse(now);
-            end_d = sdf.parse(ends);
-        }
-        catch (ParseException ex){
-            throw new RuntimeException("Error at date parsing");
-        }
-
-        if (now_d.compareTo(end_d) > 0){
+        if (now.compareTo(ends) > 0){
             request.setAttribute("ended","yes");
             dispatcher.forward(request, response);
             return;
@@ -79,7 +66,7 @@ public class BuyAuction extends HttpServlet {
         Integer buyer_id = buyer.getId();
         MessageDAO mdao = new MessageDAO(true);
 
-        mdao.autoSuccessMessage(seller_id, buyer_id, now_d);
+        mdao.autoSuccessMessage(seller_id, buyer_id, now);
 
         // 2) Delete/Buy Item
         dao.deleteItem(auction_id);
