@@ -1,35 +1,36 @@
 package entities;
 
-import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.*;
 
+@XmlType(propOrder = {"id", "name", "categories", "currently", "buy_price", "first_bid", "total_offers",
+        "location", "country", "starts", "ends", "seller", "desc"})
+@XmlRootElement( name = "Item" )
 public class Item {
 
     private Integer id;
     private String name;
-    private Double currently;
-    private Double first_bid;
+    private List<String> categories;
+    private String currently;
     private Double buy_price;
+    private String first_bid;
+    private Integer total_offers;
+
+    private Location location;
     private String country;
-    private String location;
-    private Double latitude;
-    private Double longitude;
-    private Date creation;
-    private Date starts;
-    private Date ends;
+    private String starts;
+    private String ends;
     private String seller;
     private String desc;
-    private List<String> categories;
+
+    private String creation;
     private List<Bid> bids;
     private Integer state;
     private String image;
-    private Integer total_offers;
 
-
-    public Item(Integer id, String name, Double currently, Double first_bid, Double buy_price, String country,
-                String location, Double latitude, Double longitude, Date creation, Date starts, Date ends,
-                String seller, String desc, List<String> categories, List<Bid> bids, Integer state, String image, Integer total_offers) {
-
+    //TODO: I changed Dates from Date to String in order to parse it
+    //TODO: Need to change the String type of seller and make it of type Seller
+    public Item(Integer id, String name, String currently, String first_bid, Double buy_price, String country, Location location, String creation, String starts, String ends, String seller, String desc, List<String> categories, List<Bid> bids, Integer state, String image, Integer total_offers) {
         this.id = id;
         this.name = name;
         this.currently = currently;
@@ -37,8 +38,6 @@ public class Item {
         this.buy_price = buy_price;
         this.country = country;
         this.location = location;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.creation = creation;
         this.starts = starts;
         this.ends = ends;
@@ -51,126 +50,66 @@ public class Item {
         this.total_offers = total_offers;
     }
 
+    public Item() {
+    }
+
+    @XmlAttribute(name = "ItemID", required = true)
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @XmlElement(name = "Name")
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Double getCurrently() {
-        return currently;
-    }
-
-    public void setCurrently(Double currently) {
-        this.currently = currently;
-    }
-
-    public Double getFirst_bid() {
-        return first_bid;
-    }
-
-    public void setFirst_bid(Double first_bid) {
-        this.first_bid = first_bid;
-    }
-
-    public Double getBuy_price() {
-        return buy_price;
-    }
-
-    public void setBuy_price(Double buy_price) {
-        this.buy_price = buy_price;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Date getCreation() {
-        return creation;
-    }
-
-    public void setCreation(Date creation) {
-        this.creation = creation;
-    }
-
-    public Date getStarts() {
-        return starts;
-    }
-
-    public void setStarts(Date starts) {
-        this.starts = starts;
-    }
-
-    public Date getEnds() {
-        return ends;
-    }
-
-    public void setEnds(Date ends) {
-        this.ends = ends;
-    }
-
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
+    @XmlElement(name = "Category")
     public List<String> getCategories() {
         return categories;
     }
-
     public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
+    @XmlElement(name = "Currently")
+    public String getCurrently() {
+        return currently;
+    }
+    public void setCurrently(String currently) {
+        this.currently = currently;
+    }
+
+    @XmlElement(name = "Buy_Price")
+    public Double getBuy_price() {
+        return buy_price;
+    }
+    public void setBuy_price(Double buy_price) {
+        this.buy_price = buy_price;
+    }
+
+    @XmlElement(name = "First_Bid")
+    public String getFirst_bid() {
+        return first_bid;
+    }
+    public void setFirst_bid(String first_bid) {
+        this.first_bid = first_bid;
+    }
+
+    @XmlElement(name = "Number_of_Bids")
+    public Integer getTotal_offers() {
+        return total_offers;
+    }
+    public void setTotal_offers(Integer total_offers) {
+        this.total_offers = total_offers;
+    }
+
+    @XmlTransient
     public List<Bid> getBids() {
         return bids;
     }
@@ -179,7 +118,64 @@ public class Item {
         this.bids = bids;
     }
 
+    @XmlElement(name = "Location")
+    public Location getLocation() {
+        return location;
+    }
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
+    @XmlElement(name = "Country")
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @XmlTransient
+    public String getCreation() {
+        return creation;
+    }
+
+    public void setCreation(String creation) {
+        this.creation = creation;
+    }
+
+    @XmlElement(name = "Started")
+    public String getStarts() {
+        return starts;
+    }
+    public void setStarts(String starts) {
+        this.starts = starts;
+    }
+
+    @XmlElement(name = "Ends")
+    public String getEnds() {
+        return ends;
+    }
+    public void setEnds(String ends) {
+        this.ends = ends;
+    }
+
+    @XmlElement(name = "Seller")
+    public String getSeller() {
+        return seller;
+    }
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    @XmlElement(name = "Description")
+    public String getDesc() {
+        return desc;
+    }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    @XmlTransient
     public Integer getState() {
         return state;
     }
@@ -188,6 +184,7 @@ public class Item {
         this.state = state;
     }
 
+    @XmlTransient
     public String getImage() {
         return image;
     }
@@ -195,12 +192,5 @@ public class Item {
     public void setImage(String image) {
         this.image = image;
     }
-
-    public Integer getTotal_offers() {
-        return total_offers;
-    }
-
-    public void setTotal_offers(Integer total_offers) {
-        this.total_offers = total_offers;
-    }
 }
+

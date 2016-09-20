@@ -2,6 +2,7 @@ package servlets;
 
 import dao.ItemDAO;
 import entities.Item;
+import entities.Location;
 import entities.User;
 import support.ImageValidator;
 
@@ -175,8 +176,7 @@ public class EditAuction extends HttpServlet {
         }
 
 
-        Item item = new Item(Integer.valueOf(id), title, first_bid_number, first_bid_number, buyout_number, country, location,
-                latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, old_item.getBids(), old_item.getState(), image, old_item.getTotal_offers());
+        Item item = new Item(Integer.valueOf(id), title, first_bid_number, first_bid_number, buyout_number, country, new Location(location, latitude_number, longitude_number), new Date(), null, datetime, user.getUsername(), desc, cat, old_item.getBids(), old_item.getState(), image, old_item.getTotal_offers());
 
         // Update item values
         dao.updateItem(item, old_item);

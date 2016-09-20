@@ -330,7 +330,7 @@
     $(document).ready(function(){
         $("#gmaps").on('shown.bs.tab', function() {
             var mapProp = {
-                center:new google.maps.LatLng(<%=item.getLatitude()%>,<%=item.getLongitude()%>),
+                center:new google.maps.LatLng(<%=item.getLocation().getLatitude()%>,<%=item.getLocation().getLongitude()%>),
                 zoom:7,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };

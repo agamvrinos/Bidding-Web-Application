@@ -2,6 +2,7 @@ package dao;
 
 import entities.Bid;
 import entities.Item;
+import entities.Location;
 import entities.Message;
 
 import java.sql.*;
@@ -81,7 +82,7 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image, total_offers);
+                Item item = new Item(id, title, current, first_bid, buy_price, country, new Location(location, latitude, longitude), creation, starts, ends, seller, description, categories, null, state, image, total_offers);
 
                 userAuctions.add(item);
             }
@@ -141,7 +142,7 @@ public class ItemDAO {
                     categories.add(results2.getString("category"));
                 }
 
-                Item item = new Item(id, title, current, first_bid, buy_price, country, location, latitude, longitude, creation, starts, ends, seller, description, categories, null, state, image, total_offers);
+                Item item = new Item(id, title, current, first_bid, buy_price, country, new Location(location, latitude, longitude), creation, starts, ends, seller, description, categories, null, state, image, total_offers);
 
                 auctions.add(item);
             }
@@ -185,8 +186,8 @@ public class ItemDAO {
                 item.setImage(null);
 
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_ADD_NEW_ITEM, true, item.getName(),
-                    item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
-                    item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
+                    item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation().getLocation(),
+                    item.getLocation().getLatitude(), item.getLocation().getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
                     item.getDesc(), item.getImage());
 
             if (statement.executeUpdate()==0)
@@ -217,8 +218,8 @@ public class ItemDAO {
                 item.setImage(null);
 
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_ITEM, true, item.getName(),
-                    item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
-                    item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
+                    item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation().getLocation(),
+                    item.getLocation().getLatitude(), item.getLocation().getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
                     item.getDesc(), item.getImage(), item.getTotal_offers(), item.getId());
 
             Integer id = item.getId();
@@ -314,8 +315,7 @@ public class ItemDAO {
             if(result.next()){
 
                 Item item = new Item(id, result.getString("name"), result.getDouble("currently"), result.getDouble("first_bid"),
-                        result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
-                        result.getDouble("latitude"), result.getDouble("longitude"), result.getDate("creation"),
+                        result.getDouble("buy_price"), result.getString("country"), new Location(result.getString("location"), result.getDouble("latitude"), result.getDouble("longitude")), result.getDate("creation"),
                         result.getDate("starts"), result.getDate("ends"), result.getString("seller"), result.getString("description"),
                         null, getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));
 
