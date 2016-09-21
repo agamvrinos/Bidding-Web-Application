@@ -413,7 +413,7 @@ public class ItemDAO {
             return LOW_BET;
         }
 
-        Bid bid = new Bid(null, username, null, null, new Date(), bid_value);
+        Bid bid = new Bid(null, username, null, null, null, new Date(), bid_value);
 
         try{
 
@@ -484,5 +484,9 @@ public class ItemDAO {
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at getSearchResults");
         }
+    }
+
+    public void loadXmlEntities(){
+
     }
 }
