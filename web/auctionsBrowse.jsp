@@ -124,10 +124,18 @@
             <% }%>
 
             <div class="input-group col-xs-9 col-lg-9 col-md-9">
-                <input type="text" id="searchb" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
-                <span class="input-group-btn">
-                    <input type="submit" value="Αναζήτηση" class="form-control" style="line-height: 1px; text-transform: capitalize;">
-                </span>
+                <form id="search" method="get" action="searchResults.jsp">
+                    <input type="text" id="value" name="value" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
+                    <select form="search" name="type">
+                        <option value="name">Τίτλος</option>
+                        <option value="category">Κατηγορία</option>
+                        <option value="description">Περιγραφή</option>
+                        <option value="price">Τιμή</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <input type="submit" value="Αναζήτηση" class="form-control" style="line-height: 1px; text-transform: capitalize;">
+                    </span>
+                </form>
             </div>
             <hr>
             </br>

@@ -31,7 +31,11 @@ public class ItemDAO {
     private static final String SQL_GET_TOTAL_BIDS = "SELECT total_offers FROM items WHERE id = (?)";
     private static final String SQL_UPDATE_ITEM_BIDS = "UPDATE items SET total_offers = (?), currently = (?) WHERE id = (?)";
     private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
-
+    private static final String SQL_SEARCH_ITEMS_BY_NAME = "SELECT id FROM items WHERE name LIKE '%?%'";
+    private static final String SQL_SEARCH_ITEMS_BY_CATEGORY = "SELECT DISTINCT id FROM item_categories WHERE category LIKE '%?%'";
+    private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT id FROM items WHERE description LIKE '%?%'";
+    private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT id FROM items WHERE currently < ?";
+    private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "";
 
     private ConnectionFactory factory;
 
@@ -443,6 +447,42 @@ public class ItemDAO {
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at BetAuction");
+        }
+    }
+
+    public List<Item> getSearchResults(String value, String type){
+        List<Item> items = new ArrayList<Item>();
+
+        try{
+            Connection connection = factory.getConnection();
+            PreparedStatement statement;
+
+            if(type=="name")
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false, value);
+            else if (type=="category")
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false, value);
+            else if(type=="description")
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false, value);
+            else if (type=="price")
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_PRICE, false, value);
+            else
+                return items;
+
+            //execute query
+            ResultSet result = statement.executeQuery();
+
+            //get a list of items
+            while (result.next()) {
+                Item item = getItemByID(Integer.parseInt(result.getString("id")));
+                items.add(item);
+            }
+
+            return items;
+
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at getSearchResults");
         }
     }
 }
