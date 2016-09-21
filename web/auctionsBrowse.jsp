@@ -38,7 +38,6 @@
 
                 clearInterval(timer);
                 document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
-//                disableEndedAuction(auction_id);
 
                 return;
             }
@@ -131,6 +130,7 @@
                         <option value="category">Κατηγορία</option>
                         <option value="description">Περιγραφή</option>
                         <option value="price">Τιμή</option>
+                        <option value="location">Τοποθεσία</option>
                     </select>
                     <span class="input-group-btn">
                         <input type="submit" value="Αναζήτηση" class="form-control" style="line-height: 1px; text-transform: capitalize;">

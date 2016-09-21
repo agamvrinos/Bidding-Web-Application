@@ -1,7 +1,60 @@
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="entities.Item" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<script>
+
+
+    function CountDownTimer(dt, class_name, auction_id)
+    {
+        var end = new Date(dt);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+
+            if (String(hours).length < 2){
+                hours = 0 + String(hours);
+            }
+            if (String(minutes).length < 2){
+                minutes = 0 + String(minutes);
+            }
+            if (String(seconds).length < 2){
+                seconds = 0 + String(seconds);
+            }
+
+            var datestr = days + ' days ' +
+                    hours + ' hrs ' +
+                    minutes + ' mins ' +
+                    seconds + ' secs';
+
+            document.getElementsByClassName(class_name)[0].innerHTML = datestr;
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    }
+</script>
 <html>
 <head>
     <title>Αποτελέσματα Αναζήτησης Δημοπρασιών για </title>
@@ -31,8 +84,100 @@
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
+
+             <hr style="border-top: 1px solid #1abc9c">
+
         <% ItemDAO dao = new ItemDAO(true);
-        %>
+            List<Item> auctions = dao.getSearchResults(request.getParameter("value"), request.getParameter("type"));
+            for (int i = 0; i < auctions.size(); i++) {%>
+
+            <div class="row" >
+
+                <%--Image Section--%>
+                <div class="col-sm-3 col-xs-3 col-md-3">
+                    <%String image = auctions.get(i).getImage();
+
+                        // If there is an image uploaded for this item
+                        if (image != null) {%>
+                    <img class="img-responsive center-block" src="files/<%=image%>" style="height: 200px; width: 200px">
+                    <%}
+                    // Else use the default image
+                    else {%>
+                    <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
+                    <%}%>
+                </div>
+
+                <%--Info Section--%>
+                <div class="col-sm-9 col-xs-9 col-md-9">
+
+                    <table style="table-layout:fixed; word-wrap: break-word;" id="userlist-table" class="table table-hover table-striped table-condensed ">
+                        <tbody>
+                        <div id="title" style="font-size: 25px; text-decoration: underline; font-weight: 600;">
+                            <a href="singleproduct.jsp?id=<%=auctions.get(i).getId()%>" style="color:#333333;"><%=auctions.get(i).getName()%></a>
+                        </div>
+                        <tr>
+                            <th>Κατηγορία/ες</th>
+                            <%  List<String> categories = auctions.get(i).getCategories();
+                                String total = "";
+                                if (categories != null){
+                                    for(int j = 0; j < categories.size(); j++){
+                                        if (j == categories.size() - 1)
+                                            total += categories.get(j);
+                                        else
+                                            total += categories.get(j) + ",";%>
+                            <%}
+                            }%>
+                            <td><%=total%></td>
+
+                        </tr>
+                        <tr>
+                            <th>Τρέχουσα προσφορά</th>
+                            <td><%=auctions.get(i).getCurrently()%></td>
+                        </tr>
+                        <tr>
+                            <th>Τιμή Αγοράς</th>
+                            <%if(auctions.get(i).getBuy_price() == null){%>
+                            <td>Δεν έχει οριστεί</td>
+                            <%}else{%>
+                            <td><%=auctions.get(i).getBuy_price()%></td>
+                            <%}%>
+                        </tr>
+                        <tr>
+                            <th>Αρχική Προσφορά</th>
+                            <td><%=auctions.get(i).getFirst_bid()%></td>
+                        </tr>
+                        <tr>
+                            <th>Ημερομηνία/Ώρα Λήξης</th>
+                            <td><%=auctions.get(i).getEnds()%></td>
+                        </tr>
+                        <%--Countdown timer if auction is published--%>
+                        <%
+                            Date end_time = auctions.get(i).getEnds();
+                            SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                            String end = endformat.format(end_time);
+                        %>
+                        <tr>
+                            <th>Χρόνος που Απομένει</th>
+                            <td>
+                                <div class="countdown-<%=auctions.get(i).getId()%>"></div>
+                                <script>
+                                    CountDownTimer('<%=end%>', 'countdown-<%=auctions.get(i).getId()%>', '<%=auctions.get(i).getId()%>');
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Πωλητής</th>
+                            <td><%=auctions.get(i).getSeller()%></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <hr style="border-top: 1px solid #1abc9c">
+            <%}%>
 
 
         </div>

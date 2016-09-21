@@ -7,7 +7,7 @@
 <%--TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW--%>
     <%
         Integer auction_id = Integer.valueOf(request.getParameter("id"));
-        String chosen_category = request.getParameter("category");
+//        String chosen_category = request.getParameter("category");
 
         Item item = new ItemDAO(true).getItemByID(auction_id);
 
@@ -150,7 +150,7 @@
                                         <form action="BetOffer" method="get">
 
                                             <input type="hidden" name="id" value="<%=auction_id%>">
-                                            <input type="hidden" name="category" value="<%=chosen_category%>">
+                                            <%--<input type="hidden" name="category" value="<%=chosen_category%>">--%>
 
                                             <div class="input-group">
                                                 <span class="input-group-addon"><%=item.getCurrently()%>$</span>
@@ -170,7 +170,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <%if (buy_price != 0.0){%>
-                                            <a href="BuyAuction?id=<%=auction_id%>&category=<%=chosen_category%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
+                                            <a href="BuyAuction?id=<%=auction_id%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
                                         <%}%>
                                     </div>
                                 </div>
@@ -330,7 +330,7 @@
     $(document).ready(function(){
         $("#gmaps").on('shown.bs.tab', function() {
             var mapProp = {
-                center:new google.maps.LatLng(<%=item.getLocation().getLatitude()%>,<%=item.getLocation().getLongitude()%>),
+                center:new google.maps.LatLng(<%=item.getLatitude()%>,<%=item.getLongitude()%>),
                 zoom:7,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };

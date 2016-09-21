@@ -23,7 +23,7 @@ public class ItemDAO {
     private static final String SQL_DISABLE_AUCTION = "UPDATE items SET state=-1 WHERE id= ?";
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
     private static final String SQL_CHANGE_ITEM_STATE = "UPDATE items SET state=-1 WHERE state=1 AND ends<=NOW()";
-    private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND items.state=1 AND item_categories.category = (?)";
+    private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND item_categories.category = (?)";
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
             " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
@@ -31,11 +31,11 @@ public class ItemDAO {
     private static final String SQL_GET_TOTAL_BIDS = "SELECT total_offers FROM items WHERE id = (?)";
     private static final String SQL_UPDATE_ITEM_BIDS = "UPDATE items SET total_offers = (?), currently = (?) WHERE id = (?)";
     private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
-    private static final String SQL_SEARCH_ITEMS_BY_NAME = "SELECT id FROM items WHERE name LIKE '%?%'";
-    private static final String SQL_SEARCH_ITEMS_BY_CATEGORY = "SELECT DISTINCT id FROM item_categories WHERE category LIKE '%?%'";
-    private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT id FROM items WHERE description LIKE '%?%'";
-    private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT id FROM items WHERE currently < ?";
-    private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "";
+    private static final String SQL_SEARCH_ITEMS_BY_NAME = "SELECT DISTINCT id FROM items WHERE name LIKE ?";
+    private static final String SQL_SEARCH_ITEMS_BY_CATEGORY = "SELECT DISTINCT id FROM item_categories WHERE category LIKE ?";
+    private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT DISTINCT id FROM items WHERE description LIKE ?";
+    private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT DISTINCT id FROM items WHERE currently < ?";
+    private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ?";
 
     private ConnectionFactory factory;
 
@@ -319,8 +319,8 @@ public class ItemDAO {
 
                 Item item = new Item(id, result.getString("name"), result.getDouble("currently"), result.getDouble("first_bid"),
                         result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
-                        result.getDouble("latitude"), result.getDouble("longitude"), result.getDate("creation"),
-                        result.getDate("starts"), result.getDate("ends"), result.getString("seller"), result.getString("description"),
+                        result.getDouble("latitude"), result.getDouble("longitude"), result.getTimestamp("creation"),
+                        result.getTimestamp("starts"), result.getTimestamp("ends"), result.getString("seller"), result.getString("description"),
                         null, getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));
 
                 statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
@@ -457,24 +457,41 @@ public class ItemDAO {
             Connection connection = factory.getConnection();
             PreparedStatement statement;
 
-            if(type=="name")
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false, value);
-            else if (type=="category")
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false, value);
-            else if(type=="description")
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false, value);
-            else if (type=="price")
+            if(type.equals("name")) {
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false);
+                statement.setString(1, "%" + value + "%");
+            }
+            else if (type.equals("category")) {
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false);
+                statement.setString(1, "%" + value + "%");
+            }
+            else if(type.equals("description")) {
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false);
+                statement.setString(1, "%" + value + "%");
+            }
+            else if (type.equals("price")) {
                 statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_PRICE, false, value);
+            }
+            else if (type.equals("location")) {
+                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_LOCATION, false);
+                statement.setString(1, "%" + value + "%");
+                statement.setString(2, "%" + value + "%");
+            }
             else
                 return items;
+
+
 
             //execute query
             ResultSet result = statement.executeQuery();
 
             //get a list of items
             while (result.next()) {
-                Item item = getItemByID(Integer.parseInt(result.getString("id")));
-                items.add(item);
+                Integer id = Integer.parseInt(result.getString("id"));
+                if (!id.equals(0)) {
+                    Item item = getItemByID(id);
+                    items.add(item);
+                }
             }
 
             return items;

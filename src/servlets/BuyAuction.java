@@ -25,7 +25,7 @@ public class BuyAuction extends HttpServlet {
 
         // Get auction parameters
         Integer auction_id = Integer.valueOf(request.getParameter("id"));
-        String chosen_category = request.getParameter("category");
+//        String chosen_category = request.getParameter("category");
 
         ItemDAO dao = new ItemDAO(true);
 
@@ -36,7 +36,7 @@ public class BuyAuction extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("auctionsBrowse.jsp?category=" + chosen_category);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("my_messages.jsp");
 
         // This means the item has been bought
         if (!exists){
