@@ -68,7 +68,7 @@ public class LoadXml extends HttpServlet {
             buy_price = buy_price.substring(1);
         else
             buy_price = "0.0";
-        
+
         Double buy_price_d = DoubleConvert(buy_price);
 
         String first_bid = xml_item.getFirst_bid().substring(1);
@@ -100,8 +100,13 @@ public class LoadXml extends HttpServlet {
 
         printXmlItem(xml_item);
 
+        // Create app Item entity
         Item item_ent = new Item(id, name, currently_d, first_bid_d, buy_price_d, country, location, latitude, longitude,
                 new Date(), starts_d, ends_d, sellerName, description, categories, bids, 1, "", total_offers);
+
+        // Map item info to DB tables
+        ItemDAO idao = new ItemDAO(true);
+        idao.loadXmlEntities(item_ent);
     }
 
     private Double DoubleConvert(String str){

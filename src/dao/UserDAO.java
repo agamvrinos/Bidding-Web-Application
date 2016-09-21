@@ -13,7 +13,8 @@ public class UserDAO {
     private static final String SQL_SEARCH_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ? ";
     private static final String SQL_EXISTS_USER = "SELECT 1 FROM users WHERE username = ?";
     private static final String SQL_GET_USER_LIST = "SELECT * FROM users";
-    private static final String SQL_VALIDATE_USER = "UPDATE users SET validated=1 WHERE id= ?";
+    private static final String SQL_VALIDATE_USERID = "UPDATE users SET validated=1 WHERE id= ?";
+    private static final String SQL_VALIDATE_USERNAME = "UPDATE users SET validated=1 WHERE username= ?";
 
     private ConnectionFactory factory;
 
@@ -202,10 +203,18 @@ public class UserDAO {
         }
     }
 
-    public void approveUser(String id){
+    public void approveUser(String id, Integer validateBy){
+        //validateBy = 0 -> validate by ID
+        //validateBy = 1 -> validate by username
         try{
             Connection connection = factory.getConnection();
-            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_VALIDATE_USER, false, id);
+            PreparedStatement statement;
+
+            if (validateBy == 0)
+                statement = DAOUtil.prepareStatement(connection,SQL_VALIDATE_USERID, false, id);
+            else
+                statement = DAOUtil.prepareStatement(connection,SQL_VALIDATE_USERNAME, false, id);
+
             statement.executeUpdate();
             connection.close();
         }

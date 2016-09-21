@@ -3,6 +3,7 @@ package dao;
 import entities.Bid;
 import entities.Item;
 import entities.Message;
+import entities.User;
 
 import java.sql.*;
 import java.util.Date;
@@ -486,7 +487,47 @@ public class ItemDAO {
         }
     }
 
-    public void loadXmlEntities(){
+    public void loadXmlEntities(Item item){
 
+        Integer id = item.getId();
+        String title = item.getName();
+        Double current = item.getCurrently();
+        Double buy_price = item.getBuy_price();
+        Double first_bid = item.getFirst_bid();
+        String country = item.getCountry();
+        String location = item.getLocation();
+        Double latitude = item.getLatitude();
+        Double longitude = item.getLongitude();
+        Date creation = item.getCreation();
+        Date starts = item.getStarts();
+        Date ends = item.getEnds();
+        String seller = item.getSeller();
+        String description = item.getDesc();
+        Integer state = item.getState();
+        String image = item.getImage();
+        Integer total_offers = item.getTotal_offers();
+
+        //TODO: DB-Create the user that sells the item if he doesn't exist
+        UserDAO udao = new UserDAO(true);
+        boolean exists = udao.existsUsername(seller);
+
+        if (exists){
+            System.out.println("UserName exists. Dont add it");
+        }
+        else {
+            System.out.println("Username does not exist. Need to create new user");
+            User user = new User("Nikolaos Korompos", seller, "root", "root@email.com", "6934999656",
+                                "Ελλάδα", "Αθήνα", "Κορόμπου 13", "1543", 1);
+
+            // Insert new user
+            udao.insertUser(user);
+
+            // Validate User
+            udao.approveUser(seller, 1);
+        }
+        //TODO: DB-Create The item. Don't use the ID provided.
+        //TODO: DB-Create the item category if it doesn't exist, and match item to it's categories
+        //TODO: DB-Create the bids for the specific item
+        //TODO: DB-Create the rating for this user
     }
 }
