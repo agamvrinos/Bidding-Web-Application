@@ -197,7 +197,7 @@ public class createItem extends HttpServlet {
                 latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, null, 0, image, 0);
 
         ItemDAO dao = new ItemDAO(true);
-        dao.insertItem(item);
+        dao.insertItem(item, 0);
 
         request.setAttribute("auction-creation-success","yes");
         RequestDispatcher dispatcher = request.getRequestDispatcher("my_auctions.jsp");

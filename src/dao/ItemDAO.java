@@ -15,6 +15,7 @@ public class ItemDAO {
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_IMPORT_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, starts, ends, seller, description, state, Image, total_offers) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_DELETE_ITEM = "DELETE FROM items WHERE id = (?)";
     private static final String SQL_MATCH_ITEM_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (?, ?)";
     private static final String SQL_DEL_OLD_CATEGORY = "DELETE FROM item_categories WHERE id = (?) AND category = (?)";
@@ -30,7 +31,6 @@ public class ItemDAO {
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
             " ends = (?), seller = (?), description = (?), Image = (?), total_offers = (?) WHERE id = (?)";
-
     private static final String SQL_GET_TOTAL_BIDS = "SELECT total_offers FROM items WHERE id = (?)";
     private static final String SQL_UPDATE_ITEM_BIDS = "UPDATE items SET total_offers = (?), currently = (?) WHERE id = (?)";
     private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
@@ -164,7 +164,7 @@ public class ItemDAO {
 
     public List<String> getCategories(){
 
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         try{
             Connection connection = factory.getConnection();
@@ -182,7 +182,7 @@ public class ItemDAO {
         return list;
     }
 
-    public void insertItem(Item item){
+    public void insertItem(Item item, Integer imported){
 
         try {
 
@@ -191,10 +191,18 @@ public class ItemDAO {
             if (item.getImage().equals(""))
                 item.setImage(null);
 
-            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_ADD_NEW_ITEM, true, item.getName(),
-                    item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
-                    item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
-                    item.getDesc(), item.getImage());
+            PreparedStatement statement;
+
+            if (imported == 0)
+                statement= DAOUtil.prepareStatement(connection, SQL_ADD_NEW_ITEM, true, item.getName(),
+                        item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
+                        item.getLatitude(), item.getLongitude(), item.getCreation(), item.getEnds(), item.getSeller(),
+                        item.getDesc(), item.getImage());
+            else
+                statement= DAOUtil.prepareStatement(connection, SQL_IMPORT_ITEM, true, item.getName(),
+                        item.getCurrently(), item.getBuy_price(), item.getFirst_bid(), item.getCountry(), item.getLocation(),
+                        item.getLatitude(), item.getLongitude(), item.getCreation(), item.getStarts(), item.getEnds(), item.getSeller(),
+                        item.getDesc(), item.getState(), item.getImage(), item.getTotal_offers());
 
             if (statement.executeUpdate()==0)
                 System.err.println("Creating item failed, no rows affected.");
@@ -556,6 +564,8 @@ public class ItemDAO {
 
             //TODO: DB-Create the user that sells the item if he doesn't exist
             UserDAO udao = new UserDAO(true);
+            ItemDAO idao = new ItemDAO(true);
+
             boolean exists = udao.existsUsername(seller);
 
             if (exists)
@@ -586,6 +596,10 @@ public class ItemDAO {
                         System.err.println("Creating Category failed, no rows affected.");
                 }
             }
+
+            //TODO: DB-Create The item. Don't use the ID provided.
+            idao.insertItem(item, 1);
+
             connection.close();
         }
         catch (SQLException ex){
@@ -593,7 +607,7 @@ public class ItemDAO {
             throw new RuntimeException("Error at LoadXmlEntities");
         }
 
-        //TODO: DB-Create The item. Don't use the ID provided.
+
         //TODO: DB-Match item to it's categories
         //TODO: DB-Create the bids for the specific item
         //TODO: DB-Create the rating for this user
