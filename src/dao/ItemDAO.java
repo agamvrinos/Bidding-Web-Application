@@ -39,6 +39,10 @@ public class ItemDAO {
     private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT DISTINCT id FROM items WHERE description LIKE ?";
     private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT DISTINCT id FROM items WHERE currently < ?";
     private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ?";
+    private final String  SQL_INSERT_RATING = "INSERT INTO ratings (username, rating) " +
+                                                "SELECT col1, col2 " +
+                                                "FROM (select ? as col1, ? as col2) t " +
+                                                "WHERE NOT EXISTS (SELECT * FROM ratings WHERE username = ?);";
 
     private ConnectionFactory factory;
 
@@ -270,8 +274,8 @@ public class ItemDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_DELETE_ITEM, false, id);
             statement.executeUpdate();
 
-            for(int i = 0; i < categories.size(); i++) {
-                statement = DAOUtil.prepareStatement(connection, SQL_DEL_OLD_CATEGORY, false, id, categories.get(i));
+            for(String category : categories) {
+                statement = DAOUtil.prepareStatement(connection, SQL_DEL_OLD_CATEGORY, false, id, category);
                 statement.executeUpdate();
             }
             connection.close();
@@ -371,13 +375,13 @@ public class ItemDAO {
             Connection connection = factory.getConnection();
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_CHANGE_ITEM_STATE, true);
             statement.executeUpdate();
-            ResultSet rs = statement.getGeneratedKeys();
+//            ResultSet rs = statement.getGeneratedKeys();
 
-            int i=0;
-
-            while (rs.next()){
-                i++;
-            }
+//            int i=0;
+//
+//            while (rs.next()){
+//                i++;
+//            }
 
 //            System.out.println(i);
 
@@ -603,11 +607,11 @@ public class ItemDAO {
             //DB-Create The item. Don't use the ID provided.
             Integer item_id = idao.insertItem(item, 1);
 
-            //TODO: DB-Create the bids for the specific item
-            for (Bid bid : bids)
-                bdao.insertBid(bid, item_id, seller);
-
-            //TODO: DB-Create the rating for this user
+            //DB-Create the bids for the specific item
+            if (bids != null) {
+                for (Bid bid : bids)
+                    bdao.insertBid(bid, item_id);
+            }
 
             connection.close();
         }
