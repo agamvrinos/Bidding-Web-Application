@@ -348,10 +348,6 @@ public class ItemDAO {
 
     }
 
-//    public boolean itemBelongsToUser(String id){
-//        return true;
-//    }
-
     public void updateExpiredItems(){
 
         try {
@@ -413,7 +409,7 @@ public class ItemDAO {
             return LOW_BET;
         }
 
-        Bid bid = new Bid(null, username, null, null, null, new Date(), bid_value);
+        Bid bid = new Bid(null, username, null, null, new Date(), bid_value);
 
         try{
 

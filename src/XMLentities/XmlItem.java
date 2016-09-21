@@ -15,7 +15,7 @@ public class XmlItem {
     private String buy_price;
     private String first_bid;
     private Integer total_offers;
-    private List<XmlBid> bids;
+    private XmlBids bids;
 
     private XmlLocation location;
     private String country;
@@ -82,10 +82,10 @@ public class XmlItem {
     }
 
     @XmlElement(name = "Bids")
-    public List<XmlBid> getBids() {
+    public XmlBids getBids() {
         return bids;
     }
-    public void setBids(List<XmlBid> bids) {
+    public void setBids(XmlBids bids) {
         this.bids = bids;
     }
 

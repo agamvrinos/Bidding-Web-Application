@@ -8,11 +8,11 @@ import java.util.List;
 public class XmlBids {
     private List<XmlBid> bids;
 
+    @XmlElement( name = "Bid" )
     public List<XmlBid> getBids() {
         return bids;
     }
 
-    @XmlElement( name = "Bid" )
     public void setBids(List<XmlBid> bids) {
         this.bids = bids;
     }

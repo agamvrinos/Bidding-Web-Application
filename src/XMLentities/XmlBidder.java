@@ -6,46 +6,46 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"rating", "userID", "location", "country"})
+@XmlType(propOrder = {"rating", "bidder_name", "location", "country"})
 @XmlRootElement( name = "Bidder" )
 public class XmlBidder {
     private Integer rating;
-    private String userID;
+    private String bidder_name;
     private String location;
     private String country;
 
+    @XmlAttribute(name = "Rating", required = true)
     public Integer getRating() {
         return rating;
     }
 
-    @XmlAttribute(name = "Rating", required = true)
     public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public String getUserID() {
-        return userID;
-    }
-
     @XmlAttribute(name = "UserID", required = true)
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public String getBidder_name() {
+        return bidder_name;
     }
 
+    public void setBidder_name(String bidder_name) {
+        this.bidder_name = bidder_name;
+    }
+
+    @XmlElement(name = "Location")
     public String getLocation() {
         return location;
     }
 
-    @XmlElement(name = "Location")
     public void setLocation(String location) {
         this.location = location;
     }
 
+    @XmlElement(name = "Country")
     public String getCountry() {
         return country;
     }
 
-    @XmlElement(name = "Country")
     public void setCountry(String country) {
         this.country = country;
     }

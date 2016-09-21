@@ -5,27 +5,27 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"rating", "userID"})
+@XmlType(propOrder = {"rating", "sellerName"})
 @XmlRootElement(name = "Seller")
 public class XmlSeller {
     private Integer rating;
-    private String userID;
+    private String sellerName;
 
+    @XmlAttribute(name = "Rating", required = true)
     public Integer getRating() {
         return rating;
     }
 
-    @XmlAttribute(name = "Rating", required = true)
     public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public String getUserID() {
-        return userID;
+    @XmlAttribute(name = "UserID", required = true)
+    public String getSellerName() {
+        return sellerName;
     }
 
-    @XmlAttribute(name = "UserID", required = true)
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 }

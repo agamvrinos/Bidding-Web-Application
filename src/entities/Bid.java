@@ -5,17 +5,17 @@ import java.util.Date;
 public class Bid {
 
     private Integer bidID;
+
     private String username;
-    private Float rating;
     private String country;
     private String location;
+
     private Date time;
     private Double amount;
 
-    public Bid(Integer bidID, String username, Float rating, String country, String location, Date time, Double amount) {
+    public Bid(Integer bidID, String username, String country, String location, Date time, Double amount) {
         this.bidID = bidID;
         this.username = username;
-        this.rating = rating;
         this.country = country;
         this.location = location;
         this.time = time;
@@ -36,14 +36,6 @@ public class Bid {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Float getRating() {
-        return rating;
-    }
-
-    public void setRating(Float rating) {
-        this.rating = rating;
     }
 
     public String getCountry() {

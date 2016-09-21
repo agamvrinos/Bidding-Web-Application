@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "Location")
 public class XmlLocation {
     private String location;
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
 
     public String getLocation() {
         return location;
@@ -18,21 +18,21 @@ public class XmlLocation {
         this.location = location;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
     @XmlAttribute(name="Latitude")
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
     @XmlAttribute(name="Longitude")
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }
