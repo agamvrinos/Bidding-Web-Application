@@ -29,7 +29,7 @@ public class LoadXml extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
-            File file = new File("/home/agg/Desktop/TedExamples/test.xml");
+            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-5.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -57,7 +57,7 @@ public class LoadXml extends HttpServlet {
 
         // Print the XML item
 //        printXmlItem(xml_item);
-        System.out.println("Building item");
+        System.out.println("Building item: " + xml_item.getName());
 
         //========================================================
         //============ Get INFO from the XML entity ==============

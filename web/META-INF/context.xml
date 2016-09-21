@@ -2,7 +2,7 @@
 <Context>
     <Resource
         name="jdbc/database" type="javax.sql.DataSource"
-        maxActive="100" maxIdle="30" maxWait="10000" 
+        maxActive="300" maxIdle="150" maxWait="10000"
         url="jdbc:mysql://127.0.0.1:3306/ted?characterEncoding=UTF-8"
         driverClassName="com.mysql.jdbc.Driver"
         username="root" password="root"
