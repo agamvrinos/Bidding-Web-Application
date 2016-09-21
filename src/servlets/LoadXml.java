@@ -104,6 +104,8 @@ public class LoadXml extends HttpServlet {
         Item item_ent = new Item(id, name, currently_d, first_bid_d, buy_price_d, country, location, latitude, longitude,
                 new Date(), starts_d, ends_d, sellerName, description, categories, bids, 1, "", total_offers);
 
+        item_ent.setBids(bids);
+
         // Map item info to DB tables
         ItemDAO idao = new ItemDAO(true);
         idao.loadXmlEntities(item_ent);
@@ -173,7 +175,7 @@ public class LoadXml extends HttpServlet {
             String bid_time = xml_bid.getTime();
             Date bid_time_d = DateConvert(bid_time);
 
-            String bid_amount = xml_bid.getAmount();
+            String bid_amount = xml_bid.getAmount().substring(1);
             Double bid_amount_d = DoubleConvert(bid_amount);
 
             XmlBidder bidder_info = xml_bid.getBidder();

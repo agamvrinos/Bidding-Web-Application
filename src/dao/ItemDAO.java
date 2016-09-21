@@ -182,7 +182,7 @@ public class ItemDAO {
         return list;
     }
 
-    public void insertItem(Item item, Integer imported){
+    public Integer insertItem(Item item, Integer imported){
 
         try {
 
@@ -204,8 +204,8 @@ public class ItemDAO {
                         item.getLatitude(), item.getLongitude(), item.getCreation(), item.getStarts(), item.getEnds(), item.getSeller(),
                         item.getDesc(), item.getState(), item.getImage(), item.getTotal_offers());
 
-            if (statement.executeUpdate()==0)
-                System.err.println("Creating item failed, no rows affected.");
+            if (statement.executeUpdate() == 0)
+                throw new RuntimeException("Creating item failed, no rows affected.");
 
 
             ResultSet rs = statement.getGeneratedKeys();
@@ -218,9 +218,10 @@ public class ItemDAO {
             }
 
             connection.close();
+            return id;
         }
         catch (SQLException ex){
-            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("ERROR: " + ex.getMessage());
         }
     }
 
@@ -555,6 +556,7 @@ public class ItemDAO {
         String image = item.getImage();
         Integer total_offers = item.getTotal_offers();
         List<String> categories = item.getCategories();
+        List<Bid> bids = item.getBids();
 
         PreparedStatement statement;
 
@@ -562,9 +564,10 @@ public class ItemDAO {
             // Get connection
             Connection connection = factory.getConnection();
 
-            //TODO: DB-Create the user that sells the item if he doesn't exist
+            //DB-Create the user that sells the item if he doesn't exist
             UserDAO udao = new UserDAO(true);
             ItemDAO idao = new ItemDAO(true);
+            BidDAO bdao = new BidDAO(true);
 
             boolean exists = udao.existsUsername(seller);
 
@@ -581,7 +584,7 @@ public class ItemDAO {
                 // Validate User
                 udao.approveUser(seller, 1);
             }
-            //TODO: Create new categories if not exist
+            //Create new categories if not exist
             for (String category : categories){
                 boolean exists_cat = existsCategory(category);
 
@@ -597,8 +600,14 @@ public class ItemDAO {
                 }
             }
 
-            //TODO: DB-Create The item. Don't use the ID provided.
-            idao.insertItem(item, 1);
+            //DB-Create The item. Don't use the ID provided.
+            Integer item_id = idao.insertItem(item, 1);
+
+            //TODO: DB-Create the bids for the specific item
+            for (Bid bid : bids)
+                bdao.insertBid(bid, item_id, seller);
+
+            //TODO: DB-Create the rating for this user
 
             connection.close();
         }
@@ -608,8 +617,6 @@ public class ItemDAO {
         }
 
 
-        //TODO: DB-Match item to it's categories
-        //TODO: DB-Create the bids for the specific item
-        //TODO: DB-Create the rating for this user
+
     }
 }
