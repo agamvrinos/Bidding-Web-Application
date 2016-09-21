@@ -9,15 +9,17 @@ public class Bid {
     private String username;
     private String country;
     private String location;
+    private Integer rating;
 
     private Date time;
     private Double amount;
 
-    public Bid(Integer bidID, String username, String country, String location, Date time, Double amount) {
+    public Bid(Integer bidID, String username, String country, String location, Integer rating, Date time, Double amount) {
         this.bidID = bidID;
         this.username = username;
         this.country = country;
         this.location = location;
+        this.rating = rating;
         this.time = time;
         this.amount = amount;
     }
@@ -68,5 +70,13 @@ public class Bid {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 }

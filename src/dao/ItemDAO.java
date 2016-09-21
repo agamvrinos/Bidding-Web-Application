@@ -3,6 +3,7 @@ package dao;
 import entities.Bid;
 import entities.Item;
 import entities.Message;
+import entities.User;
 
 import java.sql.*;
 import java.util.Date;
@@ -22,6 +23,8 @@ public class ItemDAO {
     private static final String SQL_ACTIVATE_AUCTION = "UPDATE items SET state=1 WHERE id= ?";
     private static final String SQL_DISABLE_AUCTION = "UPDATE items SET state=-1 WHERE id= ?";
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
+    private static final String SQL_GET_CATEGORY = "SELECT * FROM item_categories WHERE category = (?) AND id = 0";
+    private static final String SQL_INSERT_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (0, ?)";
     private static final String SQL_CHANGE_ITEM_STATE = "UPDATE items SET state=-1 WHERE state=1 AND ends<=NOW()";
     private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND item_categories.category = (?)";
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
@@ -401,6 +404,27 @@ public class ItemDAO {
         return true;
     }
 
+    public boolean existsCategory(String category_name){
+
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_CATEGORY, false, category_name);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next() ) {   // No auction found
+                connection.close();
+                return false;
+            }
+            connection.close();
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at existsCategory");
+        }
+        return true;
+    }
+
     public Integer BetAuction(Integer id, Double bid_value, String username){
 
         Item item = getItemByID(id);
@@ -413,7 +437,7 @@ public class ItemDAO {
             return LOW_BET;
         }
 
-        Bid bid = new Bid(null, username, null, null, new Date(), bid_value);
+        Bid bid = new Bid(null, username, null, null, null, new Date(), bid_value);
 
         try{
 
@@ -501,5 +525,77 @@ public class ItemDAO {
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at getSearchResults");
         }
+    }
+
+    public void loadXmlEntities(Item item){
+
+        Integer id = item.getId();
+        String title = item.getName();
+        Double current = item.getCurrently();
+        Double buy_price = item.getBuy_price();
+        Double first_bid = item.getFirst_bid();
+        String country = item.getCountry();
+        String location = item.getLocation();
+        Double latitude = item.getLatitude();
+        Double longitude = item.getLongitude();
+        Date creation = item.getCreation();
+        Date starts = item.getStarts();
+        Date ends = item.getEnds();
+        String seller = item.getSeller();
+        String description = item.getDesc();
+        Integer state = item.getState();
+        String image = item.getImage();
+        Integer total_offers = item.getTotal_offers();
+        List<String> categories = item.getCategories();
+
+        PreparedStatement statement;
+
+        try{
+            // Get connection
+            Connection connection = factory.getConnection();
+
+            //TODO: DB-Create the user that sells the item if he doesn't exist
+            UserDAO udao = new UserDAO(true);
+            boolean exists = udao.existsUsername(seller);
+
+            if (exists)
+                System.out.println("UserName exists. Dont add it");
+            else {
+                System.out.println("Username does not exist. Need to create new user");
+                User user = new User("Nikolaos Korompos", seller, "root", "root@email.com", "6934999656",
+                                    "Ελλάδα", "Αθήνα", "Κορόμπου 13", "1543", 1);
+
+                // Insert new user
+                udao.insertUser(user);
+
+                // Validate User
+                udao.approveUser(seller, 1);
+            }
+            //TODO: Create new categories if not exist
+            for (String category : categories){
+                boolean exists_cat = existsCategory(category);
+
+                if (exists_cat)
+                    System.out.println("Category \"" + category + "\" already exists. Skip it." );
+                else {
+                    System.out.println("Category \"" + category + "\" does not exist. Add it." );
+
+                    statement = DAOUtil.prepareStatement(connection, SQL_INSERT_CATEGORY, true, category);
+
+                    if (statement.executeUpdate() == 0)
+                        System.err.println("Creating Category failed, no rows affected.");
+                }
+            }
+            connection.close();
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at LoadXmlEntities");
+        }
+
+        //TODO: DB-Create The item. Don't use the ID provided.
+        //TODO: DB-Match item to it's categories
+        //TODO: DB-Create the bids for the specific item
+        //TODO: DB-Create the rating for this user
     }
 }
