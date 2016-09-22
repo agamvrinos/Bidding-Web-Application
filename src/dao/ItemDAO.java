@@ -517,8 +517,6 @@ public class ItemDAO {
             else
                 return items;
 
-
-
             //execute query
             ResultSet result = statement.executeQuery();
 
@@ -542,23 +540,7 @@ public class ItemDAO {
 
     public void loadXmlEntities(Item item){
 
-        Integer id = item.getId();
-        String title = item.getName();
-        Double current = item.getCurrently();
-        Double buy_price = item.getBuy_price();
-        Double first_bid = item.getFirst_bid();
-        String country = item.getCountry();
-        String location = item.getLocation();
-        Double latitude = item.getLatitude();
-        Double longitude = item.getLongitude();
-        Date creation = item.getCreation();
-        Date starts = item.getStarts();
-        Date ends = item.getEnds();
         String seller = item.getSeller();
-        String description = item.getDesc();
-        Integer state = item.getState();
-        String image = item.getImage();
-        Integer total_offers = item.getTotal_offers();
         List<String> categories = item.getCategories();
         List<Bid> bids = item.getBids();
 

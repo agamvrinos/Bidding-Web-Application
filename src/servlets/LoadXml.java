@@ -6,6 +6,7 @@ import dao.ItemDAO;
 import entities.Bid;
 import entities.Item;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,13 +24,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+//TODO: Prosvasi mono o admin edw
 
 @WebServlet("/LoadXml")
 public class LoadXml extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("index.jsp");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
+
+        if (xml_amount < 1 || xml_amount > 40){
+            request.setAttribute("error", "Η τιμή πρέπει να είναι από 1 εώς 40");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
         try {
 
-            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-5.xml");
+            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -53,10 +69,10 @@ public class LoadXml extends HttpServlet {
         }
     }
 
-    void buildEntity(XmlItem xml_item){
+    private void buildEntity(XmlItem xml_item){
 
         // Print the XML item
-//        printXmlItem(xml_item);
+        // printXmlItem(xml_item);
         System.out.println("Building item: " + xml_item.getName());
 
         //========================================================
@@ -115,7 +131,6 @@ public class LoadXml extends HttpServlet {
         ItemDAO idao = new ItemDAO(true);
         idao.loadXmlEntities(item_ent);
 
-        // MIN DEIS AUTH THN GRAMMI XXXXXXXXXXXXXXXXXXXXXXXX
         new BidDAO(true).insertRating(sellerName, sellerRating);
     }
 
