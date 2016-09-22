@@ -612,15 +612,12 @@ public class ItemDAO {
                 for (Bid bid : bids)
                     bdao.insertBid(bid, item_id);
             }
-
             connection.close();
         }
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at LoadXmlEntities");
         }
-
-
 
     }
 }

@@ -64,9 +64,9 @@ public class LoadXml extends HttpServlet {
         //========================================================
         Integer id = xml_item.getId();
         String name = xml_item.getName();
-        String currently = xml_item.getCurrently().substring(1);
+        String currently = xml_item.getCurrently().substring(1).replace(",", "");
         String buy_price = xml_item.getBuy_price();
-        String first_bid = xml_item.getFirst_bid().substring(1);
+        String first_bid = xml_item.getFirst_bid().substring(1).replace(",", "");
         Integer total_offers = xml_item.getTotal_offers();
         XmlLocation location_info = xml_item.getLocation();
         String location = location_info.getLocation();

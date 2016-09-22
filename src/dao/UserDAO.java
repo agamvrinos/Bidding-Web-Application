@@ -40,9 +40,10 @@ public class UserDAO {
             System.out.println("Affected Rows: " + affectedRows);
             ret = affectedRows;
 
+            connection.close();
+
             if (ret == 0) {
                 System.err.println("Creating user failed, no rows affected.");
-                connection.close();
                 return ret;
             }
 
