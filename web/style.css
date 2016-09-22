@@ -32,7 +32,7 @@ body { font-family: 'Titillium Web', sans-serif; }
 
 
 .header-area {
-    background: none repeat scroll 0 0 #f4f4f4;
+    background: none repeat scroll 0 0 #e4e4e4;
 }
 .header-area a {
     color: #888;
@@ -74,7 +74,7 @@ body { font-family: 'Titillium Web', sans-serif; }
     text-align: center;
 }
 
-.mainmenu-area {background: none repeat scroll 0 0 #2fa08a;
+.mainmenu-area {background: none repeat scroll 0 0 #34525a;
 font-family: "Roboto Condensed",sans-serif;
 text-transform: uppercase;
 width: 100%;
@@ -91,7 +91,7 @@ z-index: 999;}
 }
 .logo h1 a:hover {text-decoration: none;opacity: .7}
 .logo h1 a span {
-    color: #377d70;
+    color: #4c7a86;;
 }
 .shopping-item {
     border: 1px solid #ddd;
@@ -165,7 +165,7 @@ z-index: 999;}
 .slide-text {display: table-cell;vertical-align: middle}
 
 .zigzag-bottom {
-background: none repeat scroll 0 0 #2fa08a;
+background: none repeat scroll 0 0 #34525a;
 bottom: -80px;
 height: 165px;
 left: -5%;
@@ -187,7 +187,7 @@ z-index: 9;
   content: "";
   height: 100%;
   left: 0;
-  opacity: 0.6;
+  opacity: 0.3;
   position: absolute;
   top: 0;
   width: 100%;
@@ -215,9 +215,9 @@ z-index: 9;
 
 
 .readmore {
-    background: none repeat scroll 0 0 #1abc9c;
+    background: none repeat scroll 0 0 #447a89;
     color: #fff;
-    border: 1px solid #1abc9c;
+    border: 1px solid #34525A;
     display: inline-block;
     font-size: 20px;
     margin-top: 15px;
@@ -230,20 +230,20 @@ z-index: 9;
 
 
 .promo-area {
-  background: none repeat scroll 0 0 #2fa08a;
+  background: none repeat scroll 0 0 #34525a;
   color: #fff;
   padding: 77px 0 200px;
 }
 
 .brands-area {
-  background: none repeat scroll 0 0 #2fa08a;
+  background: none repeat scroll 0 0 #34525a;
   color: #fff;
   padding: 0px 0 200px;
 }
 
 .promo-area .zigzag-bottom, .brands-area .zigzag-bottom{background: #fff}
 .single-promo {
-    border: 1px solid #17a78b;
+    border: 1px solid #2a3144;
     font-size: 25px;
     font-weight: 200;
     padding: 20px 10px;
@@ -411,7 +411,7 @@ z-index: 9;
     color: #1ABC9C;
 }
 .wid-view-more {
-    background: none repeat scroll 0 0 #1abc9c;
+    background: none repeat scroll 0 0 #447a89;
     color: #fff;
     padding: 3px 15px;
     position: absolute;
