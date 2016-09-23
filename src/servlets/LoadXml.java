@@ -103,8 +103,6 @@ public class LoadXml extends HttpServlet {
 
         if (buy_price != null)
             buy_price = buy_price.substring(1);
-        else
-            buy_price = "0.0";
 
         Double buy_price_d = DoubleConvert(buy_price);
         Double first_bid_d = DoubleConvert(first_bid);
@@ -139,7 +137,7 @@ public class LoadXml extends HttpServlet {
         try {
             d = Double.parseDouble(str);
         }
-        catch(NumberFormatException nfe){
+        catch(NumberFormatException | NullPointerException nfe){
             return null;
         }
         return d;

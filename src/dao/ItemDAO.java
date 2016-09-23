@@ -1,5 +1,6 @@
 package dao;
 
+import XMLentities.XmlItem;
 import entities.Bid;
 import entities.Item;
 import entities.Message;
@@ -39,10 +40,8 @@ public class ItemDAO {
     private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT DISTINCT id FROM items WHERE description LIKE ?";
     private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT DISTINCT id FROM items WHERE currently < ?";
     private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ?";
-    private final String  SQL_INSERT_RATING = "INSERT INTO ratings (username, rating) " +
-                                                "SELECT col1, col2 " +
-                                                "FROM (select ? as col1, ? as col2) t " +
-                                                "WHERE NOT EXISTS (SELECT * FROM ratings WHERE username = ?);";
+    private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
+
 
     private ConnectionFactory factory;
 
@@ -320,16 +319,12 @@ public class ItemDAO {
         }
     }
 
-    public List<Bid> getItemBids(Integer id){
-        //TODO: PREPEI NA PAIKSW BALITSA ME TH VASOULA KAI TA BIDS
-        return new ArrayList<Bid>();
-    }
-
     public Item getItemByID(Integer id){
         try {
             Connection connection = factory.getConnection();
             PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM, false, id);
             ResultSet result = statement.executeQuery();
+            BidDAO bdao = new BidDAO(true);
 
             if(result.next()){
 
@@ -337,7 +332,7 @@ public class ItemDAO {
                         result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
                         result.getDouble("latitude"), result.getDouble("longitude"), result.getTimestamp("creation"),
                         result.getTimestamp("starts"), result.getTimestamp("ends"), result.getString("seller"), result.getString("description"),
-                        null, getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));
+                        null, bdao.getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));
 
                 statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results = statement.executeQuery();
@@ -529,6 +524,7 @@ public class ItemDAO {
                 }
             }
 
+            connection.close();
             return items;
 
         }
@@ -602,4 +598,25 @@ public class ItemDAO {
         }
 
     }
+
+    public Integer getUserRating(String username){
+
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_USER_RATING, false, username);
+            ResultSet result = statement.executeQuery();
+
+            result.next();
+            Integer rating = result.getInt(1);
+
+            connection.close();
+            return rating;
+        }
+        catch (SQLException ex){
+            System.err.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at getUserRating");
+        }
+    }
+
 }

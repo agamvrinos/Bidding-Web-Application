@@ -5,8 +5,11 @@ import entities.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BidDAO {
 
@@ -17,6 +20,9 @@ public class BidDAO {
             "SELECT col1, col2 " +
             "FROM (select ? as col1, ? as col2) t " +
             "WHERE NOT EXISTS (SELECT * FROM ratings WHERE username = ?);";
+    private static final String SQL_GET_ITEM_BIDS = "SELECT bids.bid_id, bids.username, bids.bid_time, bids.bid_amount," +
+            " users.country, users.city, ratings.rating FROM ted.bids, ted.users, ted.ratings WHERE bids.item_id = ? " +
+            "AND users.username = bids.username AND users.username = ratings.username ORDER BY bids.bid_amount DESC";
 
     public BidDAO(boolean pool) {
         factory = ConnectionFactory.getInstance(pool);
@@ -43,7 +49,7 @@ public class BidDAO {
             else {
                 System.out.println("Bidder Username does not exist. Need to create new user");
                 User user = new User("Nikolaos Korompos", bidder_name, "root", "root@email.com", "6934999656",
-                        "Ελλάδα", "Αθήνα", "Κορόμπου 13", "1543", 1);
+                        bid.getCountry(), bid.getLocation(), "Κορόμπου 13", "1543", 1);
 
                 // Insert new user
                 udao.insertUser(user);
@@ -86,4 +92,33 @@ public class BidDAO {
             throw new RuntimeException("Errori at InsertRating");
         }
     }
+
+
+    public List<Bid> getItemBids(Integer id){
+
+        List<Bid> bids = new ArrayList<Bid>();
+
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_BIDS, false, id);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()){
+                bids.add(new Bid(Integer.parseInt(result.getString(1)),result.getString(2), result.getString(5),
+                        result.getString(6), Integer.parseInt(result.getString(7)), result.getTimestamp(3),
+                        Double.parseDouble(result.getString(4))));
+            }
+
+            connection.close();
+            return bids;
+
+        }
+        catch (SQLException ex){
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at getItemBids");
+        }
+
+    }
+
+
 }
