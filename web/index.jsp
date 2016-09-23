@@ -27,36 +27,6 @@
 </head>
 <body>
 
-<style>
-    .splash {
-        width: 840px;
-        background: rgba(0,0,0,0.85);
-        padding: 50px 60px;
-        margin: auto;
-        border-radius: 2px;
-        text-align: center;
-        z-index: 1;
-        position: relative;
-    }
-
-    .splash .heading {
-        margin: 0;
-        color: #dddddd;
-        font-size: 35px;
-        font-weight: 400;
-        line-height: 1;
-        letter-spacing: 1.3px;
-        padding-bottom: 15px;
-    }
-
-    .splash .subhead {
-        color: #999;
-        font-size: 24px;
-        margin-bottom: 30px;
-        line-height: 1;
-        font-weight: 300;
-    }
-</style>
 <jsp:include page="header.jsp" />
 
 <div class="slider-area">
@@ -83,12 +53,37 @@
                                             <div class="input-group input-group-lg">
                                                 <input type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-primary" type="button">Αναζήτηση</button>
+                                                    <button class="btn btn-secondary" id="search-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                                                        <span class="caret" id="search-caret"></span>
+                                                    </button>
+                                                    <button class="btn btn-primary" type="button" style="margin-left: 14px; border-radius: 5px;">
+                                                        Αναζήτηση
+                                                    </button>
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
 
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-block">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label for="price" style="font-weight: 400;">Τιμή:</label>
+                                                            <input type="text" class="form-control" id="price" placeholder="π.χ 40">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="category" style="font-weight: 400;">Κατηγορία:</label>
+                                                            <input type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="place" style="font-weight: 400;">Περιοχή:</label>
+                                                            <input type="text" class="form-control" id="place" placeholder="π.χ Αθήνα">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1073,3 +1073,47 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     background-color: #e0e0e0;
     padding: 1em;
 }
+
+.splash {
+    width: 840px;
+    background: rgba(0,0,0,0.85);
+    padding: 50px 60px;
+    margin: auto;
+    border-radius: 2px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+}
+
+.splash .heading {
+    margin: 0;
+    color: #dddddd;
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 1px;
+    padding-bottom: 15px;
+}
+
+.splash .subhead {
+    color: #999;
+    font-size: 24px;
+    margin-bottom: 30px;
+    line-height: 1;
+    font-weight: 300;
+}
+
+.card {
+    color: white;
+    text-align: left;
+    padding-top: 25px;
+}
+
+#search-btn {
+    border-radius: 0px 6px 6px 0px;
+}
+
+#search-caret {
+    border-width:5px;
+    color: black;
+}

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,22 +31,24 @@ import java.util.List;
 public class LoadXml extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("index.jsp");
+        doPost(request,response);
+//        response.sendRedirect("index.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
-
-        if (xml_amount < 1 || xml_amount > 40){
-            request.setAttribute("error", "Η τιμή πρέπει να είναι από 1 εώς 40");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
+//        Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
+//
+//        if (xml_amount < 1 || xml_amount > 40){
+//            request.setAttribute("error", "Η τιμή πρέπει να είναι από 1 εώς 40");
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
+//            dispatcher.forward(request, response);
+//            return;
+//        }
         try {
 
-            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
+//            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
+            File file = new File("/home/agg/Desktop/TedExamples/test.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -110,6 +113,20 @@ public class LoadXml extends HttpServlet {
         Double first_bid_d = DoubleConvert(first_bid);
         Date starts_d = DateConvert(starts);
         Date ends_d = DateConvert(ends);
+
+        Calendar starts_cal = Calendar.getInstance();
+        Calendar ends_cal = Calendar.getInstance();
+        starts_cal.setTime(starts_d);
+        ends_cal.setTime(ends_d);
+        starts_cal.set(Calendar.YEAR, 2017);
+        ends_cal.set(Calendar.YEAR, 2017);
+
+        starts_d = starts_cal.getTime();
+        ends_d = ends_cal.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        sdf.format(starts_d);
+        sdf.format(ends_d);
 
         //========================================================
         //============ Build the bids for this Item ==============
