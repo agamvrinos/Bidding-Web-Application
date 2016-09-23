@@ -49,6 +49,7 @@
                                             Αναζητήστε, Ποντάρετε, Κερδίστε!
                                         </div>
 
+                                    <form action="index.jsp" method="get">
                                         <div class="search-bar">
                                             <div class="input-group input-group-lg">
                                                 <input type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
@@ -56,7 +57,7 @@
                                                     <button class="btn btn-secondary" id="search-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
                                                         <span class="caret" id="search-caret"></span>
                                                     </button>
-                                                    <button class="btn btn-primary" type="button" style="margin-left: 14px; border-radius: 5px;">
+                                                    <button class="btn btn-primary" style="margin-left: 14px; border-radius: 3px;">
                                                         Αναζήτηση
                                                     </button>
                                                 </span>
@@ -83,6 +84,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
