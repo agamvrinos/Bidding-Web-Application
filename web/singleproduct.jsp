@@ -11,7 +11,7 @@
 
         Item item = new ItemDAO(true).getItemByID(auction_id);
 
-        if(item == null || item.getState()!=1) { //if not valid, error page
+        if(item == null) { //if not valid, error page
             response.sendRedirect("index.jsp");
             return;
         }
@@ -169,11 +169,14 @@
                                 <%--Buy Now Button--%>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <%if (buy_price != 0.0){%>
+                                        <%if (buy_price != null){%>
                                             <a href="BuyAuction?id=<%=auction_id%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
                                         <%}%>
                                     </div>
                                 </div>
+                                <form action="ExportXML" method="POST" id="export-xml">
+                                    <button id="export" name="export" value="<%=request.getParameter("id")%>" class="btn btn-primary">Export XML</button>
+                                </form>
 
                                 <br>
 

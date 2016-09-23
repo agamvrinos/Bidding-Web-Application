@@ -13,14 +13,17 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-@WebServlet(name = "/ExportXML")
+@WebServlet("/ExportXML")
 public class ExportXML extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer item_id = Integer.parseInt(request.getParameter("id"));
+
+        //TODO: MONO ADMIN NA MPAINEI EDW
+        Integer item_id = Integer.parseInt(request.getParameter("export"));
 
         ItemDAO dao = new ItemDAO(true);
         Item item = dao.getItemByID(item_id);
@@ -88,13 +91,18 @@ public class ExportXML extends HttpServlet {
             xmlBidder.setBidder_name(item.getBids().get(i).getUsername());
             xmlBidder.setLocation(item.getBids().get(i).getLocation());
             xmlBidder.setCountry(item.getBids().get(i).getCountry());
-            xmlBidder.setRating(dao.getUserRating(item.getBids().get(i).getUsername()));
+            xmlBidder.setRating(item.getBids().get(i).getRating());
         }
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(xmlItems, response.getWriter());
+
+            response.setContentType("text/xml");
+            response.setHeader("Content-disposition","attachment; filename=item-" + item_id + ".xml");
+            OutputStream out = response.getOutputStream();
+            marshaller.marshal(xmlItems, out);
+            out.flush();
         }
         catch (JAXBException ex){
             System.err.println("ERROR on ExportXML: " + ex.getMessage());
