@@ -13,6 +13,8 @@ import java.util.*;
 public class ItemDAO {
 
     private final Integer LOW_BET = -1;
+    private int numOfResults;
+    private int numOfPages;
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -35,11 +37,13 @@ public class ItemDAO {
     private static final String SQL_GET_TOTAL_BIDS = "SELECT total_offers FROM items WHERE id = (?)";
     private static final String SQL_UPDATE_ITEM_BIDS = "UPDATE items SET total_offers = (?), currently = (?) WHERE id = (?)";
     private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
-    private static final String SQL_SEARCH_ITEMS_BY_NAME = "SELECT DISTINCT id FROM items WHERE name LIKE ?";
-    private static final String SQL_SEARCH_ITEMS_BY_CATEGORY = "SELECT DISTINCT id FROM item_categories WHERE category LIKE ?";
-    private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT DISTINCT id FROM items WHERE description LIKE ?";
-    private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT DISTINCT id FROM items WHERE currently < ?";
-    private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ?";
+
+    private static final String SQL_SEARCH_ITEMS_BY_NAME = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE name LIKE ? LIMIT ? , 15";
+    private static final String SQL_SEARCH_ITEMS_BY_CATEGORY = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM item_categories WHERE category LIKE ? LIMIT ? , 15";
+    private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE description LIKE ? LIMIT ? , 15";
+    private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE currently < ? LIMIT ? , 15";
+    private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ? LIMIT ? , 15";
+
     private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
 
 
@@ -482,8 +486,13 @@ public class ItemDAO {
         }
     }
 
-    public List<Item> getSearchResults(String value, String type){
+    public List<Item> getSearchResults(String value, String type, Integer page){
         List<Item> items = new ArrayList<Item>();
+
+        if(page < 1)
+            return items;
+
+        Integer offset = (page-1) * 15;
 
         try{
             Connection connection = factory.getConnection();
@@ -492,22 +501,27 @@ public class ItemDAO {
             if(type.equals("name")) {
                 statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false);
                 statement.setString(1, "%" + value + "%");
+                statement.setInt(2, offset);
             }
             else if (type.equals("category")) {
                 statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false);
                 statement.setString(1, "%" + value + "%");
+                statement.setInt(2, offset);
             }
             else if(type.equals("description")) {
                 statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false);
                 statement.setString(1, "%" + value + "%");
+                statement.setInt(2, offset);
             }
             else if (type.equals("price")) {
                 statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_PRICE, false, value);
+                statement.setInt(2, offset);
             }
             else if (type.equals("location")) {
                 statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_LOCATION, false);
                 statement.setString(1, "%" + value + "%");
                 statement.setString(2, "%" + value + "%");
+                statement.setInt(3, offset);
             }
             else
                 return items;
@@ -524,6 +538,16 @@ public class ItemDAO {
                 }
             }
 
+            //get number of rows
+            result = statement.executeQuery("SELECT FOUND_ROWS()");
+            result.next();
+            numOfResults = result.getInt(1);
+
+            if(numOfResults%15==0)
+                numOfPages = numOfResults/15;
+            else
+                numOfPages = (numOfResults/15)+1;
+
             connection.close();
             return items;
 
@@ -532,6 +556,14 @@ public class ItemDAO {
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at getSearchResults");
         }
+    }
+
+    public int getNumOfResults() {
+        return numOfResults;
+    }
+
+    public int getNumOfPages() {
+        return numOfPages;
     }
 
     public void loadXmlEntities(Item item){

@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="dao.DAOUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <script>
@@ -57,7 +58,7 @@
 </script>
 <html>
 <head>
-    <title>Αποτελέσματα Αναζήτησης Δημοπρασιών για </title>
+    <title>Αποτελέσματα Αναζήτησης Δημοπρασιών για <%=request.getParameter("value")%></title>
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -85,11 +86,43 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
 
-             <hr style="border-top: 1px solid #1abc9c">
+
 
         <% ItemDAO dao = new ItemDAO(true);
-            List<Item> auctions = dao.getSearchResults(request.getParameter("value"), request.getParameter("type"));
-            for (int i = 0; i < auctions.size(); i++) {%>
+            String page_str = request.getParameter("page");
+            Integer pageid;
+            if (page_str != null)
+                pageid = DAOUtil.IntConvert(page_str);
+            else
+                pageid = 1;
+            List<Item> auctions = dao.getSearchResults(request.getParameter("value"), request.getParameter("type"), pageid);%>
+
+            <br><h3>Βρέθηκαν <%=dao.getNumOfResults()%> αποτελέσματα για: "<%=request.getParameter("value")%>"</h3>
+
+            <%--PAGING--%>
+            <div class="alignright">
+                <form class="form-horizontal" action="searchResults.jsp" method="get" >
+                    <% if (pageid > 1){%>
+                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid-1%>">
+                        <strong><</strong>
+                    </a>
+                    <%}%>
+                    <input type="hidden" name="value" value="<%=request.getParameter("value")%>" />
+                    <input type="hidden" name="type" value="<%=request.getParameter("type")%>" />
+                    <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
+                    από <%=dao.getNumOfPages()%>
+                    <% if (pageid < dao.getNumOfPages()){%>
+                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid+1%>">
+                        <strong>></strong>
+                    </a>
+                    <%}%>
+                </form>
+            </div>
+            <%--END OF PAGING--%>
+
+            <br><br><hr style="border-top: 1px solid #1abc9c">
+
+            <% for (int i = 0; i < auctions.size(); i++) {%>
 
             <div class="row" >
 
@@ -132,19 +165,19 @@
                         </tr>
                         <tr>
                             <th>Τρέχουσα προσφορά</th>
-                            <td><%=auctions.get(i).getCurrently()%></td>
+                            <td>$<%=auctions.get(i).getCurrently()%></td>
                         </tr>
                         <tr>
                             <th>Τιμή Αγοράς</th>
                             <%if(auctions.get(i).getBuy_price() == null){%>
                             <td>Δεν έχει οριστεί</td>
                             <%}else{%>
-                            <td><%=auctions.get(i).getBuy_price()%></td>
+                            <td>$<%=auctions.get(i).getBuy_price()%></td>
                             <%}%>
                         </tr>
                         <tr>
                             <th>Αρχική Προσφορά</th>
-                            <td><%=auctions.get(i).getFirst_bid()%></td>
+                            <td>$<%=auctions.get(i).getFirst_bid()%></td>
                         </tr>
                         <tr>
                             <th>Ημερομηνία/Ώρα Λήξης</th>
@@ -153,7 +186,7 @@
                         <%--Countdown timer if auction is published--%>
                         <%
                             Date end_time = auctions.get(i).getEnds();
-                            SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                            SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
                             String end = endformat.format(end_time);
                         %>
                         <tr>
@@ -178,6 +211,27 @@
 
             <hr style="border-top: 1px solid #1abc9c">
             <%}%>
+
+            <%--PAGING--%>
+                <div class="alignright">
+                    <form class="form-horizontal" action="searchResults.jsp" method="get" >
+                        <% if (pageid > 1){%>
+                            <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid-1%>">
+                                <strong><</strong>
+                            </a>
+                        <%}%>
+                        <input type="hidden" name="value" value="<%=request.getParameter("value")%>" />
+                        <input type="hidden" name="type" value="<%=request.getParameter("type")%>" />
+                        <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
+                        από <%=dao.getNumOfPages()%>
+                        <% if (pageid < dao.getNumOfPages()){%>
+                            <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid+1%>">
+                               <strong>></strong>
+                            </a>
+                        <%}%>
+                    </form>
+                </div>
+            <%--END OF PAGING--%>
 
 
         </div>

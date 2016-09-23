@@ -26,4 +26,14 @@ public class DAOUtil {
 		return rs.wasNull() ? null : nValue;
 	}
 
+	public static Integer IntConvert(String str){
+		Integer i;
+		try {
+			i = Integer.parseInt(str);
+		}
+		catch(NumberFormatException | NullPointerException nfe){
+			return -1;
+		}
+		return i;
+	}
 }
