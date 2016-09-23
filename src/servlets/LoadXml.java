@@ -64,6 +64,8 @@ public class LoadXml extends HttpServlet {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(xml_items, response.getWriter());
 
+            //TODO: Na valw na se petaei sto loadXML.jsp
+
         } catch (JAXBException e) {
             e.printStackTrace();
         }

@@ -27,6 +27,36 @@
 </head>
 <body>
 
+<style>
+    .splash {
+        width: 840px;
+        background: rgba(0,0,0,0.85);
+        padding: 50px 60px;
+        margin: auto;
+        border-radius: 2px;
+        text-align: center;
+        z-index: 1;
+        position: relative;
+    }
+
+    .splash .heading {
+        margin: 0;
+        color: #dddddd;
+        font-size: 35px;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: 1.3px;
+        padding-bottom: 15px;
+    }
+
+    .splash .subhead {
+        color: #999;
+        font-size: 24px;
+        margin-bottom: 30px;
+        line-height: 1;
+        font-weight: 300;
+    }
+</style>
 <jsp:include page="header.jsp" />
 
 <div class="slider-area">
@@ -41,14 +71,24 @@
                         <div class="slide-text">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-6 col-md-offset-6">
-                                        <div class="slide-content">
-                                            <h2>We are awesome</h2>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, dolorem, excepturi. Dolore aliquam quibusdam ut quae iure vero exercitationem ratione!</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi ab molestiae minus reiciendis! Pariatur ab rerum, sapiente ex nostrum laudantium.</p>
-                                            <a href="" class="readmore">Learn more</a>
+                                    <div class="splash">
+                                        <div class="heading">
+                                            Αναζήτηση Δημοπρασιών
+                                        </div>
+                                        <div class="subhead">
+                                            Αναζητήστε, Ποντάρετε, Κερδίστε!
+                                        </div>
+
+                                        <div class="search-bar">
+                                            <div class="input-group input-group-lg">
+                                                <input type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button">Αναζήτηση</button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

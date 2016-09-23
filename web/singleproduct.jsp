@@ -174,9 +174,16 @@
                                         <%}%>
                                     </div>
                                 </div>
-                                <form action="ExportXML" method="POST" id="export-xml">
-                                    <button id="export" name="export" value="<%=request.getParameter("id")%>" class="btn btn-primary">Export XML</button>
-                                </form>
+
+                                <%--Export XML Button--%>
+                                <div class="row">
+                                    <form action="ExportXML" method="POST" id="export-xml">
+                                    <div class="col-md-8">
+                                        <br>
+                                        <button id="export" name="export" value="<%=request.getParameter("id")%>" class="btn btn-warning">Export XML</button>
+                                    </div>
+                                    </form>
+                                </div>
 
                                 <br>
 
