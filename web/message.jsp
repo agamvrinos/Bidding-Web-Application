@@ -63,29 +63,69 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <style>
+        .rating {
+            padding-top: 22px;
+        }
+        .rating-desc {
+            color: #7E8631;
+            font-weight: 500;
+            margin-bottom: 7px;
+        }
+
+        .edit {
+            color: rgb(47, 47, 47);
+        }
+    </style>
 </head>
 <body>
     <jsp:include page="header.jsp" />
 
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
-        <div id="msg-info">
-            <div id="msg-header">
-                <div id="msg-title">
-                    <%=message.getTitle()%><br>
+        <div class="container">
+            <div id="msg-info">
+                <div id="msg-header">
+                    <div id="msg-title">
+                        <%=message.getTitle()%><br>
+                    </div>
+                    <% if (msg_type.equals("rec")){%>
+                        <i><span>Αποστολέας:</span> <%=sender_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
+                    <% } else if (msg_type.equals("send")){%>
+                        <i><span>Εστάλη στον:</span> <%=receiver_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
+                    <% }%>
                 </div>
-                <% if (msg_type.equals("rec")){%>
-                    <i><span>Αποστολέας:</span> <%=sender_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
-                <% } else if (msg_type.equals("send")){%>
-                    <i><span>Εστάλη στον:</span> <%=receiver_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
-                <% }%>
-            </div>
-            <div id="msg-content">
-                <%=message.getMessage()%>
-            </div>
+                <div id="msg-content">
+                    <%=message.getMessage()%>
+                </div>
 
-            <br>
-            <a href="message_reply.jsp?id=<%=message_id%>&type=<%=msg_type%>" class="btn btn-primary" role="button">Απάντηση</a>
+                <br>
+                <a href="message_reply.jsp?id=<%=message_id%>&type=<%=msg_type%>" class="btn btn-primary" role="button">Απάντηση</a>
+
+                <div class="rating">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="rating-desc">
+                                Αξιολόγηση Πωλητή:
+                            </div>
+
+                            <div class="btn-group btn-group-justified">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success edit">
+                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Θετικά
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-danger edit">
+                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i> Αρνητικά
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
