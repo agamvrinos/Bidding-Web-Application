@@ -112,12 +112,12 @@
 
                             <div class="btn-group btn-group-justified">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-success edit">
+                                    <button type="button" class="btn btn-success edit rate">
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Θετικά
                                     </button>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger edit">
+                                    <button type="button" class="btn btn-danger edit rate">
                                         <i class="fa fa-thumbs-down" aria-hidden="true"></i> Αρνητικά
                                     </button>
                                 </div>
@@ -145,5 +145,25 @@
 
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('.rate').click(function(){
+
+            // Disable the other button than the one clicked
+            $('.rate').not($(this)).prop('disabled', true);
+            $(this).prop('disabled', true);
+            $(this).css("opacity", "1");
+
+//            $.ajax({type: "POST",
+//                url: "/imball-reagens/public/shareitem",
+//                data: { id: $("#Shareitem").val(), access_token: $("#access_token").val() },
+//                success:function(result){
+//                    $("#sharelink").html(result);
+//                }});
+        });
+    });
+</script>
+
 </body>
 </html>
