@@ -58,7 +58,7 @@
 </script>
 <html>
 <head>
-    <title>Αποτελέσματα Αναζήτησης Δημοπρασιών για <%=request.getParameter("value")%></title>
+    <title>Αποτελέσματα Αναζήτησης Δημοπρασιών</title>
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -95,24 +95,26 @@
                 pageid = DAOUtil.IntConvert(page_str);
             else
                 pageid = 1;
-            List<Item> auctions = dao.getSearchResults(request.getParameter("value"), request.getParameter("type"), pageid);%>
+            List<Item> auctions = dao.getSearchResults(request.getParameter("text"), request.getParameter("category"), request.getParameter("price"), request.getParameter("location"), pageid);%>
 
-            <br><h3>Βρέθηκαν <%=dao.getNumOfResults()%> αποτελέσματα για: "<%=request.getParameter("value")%>"</h3>
+            <br><h3>Βρέθηκαν <%=dao.getNumOfResults()%> αποτελέσματα</h3>
 
             <%--PAGING--%>
             <div class="alignright">
                 <form class="form-horizontal" action="searchResults.jsp" method="get" >
                     <% if (pageid > 1){%>
-                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid-1%>">
+                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?text=<%=request.getParameter("text")%>&category=<%=request.getParameter("category")%>&price=<%=request.getParameter("price")%>&location=<%=request.getParameter("location")%>&page=<%=pageid-1%>">
                         <strong><</strong>
                     </a>
                     <%}%>
-                    <input type="hidden" name="value" value="<%=request.getParameter("value")%>" />
-                    <input type="hidden" name="type" value="<%=request.getParameter("type")%>" />
+                    <input type="hidden" name="text" value="<%=request.getParameter("text")%>" />
+                    <input type="hidden" name="category" value="<%=request.getParameter("category")%>" />
+                    <input type="hidden" name="price" value="<%=request.getParameter("price")%>" />
+                    <input type="hidden" name="location" value="<%=request.getParameter("location")%>" />
                     <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
                     από <%=dao.getNumOfPages()%>
                     <% if (pageid < dao.getNumOfPages()){%>
-                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid+1%>">
+                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?text=<%=request.getParameter("text")%>&category=<%=request.getParameter("category")%>&price=<%=request.getParameter("price")%>&location=<%=request.getParameter("location")%>&page=<%=pageid+1%>">
                         <strong>></strong>
                     </a>
                     <%}%>
@@ -213,24 +215,26 @@
             <%}%>
 
             <%--PAGING--%>
-                <div class="alignright">
-                    <form class="form-horizontal" action="searchResults.jsp" method="get" >
-                        <% if (pageid > 1){%>
-                            <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid-1%>">
-                                <strong><</strong>
-                            </a>
-                        <%}%>
-                        <input type="hidden" name="value" value="<%=request.getParameter("value")%>" />
-                        <input type="hidden" name="type" value="<%=request.getParameter("type")%>" />
-                        <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
-                        από <%=dao.getNumOfPages()%>
-                        <% if (pageid < dao.getNumOfPages()){%>
-                            <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?value=<%=request.getParameter("value")%>&type=<%=request.getParameter("type")%>&page=<%=pageid+1%>">
-                               <strong>></strong>
-                            </a>
-                        <%}%>
-                    </form>
-                </div>
+            <div class="alignright">
+                <form class="form-horizontal" action="searchResults.jsp" method="get" >
+                    <% if (pageid > 1){%>
+                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?text=<%=request.getParameter("text")%>&category=<%=request.getParameter("category")%>&price=<%=request.getParameter("price")%>&location=<%=request.getParameter("location")%>&page=<%=pageid-1%>">
+                        <strong><</strong>
+                    </a>
+                    <%}%>
+                    <input type="hidden" name="text" value="<%=request.getParameter("text")%>" />
+                    <input type="hidden" name="category" value="<%=request.getParameter("category")%>" />
+                    <input type="hidden" name="price" value="<%=request.getParameter("price")%>" />
+                    <input type="hidden" name="location" value="<%=request.getParameter("location")%>" />
+                    <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
+                    από <%=dao.getNumOfPages()%>
+                    <% if (pageid < dao.getNumOfPages()){%>
+                    <a class="btn btn-default" style="display:inline-block" href="searchResults.jsp?text=<%=request.getParameter("text")%>&category=<%=request.getParameter("category")%>&price=<%=request.getParameter("price")%>&location=<%=request.getParameter("location")%>&page=<%=pageid+1%>">
+                        <strong>></strong>
+                    </a>
+                    <%}%>
+                </form>
+            </div>
             <%--END OF PAGING--%>
 
 

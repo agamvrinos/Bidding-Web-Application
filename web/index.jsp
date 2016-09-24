@@ -1,4 +1,8 @@
+<%@ page import="dao.ItemDAO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+<% ItemDAO idao = new ItemDAO(true);
+    List<String> categories = idao.getCategories();%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -49,10 +53,10 @@
                                             Αναζητήστε, Ποντάρετε, Κερδίστε!
                                         </div>
 
-                                    <form action="index.jsp" method="get">
+                                    <form id="search" action="searchResults.jsp" method="get">
                                         <div class="search-bar">
                                             <div class="input-group input-group-lg">
-                                                <input type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
+                                                <input name="text" type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-secondary" id="search-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
                                                         <span class="caret" id="search-caret"></span>
@@ -69,16 +73,22 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label for="price" style="font-weight: 400;">Τιμή:</label>
-                                                            <input type="text" class="form-control" id="price" placeholder="π.χ 40">
+                                                            <label for="price" style="font-weight: 400;">Μέγιστη Τιμή:</label>
+                                                            <input name="price" type="text" class="form-control" id="price" placeholder="π.χ 40">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="category" style="font-weight: 400;">Κατηγορία:</label>
-                                                            <input type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">
+                                                            <%--<input name="category" type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">--%>
+                                                            <select name="category" id="category" class="form-control">
+                                                                <option value="">Όλες</option>
+                                                                <%for(int i=0; i<categories.size(); i++){%>
+                                                                <option value="<%=categories.get(i)%>"><%=categories.get(i)%></option>
+                                                                <%}%>
+                                                            </select>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <label for="place" style="font-weight: 400;">Περιοχή:</label>
-                                                            <input type="text" class="form-control" id="place" placeholder="π.χ Αθήνα">
+                                                            <label for="location" style="font-weight: 400;">Περιοχή:</label>
+                                                            <input name="location" type="text" class="form-control" id="location" placeholder="π.χ Αθήνα">
                                                         </div>
                                                     </div>
                                                 </div>

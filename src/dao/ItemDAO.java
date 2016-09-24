@@ -15,6 +15,7 @@ public class ItemDAO {
     private final Integer LOW_BET = -1;
     private int numOfResults;
     private int numOfPages;
+    private static final int RESULTS_PER_PAGE = 15;
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -43,6 +44,9 @@ public class ItemDAO {
     private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE description LIKE ? LIMIT ? , 15";
     private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE currently < ? LIMIT ? , 15";
     private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ? LIMIT ? , 15";
+
+    private static final String SQL_SEARCH_ITEMS = "SELECT SQL_CALC_FOUND_ROWS DISTINCT items.id FROM items, item_categories WHERE (items.country LIKE ? OR items.location LIKE ?) " +
+            "AND (items.description LIKE ? OR items.name LIKE ?) AND (items.id = item_categories.id AND item_categories.category LIKE ?) AND (items.currently < ?) ORDER BY items.currently ASC LIMIT ? , " + RESULTS_PER_PAGE;
 
     private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
 
@@ -486,45 +490,80 @@ public class ItemDAO {
         }
     }
 
-    public List<Item> getSearchResults(String value, String type, Integer page){
+    public List<Item> getSearchResults(String text, String category, String price, String location, Integer page){
         List<Item> items = new ArrayList<Item>();
 
         if(page < 1)
             return items;
 
-        Integer offset = (page-1) * 15;
+        Integer offset = (page-1) * RESULTS_PER_PAGE;
 
         try{
             Connection connection = factory.getConnection();
             PreparedStatement statement;
 
-            if(type.equals("name")) {
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false);
-                statement.setString(1, "%" + value + "%");
-                statement.setInt(2, offset);
+//            if(type.equals("name")) {
+//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false);
+//                statement.setString(1, "%" + value + "%");
+//                statement.setInt(2, offset);
+//            }
+//            else if (type.equals("category")) {
+//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false);
+//                statement.setString(1, "%" + value + "%");
+//                statement.setInt(2, offset);
+//            }
+//            else if(type.equals("description")) {
+//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false);
+//                statement.setString(1, "%" + value + "%");
+//                statement.setInt(2, offset);
+//            }
+//            else if (type.equals("price")) {
+//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_PRICE, false, value);
+//                statement.setInt(2, offset);
+//            }
+//            else if (type.equals("location")) {
+//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_LOCATION, false);
+//                statement.setString(1, "%" + value + "%");
+//                statement.setString(2, "%" + value + "%");
+//                statement.setInt(3, offset);
+//            }
+//            else
+//                return items;
+
+            statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS,false);
+
+            if(location == null || location.equals("")){
+                statement.setString(1, "%");
+                statement.setString(2, "%");
             }
-            else if (type.equals("category")) {
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false);
-                statement.setString(1, "%" + value + "%");
-                statement.setInt(2, offset);
+            else {
+                statement.setString(1, "%" + location + "%");
+                statement.setString(2, "%" + location + "%");
             }
-            else if(type.equals("description")) {
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false);
-                statement.setString(1, "%" + value + "%");
-                statement.setInt(2, offset);
+            if(text == null || text.equals("")){
+                statement.setString(3, "%");
+                statement.setString(4, "%");
             }
-            else if (type.equals("price")) {
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_PRICE, false, value);
-                statement.setInt(2, offset);
+            else {
+                statement.setString(3, "%" + text + "%");
+                statement.setString(4, "%" + text + "%");
             }
-            else if (type.equals("location")) {
-                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_LOCATION, false);
-                statement.setString(1, "%" + value + "%");
-                statement.setString(2, "%" + value + "%");
-                statement.setInt(3, offset);
+            if(category == null || category.equals("")){
+                statement.setString(5, "%");
             }
-            else
-                return items;
+            else {
+                statement.setString(5, category);
+            }
+            if(price == null || price.equals("")) {
+                statement.setString(6, "9999999999");
+            }
+            else{
+                statement.setString(6, price);
+            }
+
+            statement.setInt(7, offset);
+
+
 
             //execute query
             ResultSet result = statement.executeQuery();
@@ -543,10 +582,10 @@ public class ItemDAO {
             result.next();
             numOfResults = result.getInt(1);
 
-            if(numOfResults%15==0)
-                numOfPages = numOfResults/15;
+            if(numOfResults%RESULTS_PER_PAGE==0)
+                numOfPages = numOfResults/RESULTS_PER_PAGE;
             else
-                numOfPages = (numOfResults/15)+1;
+                numOfPages = (numOfResults/RESULTS_PER_PAGE)+1;
 
             connection.close();
             return items;
