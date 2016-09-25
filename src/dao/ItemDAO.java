@@ -1,10 +1,7 @@
 package dao;
 
 import XMLentities.XmlItem;
-import entities.Bid;
-import entities.Item;
-import entities.Message;
-import entities.User;
+import entities.*;
 
 import java.sql.*;
 import java.util.Date;
@@ -49,6 +46,13 @@ public class ItemDAO {
             "AND (items.description LIKE ? OR items.name LIKE ?) AND (items.id = item_categories.id AND item_categories.category LIKE ?) AND (items.currently < ?) ORDER BY items.currently ASC LIMIT ? , " + RESULTS_PER_PAGE;
 
     private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
+
+    private static final String SQL_GET_NEIGHBORS = "SELECT DISTINCT a2.username, COUNT(DISTINCT a2.username, a2.item_id) AS c " +
+            "FROM ted.bids AS a1, ted.bids AS a2 WHERE a1.username = ? AND a2.item_id = a1.item_id " +
+            "AND a2.username != a1.username GROUP BY a2.username ORDER BY c LIMIT 0 , 10;";
+
+    private static final String SQL_GET_NEIGHBORHOOD_ITEMS = "SELECT a1.item_id FROM ted.bids AS a1 WHERE a1.username = ? " +
+            "AND NOT EXISTS( SELECT * FROM ted.bids AS a2 WHERE a2.item_id = a1.item_id AND a2.username = ?)";
 
 
     private ConnectionFactory factory;
@@ -688,6 +692,61 @@ public class ItemDAO {
             System.err.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at getUserRating");
         }
+    }
+
+    public List<Item> getRecommendedItems(String username){
+
+        List<String> neighbors = new ArrayList<String>();
+        List<Integer> items_unordered = new ArrayList<Integer>();
+        List<ItemsRecommendedCount> items_with_counts = new ArrayList<ItemsRecommendedCount>();
+        List<Item> rec_items = new ArrayList<Item>();
+
+        try {
+
+            Connection connection = factory.getConnection();
+
+            //get usernames of neighbors ordered by correlation
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_NEIGHBORS, false, username);
+            ResultSet results = statement.executeQuery();
+
+            //get them on the list
+            while (results.next())
+                neighbors.add(results.getString(1));
+
+            //get the items they have bid for, but you dont, in same order
+            for(int i=0; i<neighbors.size(); i++){
+                statement = DAOUtil.prepareStatement(connection, SQL_GET_NEIGHBORHOOD_ITEMS, false, neighbors.get(i), username);
+                results = statement.executeQuery();
+                //add all the items in a list
+                while (results.next())
+                    items_unordered.add(results.getInt(1));
+            }
+
+            //create a list of item_id + count of times it appears in the list
+            for(int i=0; i<items_unordered.size(); i++) {
+                int count = Collections.frequency(items_unordered,items_unordered.get(i));
+                items_with_counts.add(new ItemsRecommendedCount(items_unordered.get(i), count)); //duplicates allowed
+            }
+
+            //remove duplicates
+            items_with_counts = new ArrayList<ItemsRecommendedCount>(new LinkedHashSet<ItemsRecommendedCount>(items_with_counts));
+
+            //sort list based on counts
+            Collections.sort(items_with_counts,ItemsRecommendedCount.DESC_COMPARATOR);
+
+            //create final items list
+            for(int i=0; i<items_with_counts.size(); i++){
+                rec_items.add(getItemByID(items_with_counts.get(i).getId()));
+            }
+
+            return rec_items;
+
+        }
+        catch (SQLException ex){
+            System.err.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at getRecommendedItems");
+        }
+
     }
 
 }
