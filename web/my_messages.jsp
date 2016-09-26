@@ -174,7 +174,7 @@
                                     <a href="DeleteMessage?id=<%=msg.getId()%>&type=0" onclick="return confirm('Είστε σίγουροι για την διαγραφή?');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=sender_fullname%></td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=msg.getTitle()%></td>
+                                <td class='clickable-row title' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=msg.getTitle()%></td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=ended%></td>
                             </tr>
                         <%}%>
@@ -200,7 +200,7 @@
                                     <a href="DeleteMessage?id=<%=msg.getId()%>&type=1" onclick="return confirm('Είστε σίγουροι για την διαγραφή?');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=receiver_fullname%></td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=msg.getTitle()%></td>
+                                <td class='clickable-row title' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=msg.getTitle()%></td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=ended%></td>
                             </tr>
                         <%}%>
@@ -272,6 +272,11 @@
     });
 </script>
 
+<script>
+    var text = $('.title').text();
+    text = text.substr(0,35) + '...';
+    $('.title').text(text);
+</script>
 </body>
 
 

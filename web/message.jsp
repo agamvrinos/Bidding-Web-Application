@@ -25,8 +25,8 @@
     String msg_type = request.getParameter("type");
 
     // Get full message using the id
-    MessageDAO dao = new MessageDAO(true);
-    Message message = dao.getMessageById(message_id);
+    MessageDAO mdao = new MessageDAO(true);
+    Message message = mdao.getMessageById(message_id);
 
     // Format Date
     Date end_t = message.getDate();
@@ -40,7 +40,7 @@
     String receiver_fullname = receiver.getFullname();
 
     if (msg_type.equals("rec"))   // Mark message as read
-        dao.updateIsRead(message_id);
+        mdao.updateIsRead(message_id);
 %>
 <html>
 <head>
@@ -103,29 +103,33 @@
                 <br>
                 <a href="message_reply.jsp?id=<%=message_id%>&type=<%=msg_type%>" class="btn btn-primary" role="button">Απάντηση</a>
 
-                <div class="rating">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="rating-desc">
-                                Αξιολόγηση Πωλητή:
-                            </div>
+                <%
+                // if auto_message or already rated
+                if (message.getIs_auto() == 1){%>
+                    <div class="rating">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="rating-desc">
+                                    Αξιολόγηση Πωλητή:
+                                </div>
 
-                            <div class="btn-group btn-group-justified">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success edit rate" value="1">
-                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Θετικά
-                                    </button>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success edit rate" value="1">
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i> Θετικά
+                                        </button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger edit rate" value="-1">
+                                            <i class="fa fa-thumbs-down" aria-hidden="true"></i> Αρνητικά
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-danger edit rate" value="-1">
-                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i> Αρνητικά
-                                    </button>
-                                </div>
+                                <div id="ajaxServletResponse" style="color: cadetblue"></div>
                             </div>
-                            <div id="ajaxServletResponse" style="color: cadetblue"></div>
                         </div>
                     </div>
-                </div>
+                <%}%>
             </div>
         </div>
     </div>
