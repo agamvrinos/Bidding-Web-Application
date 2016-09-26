@@ -159,13 +159,18 @@
             $(this).prop('disabled', true);
             $(this).css("opacity", "1");
 
+
             $.ajax({
                 url : "DisableMessageRating",
                 method: "POST",
-                data : "&seller_id="+<%=sender.getId()%> + "&msg_id="+<%=message_id%> + "&rate_val="+rate_val,// query parameters 1st
+                type : "JSON",
+                data : {seller_uname: '<%=sender.getUsername()%>',
+                        msg_id: <%=message_id%>,
+                        rate_val: rate_val},
                 success : function(){
                     $('#ajaxServletResponse').text("Η αξιολόγηση καταχωρήθηκε");
                 }
+
             });
         });
     });

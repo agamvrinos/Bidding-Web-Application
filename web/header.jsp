@@ -80,7 +80,7 @@
                 <div class="col-sm-6">
                     <% if (request.getSession().getAttribute("user")!=null){ %>
                     <div class="shopping-item">
-                        <a href="my_messages.jsp">Νέα Μηνύματα<i class="fa fa-envelope"></i><span class="product-count">0</span></a>
+                        <a href="my_messages.jsp"><span id="msg">Loading...</span><i class="fa fa-envelope"></i><span class="product-count">0</span></a>
                     </div>
                     <%}%>
                 </div>
@@ -135,7 +135,9 @@
                             if (response != 0){
                                 $('.shopping-item').css('background-color', '#377d70');
                                 $('.shopping-item a').css('color', '#222');
+
                             }
+                            $('#msg').text('Μηνύματα');
 
                             $(messages).text(response);
                         },

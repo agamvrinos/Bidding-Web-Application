@@ -20,6 +20,7 @@ public class BidDAO {
             "SELECT col1, col2 " +
             "FROM (select ? as col1, ? as col2) t " +
             "WHERE NOT EXISTS (SELECT * FROM ratings WHERE username = ?);";
+    private static final String SQL_UPDATE_RATING = "UPDATE ratings SET rating = rating + ? WHERE username = ?";
     private static final String SQL_GET_ITEM_BIDS = "SELECT bids.bid_id, bids.username, bids.bid_time, bids.bid_amount," +
             " users.country, users.city, ratings.rating FROM ted.bids, ted.users, ted.ratings WHERE bids.item_id = ? " +
             "AND users.username = bids.username AND users.username = ratings.username ORDER BY bids.bid_amount DESC";
@@ -75,6 +76,7 @@ public class BidDAO {
         }
     }
 
+    //TODO: oti na nai sunartiseis edw. InsertRating kai UpdateRating sto BidDAO??????
     public void insertRating(String username, Integer rating) {
         try {
             Connection connection = factory.getConnection();
@@ -90,6 +92,22 @@ public class BidDAO {
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Errori at InsertRating");
+        }
+    }
+
+    public void updateRating(String username, Integer rating_val) {
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement;
+
+            // Update User rating
+            statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_RATING, true, rating_val, username);
+            statement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Errori at UpdateRating");
         }
     }
 

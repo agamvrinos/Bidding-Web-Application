@@ -18,6 +18,7 @@ public class MessageDAO {
     private static final String SQL_SEND_REPLY = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent) VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_AUTO_MSG = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent, is_auto) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE_ISREAD = "UPDATE messages SET is_read=1 WHERE id= ?";
+    private static final String SQL_UPDATE_ISAUTO = "UPDATE messages SET is_auto=0 WHERE id= ?";
     private static final String SQL_GET_USER_NEW_MSGS = "SELECT COUNT(*) AS count FROM messages WHERE receiver_id = (?) AND is_read=0 AND receiver_deleted=0";
     private static final String SQL_DELETE_SEND_MSG = "UPDATE messages SET sender_deleted=1 where id = (?)";
     private static final String SQL_DELETE_REC_MSG = "UPDATE messages SET receiver_deleted=1 where id = (?)";
@@ -148,6 +149,21 @@ public class MessageDAO {
         }
     }
 
+    public void updateIsAuto(Integer message_id){
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_ISAUTO, false, message_id);
+            statement.executeUpdate();
+
+            connection.close();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRORI: " + ex.getMessage());
+            throw new RuntimeException("Error at update is_auto");
+        }
+    }
+
     public Integer getUserNewMessages(Integer user_id){
         Integer counter = 0;
 
@@ -227,4 +243,6 @@ public class MessageDAO {
             throw new RuntimeException("Error at auto message");
         }
     }
+
+
 }
