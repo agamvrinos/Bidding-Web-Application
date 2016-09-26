@@ -112,16 +112,17 @@
 
                             <div class="btn-group btn-group-justified">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-success edit rate">
+                                    <button type="button" class="btn btn-success edit rate" value="1">
                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Θετικά
                                     </button>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger edit rate">
+                                    <button type="button" class="btn btn-danger edit rate" value="-1">
                                         <i class="fa fa-thumbs-down" aria-hidden="true"></i> Αρνητικά
                                     </button>
                                 </div>
                             </div>
+                            <div id="ajaxServletResponse" style="color: cadetblue"></div>
                         </div>
                     </div>
                 </div>
@@ -150,17 +151,22 @@
     $(document).ready(function(){
         $('.rate').click(function(){
 
+            // Get if rating was positive or negative
+            var rate_val = $(this).attr("value");
+
             // Disable the other button than the one clicked
             $('.rate').not($(this)).prop('disabled', true);
             $(this).prop('disabled', true);
             $(this).css("opacity", "1");
 
-//            $.ajax({type: "POST",
-//                url: "/imball-reagens/public/shareitem",
-//                data: { id: $("#Shareitem").val(), access_token: $("#access_token").val() },
-//                success:function(result){
-//                    $("#sharelink").html(result);
-//                }});
+            $.ajax({
+                url : "DisableMessageRating",
+                method: "POST",
+                data : "&seller_id="+<%=sender.getId()%> + "&msg_id="+<%=message_id%> + "&rate_val="+rate_val,// query parameters 1st
+                success : function(){
+                    $('#ajaxServletResponse').text("Η αξιολόγηση καταχωρήθηκε");
+                }
+            });
         });
     });
 </script>

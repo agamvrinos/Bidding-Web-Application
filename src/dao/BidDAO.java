@@ -52,7 +52,7 @@ public class BidDAO {
                         bid.getCountry(), bid.getLocation(), "Κορόμπου 13", "1543", 1);
 
                 // Insert new user
-                udao.insertUser(user);
+                udao.insertUser(user, 1);
 
                 // Validate User
                 udao.approveUser(bidder_name, 1);

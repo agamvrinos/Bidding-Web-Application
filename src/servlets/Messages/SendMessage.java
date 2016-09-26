@@ -40,7 +40,7 @@ public class SendMessage extends HttpServlet {
         String message_title = request.getParameter("title");
         String message_content = request.getParameter("message");
 
-        Message message_to_send = new Message(null, my_id, receiver_id, message_title, message_content, 0, new Date());
+        Message message_to_send = new Message(null, my_id, receiver_id, message_title, message_content, 0, new Date(), 0);
 
         // Finally send the message
         dao.sendReplyMessage(message_to_send);

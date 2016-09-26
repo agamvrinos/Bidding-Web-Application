@@ -24,7 +24,9 @@ public class UserDAO {
         factory = ConnectionFactory.getInstance(pool);
     }
 
-    public Integer insertUser(User userInfo){
+    public Integer insertUser(User userInfo, Integer is_imported){
+        //is_imported = 0 -> User created from UI
+        //is_imported = 1 -> User created from xml files
 
         int ret = -1;
 
@@ -45,6 +47,10 @@ public class UserDAO {
             if (ret == 0) {
                 System.err.println("Creating user failed, no rows affected.");
                 return ret;
+            }
+            // if User was created from the UI then set initial rating to 0
+            else if (ret != 0 && is_imported == 0){
+                new BidDAO(true).insertRating(userInfo.getUsername(), 0);
             }
 
         } catch (SQLIntegrityConstraintViolationException e1){

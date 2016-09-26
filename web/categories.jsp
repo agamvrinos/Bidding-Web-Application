@@ -43,17 +43,17 @@
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                             <div class="btn-group" role="group">
                                 <%if (i % 3 == 0) {%>
-                                    <a href="auctionsBrowse.jsp?category=<%=categories.get(i)%>" class="btn btn-default" role="button" style="background-color: rgb(200, 239, 231); border-color: rgb(58, 129, 115);"><%=categories.get(i)%></a>
+                                    <a href="auctionsBrowse.jsp?category=<%=categories.get(i)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i)%></a>
                                 <%}%>
                             </div>
                             <div class="btn-group" role="group">
                                 <%if (i + 1 < categories.size() &&  (i+1) % 3 == 1) {%>
-                                    <a href="auctionsBrowse.jsp?category=<%=categories.get(i + 1)%>" class="btn btn-default" role="button" style="background-color: rgb(200, 239, 231); border-color: rgb(58, 129, 115);"><%=categories.get(i + 1)%> </a>
+                                    <a href="auctionsBrowse.jsp?category=<%=categories.get(i + 1)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i + 1)%> </a>
                                 <%}%>
                             </div>
                             <div class="btn-group" role="group">
                                 <%if (i + 2 < categories.size() &&  (i+2) % 3 == 2) {%>
-                                    <a href="auctionsBrowse.jsp?category=<%=categories.get(i + 2)%>" class="btn btn-default" role="button" style="background-color: rgb(200, 239, 231); border-color: rgb(58, 129, 115);"><%=categories.get(i + 2)%></a>
+                                    <a href="auctionsBrowse.jsp?category=<%=categories.get(i + 2)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i + 2)%></a>
                                 <%}%>
                             </div>
                         </div>

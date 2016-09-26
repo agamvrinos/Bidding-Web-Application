@@ -37,7 +37,7 @@ public class Register extends HttpServlet {
 
         // Create UserDAO and Add new user to database
         UserDAO dao = new UserDAO(true);
-        Integer register_result = dao.insertUser(userInfo);
+        Integer register_result = dao.insertUser(userInfo, 0);
 
         // Set response encoding to UTF-8
         response.setContentType("text/html; charset=UTF-8");

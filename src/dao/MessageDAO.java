@@ -16,6 +16,7 @@ public class MessageDAO {
     private static final String SQL_GET_SENT_MSGS = "SELECT * FROM messages WHERE sender_id = (?) AND sender_deleted=0 ORDER BY date_sent DESC";
     private static final String SQL_GET_MSG_BY_ID = "SELECT * FROM messages WHERE id = (?)";
     private static final String SQL_SEND_REPLY = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_AUTO_MSG = "INSERT INTO messages (sender_id, receiver_id, message_title, message_content, date_sent, is_auto) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE_ISREAD = "UPDATE messages SET is_read=1 WHERE id= ?";
     private static final String SQL_GET_USER_NEW_MSGS = "SELECT COUNT(*) AS count FROM messages WHERE receiver_id = (?) AND is_read=0 AND receiver_deleted=0";
     private static final String SQL_DELETE_SEND_MSG = "UPDATE messages SET sender_deleted=1 where id = (?)";
@@ -55,8 +56,9 @@ public class MessageDAO {
                 String message_content = results.getString("message_content");
                 Integer is_read = results.getInt("is_read");
                 Date date = results.getTimestamp("date_sent");
+                Integer is_auto = results.getInt("is_auto");
 
-                Message message = new Message(id, sender_id, receiver_id, message_title, message_content, is_read, date);
+                Message message = new Message(id, sender_id, receiver_id, message_title, message_content, is_read, date, is_auto);
 
                 messages.add(message);
             }
@@ -89,8 +91,9 @@ public class MessageDAO {
                 String message_content = results.getString("message_content");
                 Integer is_read = results.getInt("is_read");
                 Date date = results.getTimestamp("date_sent");
+                Integer is_auto = results.getInt("is_auto");
 
-                Message message = new Message(id, sender_id, receiver_id, message_title, message_content, is_read, date);
+                Message message = new Message(id, sender_id, receiver_id, message_title, message_content, is_read, date, is_auto);
 
                 connection.close();
 
@@ -212,7 +215,7 @@ public class MessageDAO {
         try {
             Connection connection = factory.getConnection();
 
-            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_SEND_REPLY, true, sender_id, receiver_id, message_title, message_content, date_sent);
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_AUTO_MSG, true, sender_id, receiver_id, message_title, message_content, date_sent, 1);
 
             if (statement.executeUpdate() == 0)
                 throw new RuntimeException("Creating Auto Message Failed");
