@@ -9,7 +9,8 @@
         Integer auction_id = Integer.valueOf(request.getParameter("id"));
 //        String chosen_category = request.getParameter("category");
 
-        Item item = new ItemDAO(true).getItemByID(auction_id);
+        ItemDAO idao = new ItemDAO(true);
+        Item item = idao.getItemByID(auction_id);
 
         if(item == null) { //if not valid, error page
             response.sendRedirect("index.jsp");
@@ -43,6 +44,17 @@
         #map {
             width: 100%;
             height: 400px;
+        }
+
+        .btn-static {
+            background-color: lightgrey;
+            border: 1px solid grey;
+            cursor: default;
+        }
+        .btn-static:active {
+            -moz-box-shadow:    inset 0 0 0px white;
+            -webkit-box-shadow: inset 0 0 0px white;
+            box-shadow:         inset 0 0 0px white;
         }
     </style>
 
@@ -139,7 +151,12 @@
                                             <span style="font-weight: bold;">Πωλητής: </span> <a href="#"> <%=item.getSeller()%></a>
                                         </div>
                                     </div>
-                                </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5><span style="background-color: #34525a;" class="label label-default">Βαθμολογία: <%=idao.getUserRating(item.getSeller())%> <i class="fa fa-thumbs-up" aria-hidden="true"></i></span></h5>                                        </div>
+                                        </div>
+                                    </div>
 
                                 <br>
                                 <br>
@@ -191,7 +208,7 @@
                                     <ul class="product-tab" role="tablist">
                                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Περιγραφή</a></li>
                                         <li role="presentation"><a href="#maps" id="gmaps" aria-controls="gmaps" role="tab" data-toggle="tab">Χάρτης</a></li>
-                                        <li role="presentation"><a href="#reviews" id="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Αξιολόγηση</a></li>
+                                        <li role="presentation"><a href="#reviews" id="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Προσφορές</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">

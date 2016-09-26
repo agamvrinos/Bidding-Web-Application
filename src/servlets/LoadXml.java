@@ -37,18 +37,18 @@ public class LoadXml extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
-//
-//        if (xml_amount < 1 || xml_amount > 40){
-//            request.setAttribute("error", "Η τιμή πρέπει να είναι από 1 εώς 40");
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
-//            dispatcher.forward(request, response);
-//            return;
-//        }
+        Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
+
+        if (xml_amount < 1 || xml_amount > 40){
+            request.setAttribute("error", "Η τιμή πρέπει να είναι από 1 εώς 40");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
         try {
 
-//            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
-            File file = new File("/home/agg/Desktop/TedExamples/test.xml");
+            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
+//            File file = new File("/home/agg/Desktop/TedExamples/test.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -224,7 +224,7 @@ public class LoadXml extends HttpServlet {
             String bid_time = xml_bid.getTime();
             Date bid_time_d = DateConvert(bid_time);
 
-            String bid_amount = xml_bid.getAmount().substring(1);
+            String bid_amount = xml_bid.getAmount().substring(1).replace(",", "");
             Double bid_amount_d = DoubleConvert(bid_amount);
 
             XmlBidder bidder_info = xml_bid.getBidder();

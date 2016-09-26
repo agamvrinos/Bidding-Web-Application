@@ -48,7 +48,7 @@
                     <div class="input-group">
                         <input id="xml_amount" name="xml_amount" type="number" class="form-control" placeholder="Δώστε τιμή. Π.χ 1">
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">Φόρτωση!</button>
+                            <button class="btn btn-primary">Φόρτωση!</button>
                         </span>
                     </div>
                 </form>
