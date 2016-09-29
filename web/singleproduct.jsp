@@ -2,6 +2,9 @@
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="dao.BidDAO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entities.Bid" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW--%>
@@ -10,8 +13,11 @@
 //        String chosen_category = request.getParameter("category");
 
         ItemDAO idao = new ItemDAO(true);
+        BidDAO bdao = new BidDAO(true);
+
         Item item = idao.getItemByID(auction_id);
 
+        List<Bid> bids = bdao.getItemBids(auction_id);
         if(item == null) { //if not valid, error page
             response.sendRedirect("index.jsp");
             return;
@@ -28,7 +34,9 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="css/bootstrap.min.css">--%>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -82,7 +90,16 @@
                         <div class="col-sm-4">
                             <div class="product-images">
                                 <div class="product-main-img">
-                                    <img src="img/product-2.jpg" alt="">
+                                    <%String image = item.getImage();
+
+                                    // If there is an image uploaded for this item
+                                    if (image != null) {%>
+                                        <img class="img-responsive center-block" src="files/<%=image%>" style="height: 200px; width: 200px">
+                                    <%}
+                                    // Else use the default image
+                                    else {%>
+                                        <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
+                                    <%}%>
                                 </div>
 
                                 <div class="product-gallery">
@@ -208,7 +225,7 @@
                                     <ul class="product-tab" role="tablist">
                                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Περιγραφή</a></li>
                                         <li role="presentation"><a href="#maps" id="gmaps" aria-controls="gmaps" role="tab" data-toggle="tab">Χάρτης</a></li>
-                                        <li role="presentation"><a href="#reviews" id="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Προσφορές</a></li>
+                                        <li role="presentation"><a href="#offers" id="#offers" aria-controls="offers" role="tab" data-toggle="tab">Προσφορές</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
@@ -217,7 +234,33 @@
                                         <div role="tabpanel" class="tab-pane fade" id="maps">
                                             <div id="map"></div>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="reviews">
+                                        <div role="tabpanel" class="tab-pane fade" id="offers">
+
+                                            <table id="offers-table" class="table table-striped hover display compact" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Όνομα Χρήστη</th>
+                                                        <th>Προσφορά</th>
+                                                        <th>Ημερομηνία/Ώρα</th>
+                                                        <th>Χώρα</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <%
+                                                    for (Bid bid : bids){
+                                                        Date bid_time = bid.getTime();
+                                                        String b_time = end_format.format(bid_time);
+                                                    %>
+                                                    <tr>
+                                                        <td><%=bid.getUsername()%></td>
+                                                        <td>$<%=bid.getAmount()%></td>
+                                                        <td><%=b_time%></td>
+                                                        <td><%=bid.getLocation()%></td>
+                                                    </tr>
+                                                    <%}%>
+                                                </tbody>
+                                            </table>
 
                                         </div>
                                     </div>
@@ -335,7 +378,7 @@
 <script src="javascript/jquery-1.10.2.js"></script>
 <script src="javascript/jquery-ui.js"></script>
 <script src="javascript/form.js"></script>
-<script src="javascript/bootstrap.min.js"></script>
+<%--<script src="javascript/bootstrap.min.js"></script>--%>
 
 
 <!-- jQuery sticky menu -->
@@ -348,12 +391,17 @@
 <!-- Main Script -->
 <script src="javascript/main.js"></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
 <%-- GOOGLE MAPS --%>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn22YCesLQ6cAqQavGhd1lmwCIVUCZalo&callback=initialize">
 </script>
-<script>
 
+<script>
     $(document).ready(function(){
         $("#gmaps").on('shown.bs.tab', function() {
             var mapProp = {
@@ -364,10 +412,12 @@
             var map=new google.maps.Map(document.getElementById("map"),mapProp);
         });
     });
-
-
 </script>
 
-
+<script>
+    $(document).ready(function() {
+        $('#offers-table').DataTable();
+    });
+</script>
 </body>
 </html>

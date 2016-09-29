@@ -30,7 +30,6 @@
 
                 clearInterval(timer);
                 document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
-//                disableEndedAuction(auction_id);
 
                 return;
             }
@@ -106,12 +105,20 @@
                 </div>
                 <% } %>
 
-                <select id="dropDown">
-                    <option value="2">Όλες</option>
-                    <option value="1">Δημοσιευμένες</option>
-                    <option value="0">Μη Δημοσιευμένες</option>
-                    <option value="-1">Ανενεργές</option>
-                </select>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                            <select id="dropDown" class="form-control">
+                                <option value="2">Όλες</option>
+                                <option value="1">Δημοσιευμένες</option>
+                                <option value="0">Μη Δημοσιευμένες</option>
+                                <option value="-1">Ανενεργές</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
 
                 <hr style="border-top: 1px solid #1abc9c">
 

@@ -39,19 +39,9 @@
                                     String username = user.getUsername();
                                 %>
                                     <%=username%>!
-                                <%
-                                    }
-                                %>
+                                <%}%>
 
                             </li>
-                            <%--<li class="dropdown dropdown-small">--%>
-                                <%--<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">currency :</span><span class="value">USD </span><b class="caret"></b></a>--%>
-                                <%--<ul class="dropdown-menu">--%>
-                                    <%--<li><a href="#">USD</a></li>--%>
-                                    <%--<li><a href="#">INR</a></li>--%>
-                                    <%--<li><a href="#">GBP</a></li>--%>
-                                <%--</ul>--%>
-                            <%--</li>--%>
 
                             <li class="dropdown dropdown-small">
                                 <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Γλώσσα: </span><span class="value">Ελληνικά </span><b class="caret"></b></a>
