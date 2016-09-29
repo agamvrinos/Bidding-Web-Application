@@ -47,7 +47,7 @@ public class LoadXml extends HttpServlet {
         }
         try {
 
-            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
+            File file = new File("/home/stef/Downloads/ebay/ebay-data/items-" + (xml_amount - 1) + ".xml");
 //            File file = new File("/home/agg/Desktop/TedExamples/test.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 

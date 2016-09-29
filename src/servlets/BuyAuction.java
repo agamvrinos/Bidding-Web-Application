@@ -3,6 +3,7 @@ package servlets;
 import dao.ItemDAO;
 import dao.MessageDAO;
 import dao.UserDAO;
+import entities.Item;
 import entities.User;
 
 import javax.servlet.RequestDispatcher;
@@ -47,7 +48,8 @@ public class BuyAuction extends HttpServlet {
 
         // Check if in the meantime the auction has ended
         Date now = new Date();
-        Date ends = dao.getItemByID(auction_id).getEnds();
+        Item item = dao.getItemByID(auction_id);
+        Date ends = item.getEnds();
 
         if (now.compareTo(ends) > 0){
             request.setAttribute("ended","yes");
@@ -60,16 +62,16 @@ public class BuyAuction extends HttpServlet {
         // 1) Send a message to the user that bought it
         UserDAO udao = new UserDAO(true);
         User buyer = (User) request.getSession().getAttribute("user");
-        User seller = udao.getUserbyName(dao.getItemByID(auction_id).getSeller());
+        User seller = udao.getUserbyName(item.getSeller());
 
         Integer seller_id = seller.getId();
         Integer buyer_id = buyer.getId();
         MessageDAO mdao = new MessageDAO(true);
 
-        mdao.autoSuccessMessage(seller_id, buyer_id, now);
+        mdao.autoSuccessMessage(item.getId(), item.getName(), seller_id, buyer_id, now);
 
         // 2) Delete/Buy Item
-        dao.deleteItem(auction_id);
+//        dao.deleteItem(auction_id);
         request.setAttribute("success","yes");
         dispatcher.forward(request, response);
     }

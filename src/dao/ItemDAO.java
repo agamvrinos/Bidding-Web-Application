@@ -27,7 +27,10 @@ public class ItemDAO {
     private static final String SQL_GET_ITEM = "SELECT * FROM items WHERE items.id = (?)";
     private static final String SQL_GET_CATEGORY = "SELECT * FROM item_categories WHERE category = (?) AND id = 0";
     private static final String SQL_INSERT_CATEGORY = "INSERT INTO item_categories (id, category) VALUES (0, ?)";
+
     private static final String SQL_CHANGE_ITEM_STATE = "UPDATE items SET state=-1 WHERE state=1 AND ends<=NOW()";
+    private static final String SQL_GET_EXPIRED_ITEMS = "SELECT id FROM items WHERE state=1 AND ends<=NOW()";
+
     private static final String SQL_GET_AUCTIONS_BY_CAT = "SELECT * FROM items,item_categories WHERE items.id = item_categories.id AND item_categories.category = (?)";
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET name = (?), currently = (?), buy_price = (?), first_bid = (?)," +
             " country = (?), location = (?), latitude = (?), longitude = (?), creation = (?)," +
@@ -380,17 +383,20 @@ public class ItemDAO {
         try {
 
             Connection connection = factory.getConnection();
-            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_CHANGE_ITEM_STATE, true);
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_EXPIRED_ITEMS, false);
+            ResultSet rs = statement.executeQuery();
+
+            statement = DAOUtil.prepareStatement(connection, SQL_CHANGE_ITEM_STATE, false);
             statement.executeUpdate();
-//            ResultSet rs = statement.getGeneratedKeys();
 
-//            int i=0;
-//
-//            while (rs.next()){
-//                i++;
-//            }
-
-//            System.out.println(i);
+            while (rs.next()){
+                UserDAO udao = new UserDAO(true);
+                Item item = getItemByID(rs.getInt(1));
+                if(item.getBids().size()>0)
+                    new MessageDAO(true).autoSuccessMessage(item.getId(), item.getName(), udao.getUserbyName(item.getSeller()).getId(),
+                            udao.getUserbyName(item.getBids().get(0).getUsername()).getId(), new Date());
+            }
 
             connection.close();
 

@@ -223,10 +223,10 @@ public class MessageDAO {
 
     // This function is used to send an auto message from the Seller to
     // the user that bought the item or made the biggest bid
-    public void autoSuccessMessage (Integer sender_id, Integer receiver_id, Date date_sent){
+    public void autoSuccessMessage (Integer item_id, String item_title, Integer sender_id, Integer receiver_id, Date date_sent){
 
         String message_title = "Συγχαρητήρια για την αγορά";
-        String message_content = "Έχει δρομολογηθεί η διαδικασία αποστολής του Προϊόντος. Για " +
+        String message_content = "Έχει δρομολογηθεί η διαδικασία αποστολής του προϊόντος: <a href=\"singleproduct.jsp?id=" + item_id + "\" >" + item_title + "</a>. Για " +
                 "οποιαδήποτε απορία επικοινωνήστε μαζί μας";
         try {
             Connection connection = factory.getConnection();
