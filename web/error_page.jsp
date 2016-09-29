@@ -1,40 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
-<head>
-    <title>Σφάλμα!</title>
+	<head>
+		<title>Η Σελίδα δεν βρέθηκε!</title>
 
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+		<link href="css/style404.css" rel="stylesheet" type="text/css"/>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- Bootstrap -->
+        <%--<link rel="stylesheet" href="css/bootstrap.min.css">--%>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-</head>
-<body>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-    <jsp:include page="header.jsp" />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/owl.carousel.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+	</head>
 
-    <%--TODO: Na to modaroume sto telos tis erg (dynamic)--%>
-    <br><h3 style="text-align: center;">Σφάλμα 404! Drakos Not FOUND!</h3><br>
+	<body>
+        <jsp:include page="header.jsp" />
 
-    <img src="img/dragon.jpg" class="img-responsive center-block"><br><br>
+        <div class="maincontent-area">
+            <div class="zigzag-bottom"></div>
+            <div class="wrap">
+                <div class="content">
+                    <div class="row">
+                        <p><span>Προσοχή! </span>Η Σελίδα που ζητήσατε δεν υπάρχει.</p>
+                    </div>
+                    <div class="row">
+                        <img src="img/error-img.png" title="error" />
+                    </div>
+                    <br>
+                    <div class="row">
+                        <a href="index.jsp" class="btn btn-primary" role="button" style="background-color: #78a4af; margin-top: 30px;">Επιστροφή στην Αρχική</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div style="text-align: center; text-decoration: underline; font-size: 20px;">
-        <a href="index.jsp">Επιστροφή στην Αρχική</a><br><br><br>
-    </div>
+        <jsp:include page="footer.jsp" />
 
-    <jsp:include page="footer.jsp" />
+        <script src="javascript/jquery-1.10.2.js"></script>
+        <script src="javascript/jquery-ui.js"></script>
+        <script src="javascript/form.js"></script>
+        <%--<script src="javascript/bootstrap.min.js"></script>--%>
 
-</body>
+
+        <!-- jQuery sticky menu -->
+        <script src="javascript/owl.carousel.min.js"></script>
+        <script src="javascript/jquery.sticky.js"></script>
+
+        <!-- jQuery easing -->
+        <script src="javascript/jquery.easing.1.3.min.js"></script>
+
+        <!-- Main Script -->
+        <script src="javascript/main.js"></script>
+    </body>
 </html>
+

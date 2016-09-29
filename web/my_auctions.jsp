@@ -213,7 +213,7 @@
                                     <tr>
                                         <th>Χρόνος που Απομένει</th>
                                         <td>
-                                            <div class="countdown-<%=userAuctions.get(i).getId()%>"></div>
+                                            <div class="countdown-<%=userAuctions.get(i).getId()%>" style="color:green;"></div>
                                             <script>
                                                 CountDownTimer('<%=end%>', 'countdown-<%=userAuctions.get(i).getId()%>', '<%=userAuctions.get(i).getId()%>');
                                             </script>

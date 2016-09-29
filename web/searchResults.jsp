@@ -88,7 +88,7 @@
 
 
 
-        <% ItemDAO dao = new ItemDAO(true);
+        <%  ItemDAO dao = new ItemDAO(true);
             String page_str = request.getParameter("page");
             Integer pageid;
             if (page_str != null)
@@ -181,20 +181,20 @@
                             <th>Αρχική Προσφορά</th>
                             <td>$<%=auctions.get(i).getFirst_bid()%></td>
                         </tr>
-                        <tr>
-                            <th>Ημερομηνία/Ώρα Λήξης</th>
-                            <td><%=auctions.get(i).getEnds()%></td>
-                        </tr>
-                        <%--Countdown timer if auction is published--%>
                         <%
                             Date end_time = auctions.get(i).getEnds();
                             SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
                             String end = endformat.format(end_time);
                         %>
                         <tr>
+                            <th>Ημερομηνία/Ώρα Λήξης</th>
+                            <td><%=end%></td>
+                        </tr>
+                        <%--Countdown timer if auction is published--%>
+                        <tr>
                             <th>Χρόνος που Απομένει</th>
                             <td>
-                                <div class="countdown-<%=auctions.get(i).getId()%>"></div>
+                                <div class="countdown-<%=auctions.get(i).getId()%>" style="color:green;"></div>
                                 <script>
                                     CountDownTimer('<%=end%>', 'countdown-<%=auctions.get(i).getId()%>', '<%=auctions.get(i).getId()%>');
                                 </script>
@@ -202,7 +202,7 @@
                         </tr>
                         <tr>
                             <th>Πωλητής</th>
-                            <td><%=auctions.get(i).getSeller()%></td>
+                            <td><a href="#"><%=auctions.get(i).getSeller()%></a></td>
 
                         </tr>
                         </tbody>

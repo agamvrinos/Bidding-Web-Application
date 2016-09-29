@@ -94,11 +94,11 @@
 
                                     // If there is an image uploaded for this item
                                     if (image != null) {%>
-                                        <img class="img-responsive center-block" src="files/<%=image%>" style="height: 200px; width: 200px">
+                                        <img class="img-responsive center-block" src="files/<%=image%>">
                                     <%}
                                     // Else use the default image
                                     else {%>
-                                        <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
+                                        <img class="img-responsive center-block" src="img/blank.png">
                                     <%}%>
                                 </div>
 

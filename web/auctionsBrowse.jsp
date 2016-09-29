@@ -98,9 +98,6 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             </br>
-            <hr>
-            <h4>Αναζήτηση Δημοπρασίας</h4>
-
             <% if (request.getAttribute("bought") == "yes") { %>
                 <div class="alert alert-danger">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -122,22 +119,6 @@
             </div>
             <% }%>
 
-            <div class="input-group col-xs-9 col-lg-9 col-md-9">
-                <form id="search" method="get" action="searchResults.jsp">
-                    <input type="text" id="value" name="value" class="form-control" placeholder="Αναζήτηση Δημοπρασίας...">
-                    <select form="search" name="type">
-                        <option value="name">Τίτλος</option>
-                        <option value="category">Κατηγορία</option>
-                        <option value="description">Περιγραφή</option>
-                        <option value="price">Τιμή</option>
-                        <option value="location">Τοποθεσία</option>
-                    </select>
-                    <span class="input-group-btn">
-                        <input type="submit" value="Αναζήτηση" class="form-control" style="line-height: 1px; text-transform: capitalize;">
-                    </span>
-                </form>
-            </div>
-            <hr>
             </br>
 
             <h4>Κατηγορία: <%=category%> | <%=auctions.size()%> αποτελέσματα βρέθηκαν</h4>
