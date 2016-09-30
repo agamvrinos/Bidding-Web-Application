@@ -7,7 +7,7 @@ import java.util.*;
 public class UserDAO {
 
     private static final Integer USERNAME_EXISTS_ERROR = -2;
-    private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role, validated) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SEARCH_USER = "SELECT * FROM users WHERE username = ? AND password = MD5(?) ";
     private static final String SQL_SEARCH_USER_BY_ID = "SELECT * FROM users WHERE id = ? ";
     private static final String SQL_SEARCH_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ? ";
@@ -29,10 +29,14 @@ public class UserDAO {
         //is_imported = 1 -> User created from xml files
 
         int ret = -1;
+        int validated = 0;
+        if (is_imported == 1){
+            validated = 1;
+        }
 
         Object[] values = { userInfo.getFullname(), userInfo.getUsername(), userInfo.getPassword(), userInfo.getEmail()
                 , userInfo.getPhone(), userInfo.getCountry(), userInfo.getCity(), userInfo.getAddress(), userInfo.getAfm(),
-                userInfo.getRole()};
+                userInfo.getRole(), validated};
 
         try {
             Connection connection = factory.getConnection();
@@ -94,7 +98,6 @@ public class UserDAO {
             System.err.println(e.getMessage());
             return null;
         }
-
     }
 
     public List<User> getUserList(){
@@ -193,13 +196,13 @@ public class UserDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_EXISTS_USER, false, username);
             ResultSet results = statement.executeQuery();
 
+            // Username does not exist
             if (!results.isBeforeFirst()){
-                // Username does not exist
                 connection.close();
                 return false;
             }
+            // Username exists
             else {
-                // Username exists
                 connection.close();
                 return true;
             }

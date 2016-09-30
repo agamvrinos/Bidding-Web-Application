@@ -30,9 +30,10 @@
             <div class="row">
                 <% String username = (String)request.getAttribute("username");%>
                 <br>
-                <h3>Welcome <%=username%>!</h3> <br>
-                <p>Your account has now been created! You will not be able to login
-                until the administrator validates your register info. Thank you for your patience!</p>
+                <h3>Καλως ήρθες, <%=username%>!</h3> <br>
+                <p>Ο Λογαριασμός σου μόλις δημιουργήθηκε! Δεν θα είστε σε θέση να
+                    συνδεθείτε μέχρι να γίνει ενεργοποίηση του λογαριασμού σας από τον
+                    Διαχειριστή. Ευχαριστούμε!</p>
             </div>
         </div>
     </div>

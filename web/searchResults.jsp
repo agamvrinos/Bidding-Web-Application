@@ -86,8 +86,6 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
 
-
-
         <%  ItemDAO dao = new ItemDAO(true);
             String page_str = request.getParameter("page");
             Integer pageid;
@@ -122,7 +120,7 @@
             </div>
             <%--END OF PAGING--%>
 
-            <br><br><hr style="border-top: 1px solid #1abc9c">
+            <br><br><hr style="border-top: 1px solid #34525a">
 
             <% for (int i = 0; i < auctions.size(); i++) {%>
 
@@ -132,13 +130,13 @@
                 <div class="col-sm-3 col-xs-3 col-md-3">
                     <%String image = auctions.get(i).getImage();
 
-                        // If there is an image uploaded for this item
-                        if (image != null) {%>
-                    <img class="img-responsive center-block" src="files/<%=image%>" style="height: 200px; width: 200px">
+                    // If there is an image uploaded for this item
+                    if (image != null) {%>
+                        <img class="img-responsive center-block" src="files/<%=image%>">
                     <%}
                     // Else use the default image
                     else {%>
-                    <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
+                        <img class="img-responsive center-block" src="img/blank.png">
                     <%}%>
                 </div>
 
@@ -211,7 +209,7 @@
 
             </div>
 
-            <hr style="border-top: 1px solid #1abc9c">
+            <hr style="border-top: 1px solid #34525a">
             <%}%>
 
             <%--PAGING--%>

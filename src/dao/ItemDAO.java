@@ -643,9 +643,6 @@ public class ItemDAO {
 
                 // Insert new user
                 udao.insertUser(user, 1);
-
-                // Validate User
-                udao.approveUser(seller, 1);
             }
             //Create new categories if not exist
             for (String category : categories){

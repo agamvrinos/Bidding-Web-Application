@@ -20,38 +20,49 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        UserDAO dao = new UserDAO(true);
         HttpSession session = request.getSession();
 
-        // in case you are already logged in
-        if (session.getAttribute("user")!=null) {
+        // User is already logged in
+        if (session.getAttribute("user") != null) {
             response.sendRedirect("index.jsp");
             return;
         }
 
+        UserDAO dao = new UserDAO(true);
+
+        // Get user if user exists
         User user = dao.getUser(username,password);
 
-        // success
+        // User exists
         if (user != null){
-            session.setAttribute("user", user);
 
-            if(user.getRole()==0)
-                response.sendRedirect("adminpanel.jsp");
-            else
-                response.sendRedirect("index.jsp");
+            Integer is_validated = user.getValidated();
 
-            return;
+            // User is not validated (Don't allow login)
+            if (is_validated == 0){
+                request.setAttribute("login-error","Ο λογαριασμός σας δεν έχει ενεργοποιηθεί. Ευχαριστούμε για την υπομονή σας!");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+                dispatcher.forward(request, response);
+            }
+            // User is validated
+            else {
+                session.setAttribute("user", user);
+
+                if(user.getRole()==0)
+                    response.sendRedirect("adminpanel.jsp");
+                else
+                    response.sendRedirect("index.jsp");
+            }
         }
-        else{ // error
-            request.setAttribute("login-error","yes");
+        // User does not exist
+        else{
+            request.setAttribute("login-error","Λάθος εισαγωγή στοιχειών. Ξαναπροσπαθήστε.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
             dispatcher.forward(request, response);
-            return;
         }
-
     }
-
 }

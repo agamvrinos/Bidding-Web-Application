@@ -31,12 +31,12 @@
         <div class="row">
             <form class="form-horizontal" action="Login" method="post">
 
-                </br><h3>Σύνδεση Χρήστη</h3>
+                <br><h3>Σύνδεση Χρήστη</h3>
 
-                <% if (request.getAttribute("login-error") == "yes") { %>
+                <% if (request.getAttribute("login-error") != null) { %>
                     <div class="alert alert-danger">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Προσοχή! </strong>Λάθος εισαγωγή στοιχειών. Ξαναπροσπαθήστε.
+                        <strong>Προσοχή! </strong><%=request.getAttribute("login-error")%>
                     </div>
                 <% }
                    if (request.getAttribute("nologgedin") == "no") { %>
@@ -53,7 +53,6 @@
                         <label class="col-md-4 control-label" for="username">Όνομα Χρήστη</label>
                         <div class="col-md-4">
                             <input id="username" name="username" placeholder="Όνομα Χρήστη" class="form-control input-md" required="" type="text">
-
                         </div>
                     </div>
 
