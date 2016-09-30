@@ -39,7 +39,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -166,14 +166,14 @@
                             SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
                             String ended = end_format.format(end_t);
                             User sender = new UserDAO(true).getUserbyID(msg.getSender_id());
-                            String sender_fullname = sender.getFullname();
+                            String sender_username = sender.getUsername();
 
                         %>
                             <tr class='is_read-<%=msg.getIs_read()%>' >
                                 <td style="padding-top: 10px;">
                                     <a href="DeleteMessage?id=<%=msg.getId()%>&type=0" onclick="return confirm('Είστε σίγουροι για την διαγραφή?');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=sender_fullname%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=sender_username%></td>
                                 <td class='clickable-row title' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=msg.getTitle()%></td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=rec'><%=ended%></td>
                             </tr>
@@ -192,15 +192,15 @@
                             SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
                             String ended = end_format.format(end_t);
                             User receiver = new UserDAO(true).getUserbyID(msg.getReceiver_id());
-                            String receiver_fullname = receiver.getFullname();
+                            String receiver_username = receiver.getUsername();
 
                         %>
                             <tr data-href='message.jsp?id=<%=msg.getId()%>'>
                                 <td style="padding-top: 10px;">
                                     <a href="DeleteMessage?id=<%=msg.getId()%>&type=1" onclick="return confirm('Είστε σίγουροι για την διαγραφή?');"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
-                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=receiver_fullname%></td>
-                                <td class='clickable-row title' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=msg.getTitle()%></td>
+                                <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=receiver_username%></td>
+                                <td class='clickable-row title' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=msg.getTitle()%> </td>
                                 <td class='clickable-row' data-href='message.jsp?id=<%=msg.getId()%>&type=send'><%=ended%></td>
                             </tr>
                         <%}%>
@@ -272,11 +272,6 @@
     });
 </script>
 
-<script>
-    var text = $('.title').text();
-    text = text.substr(0,35) + '...';
-    $('.title').text(text);
-</script>
 </body>
 
 

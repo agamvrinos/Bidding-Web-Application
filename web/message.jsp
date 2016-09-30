@@ -28,6 +28,11 @@
     MessageDAO mdao = new MessageDAO(true);
     Message message = mdao.getMessageById(message_id);
 
+    // No message with this id
+    if (message == null){
+        response.sendRedirect("error_page.jsp");
+        return;
+    }
     // Format Date
     Date end_t = message.getDate();
     SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
@@ -59,7 +64,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">

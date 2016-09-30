@@ -18,8 +18,10 @@
         Item item = idao.getItemByID(auction_id);
 
         List<Bid> bids = bdao.getItemBids(auction_id);
-        if(item == null) { //if not valid, error page
-            response.sendRedirect("index.jsp");
+
+        //if not valid, error page
+        if(item == null) {
+            response.sendRedirect("error_page.jsp");
             return;
         }
 %>
@@ -43,7 +45,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">

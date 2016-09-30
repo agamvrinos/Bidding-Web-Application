@@ -1,8 +1,5 @@
-/**
- * Created by stef on 28/8/2016.
- */
+package support;
 
-import dao.DAOUtil;
 import dao.ItemDAO;
 
 import javax.servlet.ServletContextEvent;

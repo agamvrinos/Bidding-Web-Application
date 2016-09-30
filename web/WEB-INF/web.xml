@@ -25,6 +25,6 @@
     <!--</error-page>-->
 
     <listener>
-        <listener-class>Listener</listener-class>
+        <listener-class>support.Listener</listener-class>
     </listener>
 </web-app>
