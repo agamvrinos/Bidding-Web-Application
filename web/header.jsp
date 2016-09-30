@@ -93,7 +93,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.jsp">Αρχικη</a></li>
                         <li><a href="#">Γενικα</a></li>
-                        <li><a href="categories.jsp">Κατηγοριες</a></li>
+                        <li><a href="categories.jsp">Δημοπρασιες</a></li>
                         <li><a href="#">Βοηθεια</a></li>
                         <li><a href="#">Επικοινωνια</a></li>
                     </ul>
