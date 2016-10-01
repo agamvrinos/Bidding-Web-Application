@@ -35,78 +35,70 @@
 
 <div class="slider-area">
     <div class="zigzag-bottom"></div>
-    <div id="slide-list" class="carousel carousel-fade slide" data-ride="carousel">
 
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <div class="single-slide">
-                    <div class="slide-bg slide-one"></div>
-                    <div class="slide-text-wrapper">
-                        <div class="slide-text">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="splash">
-                                        <div class="heading">
-                                            Αναζήτηση Δημοπρασιών
-                                        </div>
-                                        <div class="subhead">
-                                            Αναζητήστε, Ποντάρετε, Κερδίστε!
-                                        </div>
+    <div class="item active">
+        <div class="slide-bg slide-one"></div>
+        <div class="slide-text-wrapper">
+            <div class="slide-text">
+                <div class="container">
+                    <div class="row">
+                        <div class="splash">
+                            <div class="heading">
+                                Αναζήτηση Δημοπρασιών
+                            </div>
+                            <div class="subhead">
+                                Αναζητήστε, Ποντάρετε, Κερδίστε!
+                            </div>
 
-                                    <form id="search" action="searchResults.jsp" method="get">
-                                        <div class="search-bar">
-                                            <div class="input-group input-group-lg">
-                                                <input name="text" type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-secondary" id="search-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
-                                                        <span class="caret" id="search-caret"></span>
-                                                    </button>
-                                                    <button class="btn btn-primary" style="margin-left: 14px; border-radius: 3px;">
-                                                        Αναζήτηση
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
+                            <form id="search" action="searchResults.jsp" method="get">
+                                <div class="search-bar">
+                                    <div class="input-group input-group-lg">
+                                        <input name="text" type="text" class="form-control" placeholder="Αναζήτηση..." aria-describedby="sizing-addon1">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-secondary" id="search-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                                                <span class="caret" id="search-caret"></span>
+                                            </button>
+                                            <button class="btn btn-primary" style="margin-left: 14px; border-radius: 3px;">
+                                                Αναζήτηση
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
 
-                                        <div class="collapse" id="collapseExample">
-                                            <div class="card card-block">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label for="price" style="font-weight: 400;">Μέγιστη Τιμή:</label>
-                                                            <input name="price" type="text" class="form-control" id="price" placeholder="π.χ 40">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="category" style="font-weight: 400;">Κατηγορία:</label>
-                                                            <%--<input name="category" type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">--%>
-                                                            <select name="category" id="category" class="form-control">
-                                                                <option value="">Όλες</option>
-                                                                <%for(int i=0; i<categories.size(); i++){%>
-                                                                <option value="<%=categories.get(i)%>"><%=categories.get(i)%></option>
-                                                                <%}%>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="location" style="font-weight: 400;">Περιοχή:</label>
-                                                            <input name="location" type="text" class="form-control" id="location" placeholder="π.χ Αθήνα">
-                                                        </div>
-                                                    </div>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-block">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="price" style="font-weight: 400;">Μέγιστη Τιμή:</label>
+                                                    <input name="price" type="text" class="form-control" id="price" placeholder="π.χ 40">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="category" style="font-weight: 400;">Κατηγορία:</label>
+                                                    <%--<input name="category" type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">--%>
+                                                    <select name="category" id="category" class="form-control">
+                                                        <option value="">Όλες</option>
+                                                        <%for(String category : categories){%>
+                                                            <option value="<%=category%>"><%=category%></option>
+                                                        <%}%>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="location" style="font-weight: 400;">Περιοχή:</label>
+                                                    <input name="location" type="text" class="form-control" id="location" placeholder="π.χ Αθήνα">
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-</div> <!-- End slider area -->
+</div>
 
 <div class="promo-area">
     <div class="zigzag-bottom"></div>
@@ -115,25 +107,25 @@
             <div class="col-md-3 col-sm-6">
                 <div class="single-promo">
                     <i class="fa fa-refresh"></i>
-                    <p>30 Days return</p>
+                    <p>Επιστροφές</p>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="single-promo">
                     <i class="fa fa-truck"></i>
-                    <p>Free shipping</p>
+                    <p>Δωρεάν Μεταφορά</p>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="single-promo">
                     <i class="fa fa-lock"></i>
-                    <p>Secure payments</p>
+                    <p>Ασφαλείς Πληρωμές</p>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="single-promo">
                     <i class="fa fa-gift"></i>
-                    <p>New products</p>
+                    <p>Νέα Προϊόντα</p>
                 </div>
             </div>
         </div>
@@ -142,182 +134,101 @@
 
 <div class="maincontent-area">
     <div class="zigzag-bottom"></div>
-</div> <!-- End main content area -->
-
-<div class="brands-area">
-    <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="brand-wrapper">
-                    <h2 class="section-title">Brands</h2>
-                    <div class="brand-list">
-                        <img src="img/services_logo__1.jpg" alt="">
-                        <img src="img/services_logo__2.jpg" alt="">
-                        <img src="img/services_logo__3.jpg" alt="">
-                        <img src="img/services_logo__4.jpg" alt="">
-                        <img src="img/services_logo__1.jpg" alt="">
-                        <img src="img/services_logo__2.jpg" alt="">
-                        <img src="img/services_logo__3.jpg" alt="">
-                        <img src="img/services_logo__4.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <!-- End brands area -->
+                <div class="latest-product">
+                    <h1 style="text-align: center">Προτεινόμενα Προϊόντα</h1>
+                    <div class="product-carousel">
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="img/blank.png" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                </div>
+                            </div>
 
-<div class="product-widget-area">
-    <div class="zigzag-bottom"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="single-product-widget">
-                    <h2 class="product-wid-title">Top Sellers</h2>
-                    <a href="" class="wid-view-more">View All</a>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            <h2><a href="#">Sony Smart TV - 2015</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>$700.00</ins> <del>$800.00</del>
+                            </div>
                         </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="img/blank.png" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                </div>
+                            </div>
+
+                            <h2><a href="#">Apple new mac book 2015 March :P</a></h2>
+                            <div class="product-carousel-price">
+                                <ins>$899.00</ins> <del>$999.00</del>
+                            </div>
                         </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Apple new mac book 2015</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="img/blank.png" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                </div>
+                            </div>
+
+                            <h2><a href="#">Apple new i phone 6</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>$400.00</ins> <del>$425.00</del>
+                            </div>
                         </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="img/blank.png" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                </div>
+                            </div>
+
+                            <h2><a href="#">Sony playstation microsoft</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>$200.00</ins> <del>$225.00</del>
+                            </div>
                         </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="img/blank.png" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                </div>
+                            </div>
+
+                            <h2><a href="#">Sony Smart Air Condtion</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>$1200.00</ins> <del>$1355.00</del>
+                            </div>
                         </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="single-product-widget">
-                    <h2 class="product-wid-title">Recently Viewed</h2>
-                    <a href="#" class="wid-view-more">View All</a>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony Smart Air Condtion</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-2.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="single-product-widget">
-                    <h2 class="product-wid-title">Top New</h2>
-                    <a href="#" class="wid-view-more">View All</a>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-3.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Apple new i phone 6</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-4.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Samsung gallaxy note 4</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
-                        </div>
-                    </div>
-                    <div class="single-wid-product">
-                        <a href="single-product.html"><img src="img/product-thumb-1.jpg" alt="" class="product-thumb"></a>
-                        <h2><a href="single-product.html">Sony playstation microsoft</a></h2>
-                        <div class="product-wid-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="product-wid-price">
-                            <ins>$400.00</ins> <del>$425.00</del>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="img/blank.png" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                </div>
+                            </div>
+
+                            <h2><a href="#">Samsung gallaxy note 4</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>$400.00</ins>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div> <!-- End product widget area -->
+</div> <!-- End main content area -->
 
 <jsp:include page="footer.jsp" />
 

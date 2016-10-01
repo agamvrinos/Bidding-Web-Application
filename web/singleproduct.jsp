@@ -272,15 +272,13 @@
                         </div>
                     </div>
 
-
                     <div class="related-products-wrapper">
-                        <h2 class="related-products-title">Related Products</h2>
+                        <h2 class="related-products-title">Σχετικα Προϊοντα</h2>
                         <div class="related-products-carousel">
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-1.jpg" alt="">
+                                    <img style="width: 100%;" src="img/blank.png" alt="">
                                     <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
@@ -293,9 +291,8 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-2.jpg" alt="">
+                                    <img src="img/blank.png" alt="">
                                     <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
@@ -307,9 +304,8 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-3.jpg" alt="">
+                                    <img src="img/blank.png" alt="">
                                     <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
@@ -322,9 +318,8 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-4.jpg" alt="">
+                                    <img src="img/blank.png" alt="">
                                     <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
@@ -337,9 +332,8 @@
                             </div>
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/product-5.jpg" alt="">
+                                    <img src="img/blank.png" alt="">
                                     <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
@@ -348,21 +342,6 @@
 
                                 <div class="product-carousel-price">
                                     <ins>$1200.00</ins> <del>$1355.00</del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/product-6.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                        <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
-
-                                <h2><a href="">Samsung gallaxy note 4</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$400.00</ins>
                                 </div>
                             </div>
                         </div>

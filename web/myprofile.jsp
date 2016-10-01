@@ -45,7 +45,7 @@
             </div>
             <div >
                 <div class="panel panel-info">
-                    <div class="panel-heading"  style="background-color:#399280; color:black; border-bottom: black;">
+                    <div class="panel-heading"  style="background-color:rgb(107, 154, 167); color:black; border-bottom: black;">
                         <h3 class="panel-title"><%=user.getFullname()%></h3>
                     </div>
                     <div class="panel-body">

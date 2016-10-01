@@ -31,14 +31,14 @@
 
                         <ul class="list-unstyled list-inline">
                             <li>
-                                Καλώς ήρθες,
+
                                 <% if (request.getSession().getAttribute("user")==null){ %>
-                                    επισκέπτη!
+                                    Καλώς ήρθες, επισκέπτη!
                                 <% } else {
                                     User user = (User) request.getSession().getAttribute("user");
                                     String username = user.getUsername();
                                 %>
-                                    <%=username%>!
+                                    Καλώς ήρθες,<a href="myprofile.jsp" style="display: -moz-grid-line; color: rgb(52, 82, 90); text-decoration: underline;"><%=username%>!</a>
                                 <%}%>
 
                             </li>
