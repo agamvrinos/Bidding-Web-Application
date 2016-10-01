@@ -19,6 +19,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,17 +41,11 @@ public class LoadXml extends HttpServlet {
         if (user == null || user.getRole() != 0)
             response.sendRedirect("error_page.jsp");
 
-        Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
+        String xmlpath = request.getParameter("xml_path");
 
-        if (xml_amount < 1 || xml_amount > 40){
-            request.setAttribute("error", "Η τιμή πρέπει να είναι από 1 εώς 40");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
         try {
 
-            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
+            File file = new File(xmlpath);
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -69,8 +64,11 @@ public class LoadXml extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
             dispatcher.forward(request, response);
 
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        } catch (JAXBException | InvalidPathException ex) {
+            request.setAttribute("error", "Κάτι πήγε στραβά! Ίσως το μονοπάτι δεν είναι έγκυρο.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
+            dispatcher.forward(request, response);
+            return;
         }
     }
 

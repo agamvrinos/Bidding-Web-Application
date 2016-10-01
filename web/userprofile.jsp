@@ -1,7 +1,17 @@
 <%@ page import="entities.User" %>
 <%@ page import="dao.UserDAO" %>
+<%@ page import="dao.DAOUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% User user = new UserDAO(true).getUserbyID(Integer.valueOf(request.getParameter("id")));
+<%  String uid = request.getParameter("id");
+    //in case id parameter is missing or invalid
+    if(uid == null || DAOUtil.IntConvert(uid) == -1)
+        response.sendRedirect("error_page.jsp");
+
+    User user = new UserDAO(true).getUserbyID(Integer.valueOf(uid));
+    //if user doesnt exist
+    if(user==null)
+        response.sendRedirect("error_page.jsp");
+
     User sessionUser = (User) request.getSession().getAttribute("user");
     int sessionUserRole = -1;
     if (sessionUser != null)
@@ -47,18 +57,6 @@
                     <div class="row">
                         <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png" class="img-circle img-responsive"> </div>
 
-                        <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-                          <dl>
-                            <dt>DEPARTMENT:</dt>
-                            <dd>Administrator</dd>
-                            <dt>HIRE DATE</dt>
-                            <dd>11/12/2013</dd>
-                            <dt>DATE OF BIRTH</dt>
-                               <dd>11/12/2013</dd>
-                            <dt>GENDER</dt>
-                            <dd>Male</dd>
-                          </dl>
-                        </div>-->
                         <span class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
                                 <tbody>
@@ -76,8 +74,11 @@
                                         else if (role == 1) {
                                             roletext = "Πωλητής";
                                         }
-                                        else {
+                                        else if (role == 2){
                                             roletext = "Προσφέρον";
+                                        }
+                                        else {
+                                            roletext = "Πωλητής/ Προσφέρον";
                                         }%>
                                     <td><%=roletext%></td>
                                 </tr>
@@ -129,11 +130,6 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <%--<a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>--%>
-                    <%--<span class="pull-right">--%>
-                    <%--<a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-cog"></i></a>--%>
-                    <%--<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>--%>
-                    <%--</span>--%>
                 </div>
 
             </div>

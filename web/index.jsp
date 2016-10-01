@@ -7,7 +7,7 @@
 <%
     ItemDAO idao = new ItemDAO(true);
     List<String> categories = idao.getCategories();
-    User user = (User) session.getAttribute("user");
+    User user = (User) request.getSession().getAttribute("user");
 %>
 <html>
 <head>

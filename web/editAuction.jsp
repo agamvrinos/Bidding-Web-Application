@@ -8,7 +8,7 @@
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("error_page.jsp");
 
     String id = request.getParameter("id");
     Integer iid = Integer.valueOf(id);

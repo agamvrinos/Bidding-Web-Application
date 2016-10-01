@@ -6,8 +6,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null)
-        response.sendRedirect("index.jsp");
+    if(sessionUser==null || sessionUser.getRole() == 2)
+        response.sendRedirect("error_page.jsp");
 %>
 <script>
 

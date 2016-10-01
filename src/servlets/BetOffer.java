@@ -32,7 +32,7 @@ public class BetOffer extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("auctionsBrowse.jsp?category=" + chosen_category);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("singleproduct.jsp?id=" + auction_id);
         RequestDispatcher dispatcher2 = request.getRequestDispatcher("singleproduct.jsp?id=" + auction_id + "&" + chosen_category);
         RequestDispatcher dispatcher3 = request.getRequestDispatcher("login.jsp");
 

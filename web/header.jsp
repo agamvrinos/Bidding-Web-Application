@@ -13,12 +13,12 @@
                             <% }
                             else {
                             %>
-                            <li><a href="my_messages.jsp" ><i class="fa fa-envelope"></i>Μηνύματα</a></li>
-                            <li><a href="my_auctions.jsp" id="my_auctions"><i class="fa fa-user"></i>Διαχείριση Δημοπρασιών</a></li>
-                            <li><a href="Logout" id="logout_button"><i class="fa fa-user"></i>Αποσύνδεση</a></li>
-                            <%
-                                }
-                            %>
+                                <li><a href="my_messages.jsp" ><i class="fa fa-envelope"></i>Μηνύματα</a></li>
+                                <%if ( ((User) request.getSession().getAttribute("user")).getRole()!=2){%>
+                                    <li><a href="my_auctions.jsp" id="my_auctions"><i class="fa fa-user"></i>Διαχείριση Δημοπρασιών</a></li>
+                                <%}%>
+                                <li><a href="Logout" id="logout_button"><i class="fa fa-user"></i>Αποσύνδεση</a></li>
+                            <%}%>
                         </ul>
                     </div>
                 </div>

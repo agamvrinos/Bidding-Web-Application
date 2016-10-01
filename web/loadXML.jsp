@@ -1,4 +1,10 @@
+<%@ page import="entities.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%  User sessionUser = (User) request.getSession().getAttribute("user");
+    if(sessionUser==null || sessionUser.getRole()!=0)
+        response.sendRedirect("error_page.jsp");
+%>
+
 <html>
 <head>
     <title>Load XML</title>
@@ -52,9 +58,9 @@
                 <%}%>
 
                 <form action="LoadXml" method="post">
-                    <label for="xml_amount">Φόρτωση XML αρχείων (1-40).</label>
+                    <label for="xml_amount">Δώστε το απόλυτο τοπικό μονοπάτι του αρχείου XML που θέλετε να φορτωθεί:</label>
                     <div class="input-group">
-                        <input id="xml_amount" name="xml_amount" type="number" class="form-control" placeholder="Δώστε τιμή. Π.χ 1">
+                        <input id="xml_amount" name="xml_path" type="text" class="form-control" placeholder="Π.χ. /home/user1/xml/item-1.xml">
                         <span class="input-group-btn">
                             <button class="btn btn-primary">Φόρτωση!</button>
                         </span>

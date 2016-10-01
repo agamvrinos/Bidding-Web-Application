@@ -28,7 +28,9 @@
     <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <% String username = (String)request.getAttribute("username");%>
+                <% String username = (String)request.getAttribute("username");
+                    if(username==null)
+                        response.sendRedirect("error_page.jsp");%>
                 <br>
                 <h3>Καλως ήρθες, <%=username%>!</h3> <br>
                 <p>Ο Λογαριασμός σου μόλις δημιουργήθηκε! Δεν θα είστε σε θέση να
