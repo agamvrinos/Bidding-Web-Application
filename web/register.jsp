@@ -1,4 +1,4 @@
-<%@ page import="entities.User" %>
+<%@ page import="entities.AppEntities.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
