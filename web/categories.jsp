@@ -1,5 +1,6 @@
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.*" %>
+<%@ page import="dao.DAOUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -36,7 +37,14 @@
 
             <%
                 ItemDAO dao = new ItemDAO(true);
-                List<String> categories = dao.getCategories();
+                String page_str = request.getParameter("page");
+                Integer pageid;
+                if (page_str != null)
+                    pageid = DAOUtil.IntConvert(page_str);
+                else
+                    pageid = 1;
+                List<String> search_categories = dao.getCategories();
+                List<String> categories = dao.getLimitedCategories(pageid);
             %>
 
             <div class="row">
@@ -70,8 +78,8 @@
                                             <%--<input name="category" type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">--%>
                                             <select name="category" id="category" class="form-control">
                                                 <option value="">Όλες</option>
-                                                <%for(int j=0; j<categories.size(); j++){%>
-                                                <option value="<%=categories.get(j)%>"><%=categories.get(j)%></option>
+                                                <%for(int j=0; j<search_categories.size(); j++){%>
+                                                <option value="<%=search_categories.get(j)%>"><%=search_categories.get(j)%></option>
                                                 <%}%>
                                             </select>
                                         </div>
@@ -101,17 +109,17 @@
                     <div class="btn-group btn-group-justified" role="group" aria-label="...">
                         <div class="btn-group" role="group">
                             <%if (i % 3 == 0) {%>
-                                <a href="auctionsBrowse.jsp?category=<%=categories.get(i)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i)%></a>
+                                <a href="searchResults.jsp?text=&price=&location=&category=<%=categories.get(i)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i)%></a>
                             <%}%>
                         </div>
                         <div class="btn-group" role="group">
                             <%if (i + 1 < categories.size() &&  (i+1) % 3 == 1) {%>
-                                <a href="auctionsBrowse.jsp?category=<%=categories.get(i + 1)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i + 1)%> </a>
+                                <a href="searchResults.jsp?text=&price=&location=&category=<%=categories.get(i+1)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i + 1)%> </a>
                             <%}%>
                         </div>
                         <div class="btn-group" role="group">
                             <%if (i + 2 < categories.size() &&  (i+2) % 3 == 2) {%>
-                                <a href="auctionsBrowse.jsp?category=<%=categories.get(i + 2)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i + 2)%></a>
+                                <a href="searchResults.jsp?text=&price=&location=&category=<%=categories.get(i+2)%>" class="btn btn-default" role="button" style="background-color: rgb(140, 182, 194); border-color: rgb(52, 82, 90);"><%=categories.get(i + 2)%></a>
                             <%}%>
                         </div>
                     </div>
@@ -120,6 +128,26 @@
             <%
                 }
             %>
+
+            <%--PAGING--%>
+            <div class="alignright">
+                <form class="form-horizontal" action="searchResults.jsp" method="get" >
+                    <% if (pageid > 1){%>
+                    <a class="btn btn-default" style="display:inline-block" href="categories.jsp?page=<%=pageid-1%>">
+                        <strong><</strong>
+                    </a>
+                    <%}%>
+                    <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
+                    από <%=dao.getNumOfPages()%>
+                    <% if (pageid < dao.getNumOfPages()){%>
+                    <a class="btn btn-default" style="display:inline-block" href="categories.jsp?page=<%=pageid+1%>">
+                        <strong>></strong>
+                    </a>
+                    <%}%>
+                </form>
+            </div>
+            <%--END OF PAGING--%>
+
         </div>
     </div>
 

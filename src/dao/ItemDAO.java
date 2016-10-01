@@ -12,10 +12,12 @@ public class ItemDAO {
     private int numOfResults;
     private int numOfPages;
     private static final int RESULTS_PER_PAGE = 15;
+    private static final int CATEGORIES_PER_PAGE = 30;
     private static final int KNN = 30;
     private static final int MAX_REC_ITEMS_PER_USER = 10;
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
+    private static final String SQL_GET_LIMITED_CATEGORIES = "SELECT SQL_CALC_FOUND_ROWS category FROM item_categories WHERE id = 0 LIMIT ?, " + CATEGORIES_PER_PAGE;
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_IMPORT_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, starts, ends, seller, description, state, Image, total_offers) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_DELETE_ITEM = "DELETE FROM items WHERE id = (?)";
@@ -40,13 +42,7 @@ public class ItemDAO {
     private static final String SQL_UPDATE_ITEM_BIDS = "UPDATE items SET total_offers = (?), currently = (?) WHERE id = (?)";
     private static final String SQL_INSERT_NEW_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
 
-    private static final String SQL_SEARCH_ITEMS_BY_NAME = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE name LIKE ? LIMIT ? , 15";
-    private static final String SQL_SEARCH_ITEMS_BY_CATEGORY = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM item_categories WHERE category LIKE ? LIMIT ? , 15";
-    private static final String SQL_SEARCH_ITEMS_BY_DESCRIPTION = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE description LIKE ? LIMIT ? , 15";
-    private static final String SQL_SEARCH_ITEMS_BY_PRICE = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE currently < ? LIMIT ? , 15";
-    private static final String SQL_SEARCH_ITEMS_BY_LOCATION = "SELECT SQL_CALC_FOUND_ROWS DISTINCT id FROM items WHERE country LIKE ? OR location LIKE ? LIMIT ? , 15";
-
-    private static final String SQL_SEARCH_ITEMS = "SELECT SQL_CALC_FOUND_ROWS DISTINCT items.id FROM items, item_categories WHERE (items.country LIKE ? OR items.location LIKE ?) " +
+    private static final String SQL_SEARCH_ITEMS = "SELECT SQL_CALC_FOUND_ROWS DISTINCT items.id FROM items, item_categories WHERE items.state = 1 AND (items.country LIKE ? OR items.location LIKE ?) " +
             "AND (items.description LIKE ? OR items.name LIKE ?) AND (items.id = item_categories.id AND item_categories.category LIKE ?) AND (items.currently < ?) ORDER BY items.currently ASC LIMIT ? , " + RESULTS_PER_PAGE;
 
     private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
@@ -198,6 +194,46 @@ public class ItemDAO {
                 list.add(results.getString("category"));
             }
             connection.close();
+        }
+        catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public List<String> getLimitedCategories(Integer page){
+
+        List<String> list = new ArrayList<>();
+
+        if(page < 1)
+            return list;
+
+        Integer offset = (page-1) * CATEGORIES_PER_PAGE;
+
+        try{
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_GET_LIMITED_CATEGORIES, false, offset);
+            ResultSet results = statement.executeQuery();
+
+            while(results.next()){
+                list.add(results.getString(1));
+            }
+
+            //get number of rows
+            results = statement.executeQuery("SELECT FOUND_ROWS()");
+            results.next();
+            numOfResults = results.getInt(1);
+
+            if(numOfResults%CATEGORIES_PER_PAGE==0)
+                numOfPages = numOfResults/CATEGORIES_PER_PAGE;
+            else
+                numOfPages = (numOfResults/CATEGORIES_PER_PAGE)+1;
+
+            connection.close();
+
+            return list;
+
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
@@ -517,34 +553,6 @@ public class ItemDAO {
             Connection connection = factory.getConnection();
             PreparedStatement statement;
 
-//            if(type.equals("name")) {
-//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_NAME, false);
-//                statement.setString(1, "%" + value + "%");
-//                statement.setInt(2, offset);
-//            }
-//            else if (type.equals("category")) {
-//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_CATEGORY, false);
-//                statement.setString(1, "%" + value + "%");
-//                statement.setInt(2, offset);
-//            }
-//            else if(type.equals("description")) {
-//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_DESCRIPTION, false);
-//                statement.setString(1, "%" + value + "%");
-//                statement.setInt(2, offset);
-//            }
-//            else if (type.equals("price")) {
-//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_PRICE, false, value);
-//                statement.setInt(2, offset);
-//            }
-//            else if (type.equals("location")) {
-//                statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS_BY_LOCATION, false);
-//                statement.setString(1, "%" + value + "%");
-//                statement.setString(2, "%" + value + "%");
-//                statement.setInt(3, offset);
-//            }
-//            else
-//                return items;
-
             statement = DAOUtil.prepareStatement(connection, SQL_SEARCH_ITEMS,false);
 
             if(location == null || location.equals("")){
@@ -764,6 +772,8 @@ public class ItemDAO {
 
             }
 
+            connection.close();
+
         }
         catch (SQLException ex){
             System.err.println("ERROR: " + ex.getMessage());
@@ -788,6 +798,9 @@ public class ItemDAO {
 
             while (rs.next())
                 rec_items.add(getItemByID(rs.getInt(1)));
+
+
+            connection.close();
 
             return rec_items;
 
