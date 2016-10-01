@@ -1,5 +1,5 @@
 <%@ page import="dao.ItemDAO" %>
-<%@ page import="entities.Item" %>
+<%@ page import="entities.AppEntities.Item" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>

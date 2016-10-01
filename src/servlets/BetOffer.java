@@ -2,7 +2,7 @@ package servlets;
 
 import dao.ItemDAO;
 import dao.UserDAO;
-import entities.User;
+import entities.AppEntities.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

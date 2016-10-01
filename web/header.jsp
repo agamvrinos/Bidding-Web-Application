@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="entities.User" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="entities.AppEntities.User" %>
 
     <div class="header-area">
         <div class="container">

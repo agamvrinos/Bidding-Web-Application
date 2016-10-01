@@ -1,6 +1,6 @@
 package dao;
 
-import entities.*;
+import entities.AppEntities.*;
 
 import java.sql.*;
 import java.util.Date;

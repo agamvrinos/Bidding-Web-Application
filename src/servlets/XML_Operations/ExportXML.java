@@ -1,9 +1,9 @@
 package servlets.XML_Operations;
 
-import XMLentities.*;
 import dao.ItemDAO;
-import entities.Item;
-import entities.User;
+import entities.AppEntities.Item;
+import entities.AppEntities.User;
+import entities.XmlEntities.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

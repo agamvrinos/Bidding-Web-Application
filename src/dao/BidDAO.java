@@ -1,7 +1,7 @@
 package dao;
 
-import entities.Bid;
-import entities.User;
+import entities.AppEntities.Bid;
+import entities.AppEntities.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

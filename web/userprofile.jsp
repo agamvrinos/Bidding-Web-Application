@@ -1,4 +1,4 @@
-<%@ page import="entities.User" %>
+<%@ page import="entities.AppEntities.User" %>
 <%@ page import="dao.UserDAO" %>
 <%@ page import="dao.DAOUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

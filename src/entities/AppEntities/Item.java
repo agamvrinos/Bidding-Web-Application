@@ -1,4 +1,4 @@
-package entities;
+package entities.AppEntities;
 
 import java.util.Date;
 import java.util.List;

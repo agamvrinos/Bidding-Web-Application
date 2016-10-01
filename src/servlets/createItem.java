@@ -1,8 +1,8 @@
 package servlets;
 
 import dao.ItemDAO;
-import entities.Item;
-import entities.User;
+import entities.AppEntities.Item;
+import entities.AppEntities.User;
 import support.ImageValidator;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;

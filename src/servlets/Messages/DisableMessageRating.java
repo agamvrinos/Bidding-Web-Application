@@ -2,7 +2,6 @@ package servlets.Messages;
 
 import dao.BidDAO;
 import dao.MessageDAO;
-import entities.Message;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

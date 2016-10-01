@@ -3,8 +3,8 @@
 <%@ page import="dao.UserDAO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="entities.User" %>
-<%@ page import="entities.Message" %>
+<%@ page import="entities.AppEntities.User" %>
+<%@ page import="entities.AppEntities.Message" %>
 
 <%
     // Make sure user is logged in

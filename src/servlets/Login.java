@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import dao.UserDAO;
-import entities.User;
+import entities.AppEntities.User;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet {

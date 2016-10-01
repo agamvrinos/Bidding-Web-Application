@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entities.User" %>
-<%@ page import="entities.Item" %>
+<%@ page import="entities.AppEntities.User" %>
+<%@ page import="entities.AppEntities.Item" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
