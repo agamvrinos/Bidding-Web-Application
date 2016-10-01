@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
 
         // User is already logged in
         if (session.getAttribute("user") != null) {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("error_page.jsp");
             return;
         }
 

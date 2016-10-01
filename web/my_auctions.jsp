@@ -8,7 +8,6 @@
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)
         response.sendRedirect("index.jsp");
-
 %>
 <script>
 

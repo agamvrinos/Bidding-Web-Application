@@ -65,12 +65,12 @@
                 padding-top: 12px;
                 padding-bottom: 12px;
                 color: black;
-                border: solid 1px #085849;
+                border: solid 1px #34525A;
             }
 
             .sidebar-nav .navbar-nav>.active>a, .sidebar-nav .navbar-nav>.active>a:hover, .sidebar-nav .navbar-nav>.active>a:focus {
                 color: white;
-                background-color: #157d69;
+                background-color: #588b99;
             }
 
             .hide{

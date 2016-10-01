@@ -1,10 +1,11 @@
-package servlets;
+package servlets.XML_Operations;
 
 import XMLentities.*;
 import dao.BidDAO;
 import dao.ItemDAO;
 import entities.Bid;
 import entities.Item;
+import entities.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,8 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-//TODO: Prosvasi mono o admin edw
-
 @WebServlet("/LoadXml")
 public class LoadXml extends HttpServlet {
 
@@ -35,6 +34,11 @@ public class LoadXml extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // Error handling
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null || user.getRole() != 0)
+            response.sendRedirect("error_page.jsp");
 
         Integer xml_amount = Integer.valueOf(request.getParameter("xml_amount"));
 

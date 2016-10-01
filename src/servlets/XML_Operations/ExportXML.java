@@ -1,8 +1,9 @@
-package servlets;
+package servlets.XML_Operations;
 
 import XMLentities.*;
 import dao.ItemDAO;
 import entities.Item;
+import entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-
 @WebServlet("/ExportXML")
 public class ExportXML extends HttpServlet {
 
@@ -27,7 +27,11 @@ public class ExportXML extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //TODO: MONO ADMIN NA MPAINEI EDW
+        // Error handling
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null || user.getRole() != 0)
+            response.sendRedirect("error_page.jsp");
+
         Integer item_id = Integer.parseInt(request.getParameter("export"));
 
         ItemDAO dao = new ItemDAO(true);

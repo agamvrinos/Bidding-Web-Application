@@ -18,8 +18,8 @@ public class ValidateUser extends HttpServlet {
 
         User user = (User) request.getSession().getAttribute("user");
 
-        if (user.getRole() != 0){
-            response.sendRedirect("index.jsp");
+        if (user == null || user.getRole() != 0){
+            response.sendRedirect("error_page.jsp");
             return;
         }
 

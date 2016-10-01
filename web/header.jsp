@@ -7,9 +7,6 @@
                     <div class="user-menu">
                         <ul>
                             <li><a href="myprofile.jsp"><i class="fa fa-user"></i>Το Προφίλ μου</a></li>
-                            <%--<li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>--%>
-                            <%--<li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>--%>
-                            <%--<li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>--%>
                             <% if (request.getSession().getAttribute("user")==null){ %>
                                 <li><a href="login.jsp" id="login_button"><i class="fa fa-user"></i>Σύνδεση</a></li>
                                 <li><a href="register.jsp" id="register_button"><i class="fa fa-user"></i>Εγγραφή</a></li>
@@ -38,7 +35,7 @@
                                     User user = (User) request.getSession().getAttribute("user");
                                     String username = user.getUsername();
                                 %>
-                                    Καλώς ήρθες,<a href="myprofile.jsp" style="display: -moz-grid-line; color: rgb(52, 82, 90); text-decoration: underline;"><%=username%>!</a>
+                                    Καλώς ήρθες,<a href="myprofile.jsp" style="display: inherit; color: rgb(52, 82, 90); text-decoration: underline;"><%=username%>!</a>
                                 <%}%>
 
                             </li>
