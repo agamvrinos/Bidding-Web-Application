@@ -27,9 +27,12 @@ public class Listener implements ServletContextListener,
          initialized(when the Web application is deployed). 
          You can initialize servlet context related data here.
       */
+        ItemDAO dao = new ItemDAO(true);
 
-        new ItemDAO(true).updateExpiredItems();
+        //run once when server starts
+        dao.updateExpiredItems();
 
+        //and then every minute update of expired items
         TimerTask task = new TimerTask() {
             @Override
             public void run () {
@@ -40,6 +43,22 @@ public class Listener implements ServletContextListener,
         Calendar calendar = Calendar.getInstance();
         int sec = calendar.get(Calendar.SECOND);
         timer.scheduleAtFixedRate (task, 1000*(60 - sec), 1000*60);
+
+
+        //run once when server starts
+        dao.updateRecommendedItems();
+
+        //and then every hour update of recommended items for every user
+        TimerTask task2 = new TimerTask() {
+            @Override
+            public void run () {
+                new ItemDAO(true).updateRecommendedItems();
+            }
+        };
+        Timer timer2 = new Timer();
+        timer2.scheduleAtFixedRate(task2, 1000*60*60, 1000*60*60);
+
+
     }
 
     public void contextDestroyed(ServletContextEvent sce) {}

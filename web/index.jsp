@@ -1,5 +1,7 @@
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="entities.User" %>
+<%@ page import="entities.Item" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <% ItemDAO idao = new ItemDAO(true);
     List<String> categories = idao.getCategories();%>
@@ -140,20 +142,29 @@
                 <div class="latest-product">
                     <h1 style="text-align: center">Προτεινόμενα Προϊόντα</h1>
                     <div class="product-carousel">
+                        <% User user = (User) session.getAttribute("user");
+                            if(user!=null) {
+                                List<Item> rec_items = idao.getRecItems(user.getUsername());
+                                for(int i = 0; i < rec_items.size(); i++){%>
                         <div class="single-product">
                             <div class="product-f-image">
                                 <img src="img/blank.png" alt="">
                                 <div class="product-hover">
-                                    <a href="#" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                    <a href="singleproduct.jsp?id=<%=rec_items.get(i).getId()%>" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
                                 </div>
                             </div>
 
-                            <h2><a href="#">Sony Smart TV - 2015</a></h2>
+                            <h2><a href="singleproduct.jsp?id=<%=rec_items.get(i).getId()%>"><%=rec_items.get(i).getName()%></a></h2>
 
                             <div class="product-carousel-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
+                                <ins><%=rec_items.get(i).getCurrently()%></ins>
+                                <%if (rec_items.get(i).getBuy_price()!=null){%>
+                                $<%=rec_items.get(i).getBuy_price()%>
+                                <%}%>
                             </div>
                         </div>
+                        <%}
+                        }%>
                         <div class="single-product">
                             <div class="product-f-image">
                                 <img src="img/blank.png" alt="">
@@ -206,7 +217,7 @@
                             <h2><a href="#">Sony Smart Air Condtion</a></h2>
 
                             <div class="product-carousel-price">
-                                <ins>$1200.00</ins> <del>$1355.00</del>
+                                <ins>$1200.00</ins> $1355.00
                             </div>
                         </div>
                         <div class="single-product">

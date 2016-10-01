@@ -1,6 +1,5 @@
 package dao;
 
-import XMLentities.XmlItem;
 import entities.*;
 
 import java.sql.*;
@@ -13,6 +12,8 @@ public class ItemDAO {
     private int numOfResults;
     private int numOfPages;
     private static final int RESULTS_PER_PAGE = 15;
+    private static final int KNN = 30;
+    private static final int MAX_REC_ITEMS_PER_USER = 10;
 
     private static final String SQL_GET_CATEGORIES = "SELECT category FROM item_categories WHERE id = 0 ";
     private static final String SQL_ADD_NEW_ITEM = "INSERT INTO items (name, currently, buy_price, first_bid, country, location, latitude, longitude, creation, ends, seller, description, Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -50,12 +51,16 @@ public class ItemDAO {
 
     private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
 
+    private static final String SQL_GET_ALL_USERNAMES = "SELECT username FROM users";
     private static final String SQL_GET_NEIGHBORS = "SELECT DISTINCT a2.username, COUNT(DISTINCT a2.username, a2.item_id) AS c " +
             "FROM ted.bids AS a1, ted.bids AS a2 WHERE a1.username = ? AND a2.item_id = a1.item_id " +
-            "AND a2.username != a1.username GROUP BY a2.username ORDER BY c LIMIT 0 , 10;";
-
-    private static final String SQL_GET_NEIGHBORHOOD_ITEMS = "SELECT a1.item_id FROM ted.bids AS a1 WHERE a1.username = ? " +
+            "AND a2.username != a1.username GROUP BY a2.username ORDER BY c DESC LIMIT 0 , " + KNN;
+    private static final String SQL_GET_NEIGHBORHOOD_ITEMS = "SELECT a1.item_id FROM ted.bids AS a1, ted.items AS items " +
+            "WHERE a1.username = ? AND a1.item_id = items.id AND items.state = 1 " +
             "AND NOT EXISTS( SELECT * FROM ted.bids AS a2 WHERE a2.item_id = a1.item_id AND a2.username = ?)";
+    private static final String SQL_UPDATE_RECOMMENDATIONS = "INSERT INTO recommendations (username, rank, item_id) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE item_id = ?";
+    private static final String SQL_DELETE_EXTRA_REC_ITEMS = "DELETE FROM recommendations WHERE username = ? AND rank >= ?";
+    private static final String SQL_GET_REC_ITEMS = "SELECT item_id FROM recommendations WHERE username = ? ORDER BY rank ASC";
 
 
     private ConnectionFactory factory;
@@ -697,59 +702,100 @@ public class ItemDAO {
         }
     }
 
-    public List<Item> getRecommendedItems(String username){
-
-        List<String> neighbors = new ArrayList<String>();
-        List<Integer> items_unordered = new ArrayList<Integer>();
-        List<ItemsRecommendedCount> items_with_counts = new ArrayList<ItemsRecommendedCount>();
-        List<Item> rec_items = new ArrayList<Item>();
+    public void updateRecommendedItems(){
 
         try {
 
             Connection connection = factory.getConnection();
 
-            //get usernames of neighbors ordered by correlation
-            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_NEIGHBORS, false, username);
-            ResultSet results = statement.executeQuery();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_ALL_USERNAMES, false);
+            ResultSet rs = statement.executeQuery();
 
-            //get them on the list
-            while (results.next())
-                neighbors.add(results.getString(1));
+            while(rs.next()) {
 
-            //get the items they have bid for, but you dont, in same order
-            for(int i=0; i<neighbors.size(); i++){
-                statement = DAOUtil.prepareStatement(connection, SQL_GET_NEIGHBORHOOD_ITEMS, false, neighbors.get(i), username);
-                results = statement.executeQuery();
-                //add all the items in a list
+                List<UserCorrelation> neighbors = new ArrayList<UserCorrelation>();
+                Map<Integer, Integer> items_unranked = new HashMap<Integer, Integer>();
+                List<RecommendedItem> items_ranked = new ArrayList<RecommendedItem>();
+
+
+                //get usernames of neighbors ordered by correlation
+                statement = DAOUtil.prepareStatement(connection, SQL_GET_NEIGHBORS, false, rs.getString(1));
+                ResultSet results = statement.executeQuery();
+
+
+                //get them on the list
                 while (results.next())
-                    items_unordered.add(results.getInt(1));
+                    neighbors.add(new UserCorrelation(results.getString(1), results.getInt(2)));
+
+                //get the items they have bid for, but user have not
+                for (int i = 0; i < neighbors.size(); i++) {
+                    statement = DAOUtil.prepareStatement(connection, SQL_GET_NEIGHBORHOOD_ITEMS, false, neighbors.get(i).getUsername(), rs.getString(1));
+                    results = statement.executeQuery();
+
+                    //add all the items in a list
+                    while (results.next()) {
+                        if (!items_unranked.containsKey(results.getInt(1)))
+                            items_unranked.put(results.getInt(1), neighbors.get(i).getCorrelation());
+                        else
+                            items_unranked.put(results.getInt(1), neighbors.get(i).getCorrelation() + items_unranked.get(results.getInt(1)));
+                    }
+                }
+
+                for (Map.Entry<Integer, Integer> entry : items_unranked.entrySet()) {
+                    items_ranked.add(new RecommendedItem(entry.getKey(), entry.getValue()));
+                }
+
+                //sort list based on rank
+                Collections.sort(items_ranked, RecommendedItem.DESC_COMPARATOR);
+
+                //recommended items per user should be 10 or less
+                int max_rec = MAX_REC_ITEMS_PER_USER;
+                if(items_ranked.size() < MAX_REC_ITEMS_PER_USER)
+                    max_rec = items_ranked.size();
+
+                //insert or update rec table
+                for(int i=0; i < max_rec; i++) {
+                    statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_RECOMMENDATIONS, false, rs.getString(1), i, items_ranked.get(i).getId(), items_ranked.get(i).getId());
+                    statement.executeUpdate();
+                }
+
+                statement = DAOUtil.prepareStatement(connection, SQL_DELETE_EXTRA_REC_ITEMS, false, rs.getString(1), max_rec);
+                statement.executeUpdate();
+
             }
 
-            //create a list of item_id + count of times it appears in the list
-            for(int i=0; i<items_unordered.size(); i++) {
-                int count = Collections.frequency(items_unordered,items_unordered.get(i));
-                items_with_counts.add(new ItemsRecommendedCount(items_unordered.get(i), count)); //duplicates allowed
-            }
+        }
+        catch (SQLException ex){
+            System.err.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at updateRecommendedItems");
+        }
 
-            //remove duplicates
-            items_with_counts = new ArrayList<ItemsRecommendedCount>(new LinkedHashSet<ItemsRecommendedCount>(items_with_counts));
+    }
 
-            //sort list based on counts
-            Collections.sort(items_with_counts,ItemsRecommendedCount.DESC_COMPARATOR);
+    public List<Item> getRecItems(String username){
 
-            //create final items list
-            for(int i=0; i<items_with_counts.size(); i++){
-                rec_items.add(getItemByID(items_with_counts.get(i).getId()));
-            }
+        if(username == null)
+            return new ArrayList<Item>();
+
+        try {
+
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_REC_ITEMS, false, username);
+            ResultSet rs = statement.executeQuery();
+
+            List<Item> rec_items = new ArrayList<Item>();
+
+            while (rs.next())
+                rec_items.add(getItemByID(rs.getInt(1)));
 
             return rec_items;
 
         }
         catch (SQLException ex){
             System.err.println("ERROR: " + ex.getMessage());
-            throw new RuntimeException("Error at getRecommendedItems");
+            throw new RuntimeException("Error at getRecItems");
         }
-
     }
 
 }
