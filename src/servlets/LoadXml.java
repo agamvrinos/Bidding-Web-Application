@@ -31,8 +31,7 @@ import java.util.List;
 public class LoadXml extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
-//        response.sendRedirect("index.jsp");
+        response.sendRedirect("error_page.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,8 +46,7 @@ public class LoadXml extends HttpServlet {
         }
         try {
 
-            File file = new File("/home/stef/Downloads/ebay/ebay-data/items-" + (xml_amount - 1) + ".xml");
-//            File file = new File("/home/agg/Desktop/TedExamples/test.xml");
+            File file = new File("/home/agg/Desktop/TedExamples/ebay-data/items-" + (xml_amount - 1) + ".xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(XmlItems.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -63,11 +61,9 @@ public class LoadXml extends HttpServlet {
                 System.out.println("===============================================");
             }
 
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(xml_items, response.getWriter());
-
-            //TODO: Na valw na se petaei sto loadXML.jsp
+            request.setAttribute("message","H φόρτωση του αρχείου ολοκληρώθηκε.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("loadXML.jsp");
+            dispatcher.forward(request, response);
 
         } catch (JAXBException e) {
             e.printStackTrace();

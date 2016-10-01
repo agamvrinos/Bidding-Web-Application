@@ -153,17 +153,12 @@ public class ItemDAO {
                 String image = results.getString("image");
                 Integer total_offers = results.getInt("total_offers");
 
-//                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-//                String ends2 = formatter.format(ends);
-//                System.out.println("ENDS " + ends);
-
                 PreparedStatement statement2 = DAOUtil.prepareStatement(connection, SQL_GET_ITEM_CATEGORIES, false, id);
                 ResultSet results2 = statement2.executeQuery();
 
                 List<String> categories = new ArrayList<>();
 
                 while(results2.next()) {
-//                    System.out.print("Category: " + results2.getString("category"));
                     categories.add(results2.getString("category"));
                 }
 
@@ -647,13 +642,9 @@ public class ItemDAO {
 
             boolean exists = udao.existsUsername(seller);
 
-            if (exists)
-                System.out.println("UserName exists. Dont add it");
-            else {
-                System.out.println("Username does not exist. Need to create new user");
+            if (!exists) {
                 User user = new User("Nikolaos Korompos", seller, "root", "root@email.com", "6934999656",
                                     "Ελλάδα", "Αθήνα", "Κορόμπου 13", "1543", 1);
-
                 // Insert new user
                 udao.insertUser(user, 1);
             }
@@ -661,11 +652,7 @@ public class ItemDAO {
             for (String category : categories){
                 boolean exists_cat = existsCategory(category);
 
-                if (exists_cat)
-                    System.out.println("Category \"" + category + "\" already exists. Skip it." );
-                else {
-                    System.out.println("Category \"" + category + "\" does not exist. Add it." );
-
+                if (!exists_cat) {
                     statement = DAOUtil.prepareStatement(connection, SQL_INSERT_CATEGORY, true, category);
 
                     if (statement.executeUpdate() == 0)

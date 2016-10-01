@@ -43,7 +43,6 @@ public class UserDAO {
             PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_ADD_NEW_USER, false, values);
 
             int affectedRows = statement.executeUpdate();
-            System.out.println("Affected Rows: " + affectedRows);
             ret = affectedRows;
 
             connection.close();

@@ -45,18 +45,14 @@ public class BidDAO {
 
             boolean exists = udao.existsUsername(bidder_name);
 
-            if (exists)
-                System.out.println("Bidder UserName exists. Dont add it");
-            else {
+            // If user does not exist
+            if (!exists){
                 System.out.println("Bidder Username does not exist. Need to create new user");
                 User user = new User("Nikolaos Korompos", bidder_name, "root", "root@email.com", "6934999656",
                         bid.getCountry(), bid.getLocation(), "Κορόμπου 13", "1543", 1);
 
                 // Insert new user
                 udao.insertUser(user, 1);
-
-                // Validate User
-                udao.approveUser(bidder_name, 1);
             }
 
             // Insert the Bid
@@ -84,9 +80,7 @@ public class BidDAO {
 
             // Insert User-Bidder rating
             statement = DAOUtil.prepareStatement(connection, SQL_INSERT_RATING, true, username, rating, username);
-
-            if (statement.executeUpdate() == 0)
-                System.out.println("Rated user already exists");
+            statement.executeUpdate();
 
             connection.close();
         } catch (SQLException ex) {
@@ -111,7 +105,6 @@ public class BidDAO {
         }
     }
 
-
     public List<Bid> getItemBids(Integer id){
 
         List<Bid> bids = new ArrayList<Bid>();
@@ -129,7 +122,6 @@ public class BidDAO {
 
             connection.close();
             return bids;
-
         }
         catch (SQLException ex){
             System.out.println("ERROR: " + ex.getMessage());
@@ -137,6 +129,4 @@ public class BidDAO {
         }
 
     }
-
-
 }

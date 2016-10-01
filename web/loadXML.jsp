@@ -31,10 +31,10 @@
             <br>
             <br>
 
-
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <%
-                String error = (String)request.getAttribute("error");
+                    String error = (String)request.getAttribute("error");
+                    String message = (String)request.getAttribute("message");
 
                 // Wrong xml file number
                 if (error != null) {%>
@@ -42,7 +42,15 @@
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Προσοχή! </strong><%=error%>
                     </div>
+                <%}
+                // Import success
+                if (message != null) {%>
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Επιτυχία! </strong><%=message%>
+                </div>
                 <%}%>
+
                 <form action="LoadXml" method="post">
                     <label for="xml_amount">Φόρτωση XML αρχείων (1-40).</label>
                     <div class="input-group">
