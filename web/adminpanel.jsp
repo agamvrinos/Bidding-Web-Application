@@ -1,6 +1,7 @@
 <%@ page import="dao.UserDAO" %>
 <%@ page import="entities.User" %>
 <%@ page import="java.util.List" %>
+<%@ page import="dao.DAOUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null || sessionUser.getRole()!=0)
@@ -50,7 +51,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <%  List<User> userlist = new UserDAO(true).getUserList();
+                <%  UserDAO dao = new UserDAO(true);
+                    String page_str = request.getParameter("page");
+                    Integer pageid;
+                    if (page_str != null)
+                        pageid = DAOUtil.IntConvert(page_str);
+                    else
+                        pageid = 1;
+                    List<User> userlist = dao.getUserList(pageid);
                     for(int i=0; i < userlist.size(); i++){
                 %>
                 <tr>
@@ -81,6 +89,26 @@
                 </tbody>
             </table>
         </div>
+
+        <%--PAGING--%>
+        <div class="alignright">
+            <form class="form-horizontal" action="adminpanel.jsp" method="get" >
+                <% if (pageid > 1){%>
+                <a class="btn btn-default" style="display:inline-block" href="adminpanel.jsp?page=<%=pageid-1%>">
+                    <strong><</strong>
+                </a>
+                <%}%>
+                <input type="text" style="width: 40px; height: 33px; display:inline-block" name="page" value="<%=pageid%>" />
+                από <%=dao.getNumOfPages()%>
+                <% if (pageid < dao.getNumOfPages()){%>
+                <a class="btn btn-default" style="display:inline-block" href="adminpanel.jsp?page=<%=pageid+1%>">
+                    <strong>></strong>
+                </a>
+                <%}%>
+            </form>
+        </div>
+        <%--END OF PAGING--%>
+
     </div>
 </div>
 

@@ -131,7 +131,7 @@
 
             <%--PAGING--%>
             <div class="alignright">
-                <form class="form-horizontal" action="searchResults.jsp" method="get" >
+                <form class="form-horizontal" action="categories.jsp" method="get" >
                     <% if (pageid > 1){%>
                     <a class="btn btn-default" style="display:inline-block" href="categories.jsp?page=<%=pageid-1%>">
                         <strong><</strong>

@@ -6,13 +6,17 @@ import java.util.*;
 
 public class UserDAO {
 
+    private int numOfResults;
+    private int numOfPages;
+    private static final int USERS_PER_PAGE = 15;
+
     private static final Integer USERNAME_EXISTS_ERROR = -2;
     private static final String SQL_ADD_NEW_USER = "INSERT INTO users (fullname, username, password, email, phone, country, city, address, afm, role, validated) VALUES (?, ?, MD5(?), ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_SEARCH_USER = "SELECT * FROM users WHERE username = ? AND password = MD5(?) ";
     private static final String SQL_SEARCH_USER_BY_ID = "SELECT * FROM users WHERE id = ? ";
     private static final String SQL_SEARCH_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ? ";
     private static final String SQL_EXISTS_USER = "SELECT 1 FROM users WHERE username = ?";
-    private static final String SQL_GET_USER_LIST = "SELECT * FROM users";
+    private static final String SQL_GET_USER_LIST = "SELECT SQL_CALC_FOUND_ROWS * FROM users ORDER BY id DESC LIMIT ?, " + USERS_PER_PAGE;
     private static final String SQL_VALIDATE_USERID = "UPDATE users SET validated=1 WHERE id= ?";
     private static final String SQL_VALIDATE_USERNAME = "UPDATE users SET validated=1 WHERE username= ?";
 
@@ -22,6 +26,14 @@ public class UserDAO {
     public UserDAO(boolean pool)
     {
         factory = ConnectionFactory.getInstance(pool);
+    }
+
+    public int getNumOfResults() {
+        return numOfResults;
+    }
+
+    public int getNumOfPages() {
+        return numOfPages;
     }
 
     public Integer insertUser(User userInfo, Integer is_imported){
@@ -99,13 +111,18 @@ public class UserDAO {
         }
     }
 
-    public List<User> getUserList(){
+    public List<User> getUserList(Integer page){
 
-        List<User> userlist = new ArrayList<User>();
+        List<User> list = new ArrayList<User>();
+
+        if(page < 1)
+            return list;
+
+        Integer offset = (page-1) * USERS_PER_PAGE;
 
         try{
             Connection connection = factory.getConnection();
-            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_GET_USER_LIST, false);
+            PreparedStatement statement = DAOUtil.prepareStatement(connection,SQL_GET_USER_LIST, false, offset);
             ResultSet results = statement.executeQuery();
 
             while(results.next()){
@@ -116,14 +133,26 @@ public class UserDAO {
                 user.setId(results.getInt("id"));
                 user.setValidated(results.getInt("validated"));
 
-                userlist.add(user);
+                list.add(user);
             }
+
+            //get number of rows
+            results = statement.executeQuery("SELECT FOUND_ROWS()");
+            results.next();
+            numOfResults = results.getInt(1);
+
+            if(numOfResults%USERS_PER_PAGE==0)
+                numOfPages = numOfResults/USERS_PER_PAGE;
+            else
+                numOfPages = (numOfResults/USERS_PER_PAGE)+1;
+
             connection.close();
+            return list;
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
         }
-        return userlist;
+        return list;
     }
 
     public User getUserbyID(Integer id){
