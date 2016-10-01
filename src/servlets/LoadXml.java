@@ -52,13 +52,13 @@ public class LoadXml extends HttpServlet {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             XmlItems xml_items = (XmlItems) jaxbUnmarshaller.unmarshal(file);
 
+            List<XmlItem> xmlitems = xml_items.getItems();
+
             // Loop over the built XMLitems
-            for (XmlItem xml_item : xml_items.getItems()){
+            for (XmlItem xml_item : xmlitems){
 
                 // Create the app entity using the xml_entity
                 buildEntity(xml_item);
-
-                System.out.println("===============================================");
             }
 
             request.setAttribute("message","H φόρτωση του αρχείου ολοκληρώθηκε.");
@@ -74,7 +74,7 @@ public class LoadXml extends HttpServlet {
 
         // Print the XML item
         // printXmlItem(xml_item);
-        System.out.println("Building item: " + xml_item.getName());
+        // System.out.println("Building item: " + xml_item.getName());
 
         //========================================================
         //============ Get INFO from the XML entity ==============

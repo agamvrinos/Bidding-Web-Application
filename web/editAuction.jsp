@@ -11,9 +11,21 @@
         response.sendRedirect("index.jsp");
 
     String id = request.getParameter("id");
-    ItemDAO dao2 = new ItemDAO(true);
-    Item item = dao2.getItemByID(Integer.valueOf(id));
+    Integer iid = Integer.valueOf(id);
 
+    ItemDAO idao = new ItemDAO(true);
+    Item item = idao.getItemByID(iid);
+
+    // If item does not exists then error
+    if (item == null){
+        response.sendRedirect("error_page.jsp");
+        return;
+    }
+    // If item exists but does not belong to user then error
+    else if (!idao.belongsToUser(sessionUser.getUsername(), iid)){
+        response.sendRedirect("error_page.jsp");
+        return;
+    }
 %>
 
 <html>

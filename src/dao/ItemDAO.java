@@ -57,6 +57,7 @@ public class ItemDAO {
     private static final String SQL_UPDATE_RECOMMENDATIONS = "INSERT INTO recommendations (username, rank, item_id) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE item_id = ?";
     private static final String SQL_DELETE_EXTRA_REC_ITEMS = "DELETE FROM recommendations WHERE username = ? AND rank >= ?";
     private static final String SQL_GET_REC_ITEMS = "SELECT item_id FROM recommendations WHERE username = ? ORDER BY rank ASC";
+    private static final String SQL_BELONGS_TO_USER = "SELECT * FROM items WHERE seller = ? AND id = ?";
 
 
     private ConnectionFactory factory;
@@ -796,6 +797,30 @@ public class ItemDAO {
             System.err.println("ERROR: " + ex.getMessage());
             throw new RuntimeException("Error at getRecItems");
         }
+    }
+
+    public boolean belongsToUser(String username, Integer item_id){
+
+        try {
+
+            Connection connection = factory.getConnection();
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_BELONGS_TO_USER, false, username, item_id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Item does not belong to this User
+            if (!resultSet.isBeforeFirst()) {
+                connection.close();
+                return false;
+            }
+
+            connection.close();
+        }
+        catch (SQLException ex){
+            System.err.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at belongsToUser");
+        }
+        return true;
     }
 
 }

@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 @WebServlet("/ExportXML")
 public class ExportXML extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("error_page.jsp");
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //TODO: MONO ADMIN NA MPAINEI EDW
@@ -108,9 +113,5 @@ public class ExportXML extends HttpServlet {
             System.err.println("ERROR on ExportXML: " + ex.getMessage());
         }
 
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("index.jsp");
     }
 }

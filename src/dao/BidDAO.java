@@ -47,7 +47,6 @@ public class BidDAO {
 
             // If user does not exist
             if (!exists){
-                System.out.println("Bidder Username does not exist. Need to create new user");
                 User user = new User("Nikolaos Korompos", bidder_name, "root", "root@email.com", "6934999656",
                         bid.getCountry(), bid.getLocation(), "Κορόμπου 13", "1543", 1);
 

@@ -17,11 +17,9 @@ public class DisableEndedAuction extends HttpServlet {
 
         // Get username from ajax
         String auction_id = request.getParameter("id");
-        System.out.println("AUCTION ID TO TERMINATE " + auction_id);
 
         // Disable ended auction
         ItemDAO dao = new ItemDAO(true);
         dao.disableAuction(auction_id);
-
     }
 }

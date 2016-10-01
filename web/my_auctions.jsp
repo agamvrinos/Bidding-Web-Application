@@ -120,7 +120,7 @@
                 </div>
 
 
-                <hr style="border-top: 1px solid #1abc9c">
+                <hr style="border-top: 1px solid #34525a">
 
                 <%
                 if (sessionUser != null) {
@@ -267,7 +267,7 @@
                         </div>
                     </div>
 
-                    <hr style="border-top: 1px solid #1abc9c">
+                    <hr style="border-top: 1px solid #34525a">
                 </div>
                 <%}
                 }
