@@ -1,7 +1,7 @@
 package servlets.Messages;
 
 import dao.MessageDAO;
-import entities.Message;
+import entities.AppEntities.Message;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

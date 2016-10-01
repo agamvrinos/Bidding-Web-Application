@@ -1,8 +1,8 @@
 package servlets;
 
 import dao.ItemDAO;
-import entities.Item;
-import entities.User;
+import entities.AppEntities.Item;
+import entities.AppEntities.User;
 import support.ImageValidator;
 
 import javax.servlet.RequestDispatcher;

@@ -1,7 +1,6 @@
 package servlets;
 
 import dao.ItemDAO;
-import entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

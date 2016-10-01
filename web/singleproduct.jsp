@@ -1,10 +1,10 @@
-<%@ page import="entities.Item" %>
+<%@ page import="entities.AppEntities.Item" %>
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="dao.BidDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entities.Bid" %>
+<%@ page import="entities.AppEntities.Bid" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW--%>

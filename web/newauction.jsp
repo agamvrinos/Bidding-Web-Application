@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entities.User" %>
+<%@ page import="entities.AppEntities.User" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
     if(sessionUser==null)

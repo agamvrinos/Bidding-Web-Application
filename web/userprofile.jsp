@@ -1,4 +1,4 @@
-<%@ page import="entities.User" %>
+<%@ page import="entities.AppEntities.User" %>
 <%@ page import="dao.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% User user = new UserDAO(true).getUserbyID(Integer.valueOf(request.getParameter("id")));

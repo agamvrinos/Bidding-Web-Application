@@ -1,11 +1,11 @@
 package servlets.XML_Operations;
 
-import XMLentities.*;
 import dao.BidDAO;
 import dao.ItemDAO;
-import entities.Bid;
-import entities.Item;
-import entities.User;
+import entities.AppEntities.Bid;
+import entities.AppEntities.Item;
+import entities.AppEntities.User;
+import entities.XmlEntities.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;

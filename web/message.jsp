@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="entities.User" %>
-<%@ page import="entities.Message" %>
+<%@ page import="entities.AppEntities.User" %>
+<%@ page import="entities.AppEntities.Message" %>
 <%@ page import="dao.MessageDAO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>

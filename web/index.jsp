@@ -1,7 +1,7 @@
 <%@ page import="dao.ItemDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entities.User" %>
-<%@ page import="entities.Item" %>
+<%@ page import="entities.AppEntities.User" %>
+<%@ page import="entities.AppEntities.Item" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 
 <%

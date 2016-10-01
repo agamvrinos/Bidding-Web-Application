@@ -1,7 +1,6 @@
 package servlets.Messages;
 
 import dao.MessageDAO;
-import entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

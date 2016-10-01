@@ -1,4 +1,4 @@
-package XMLentities;
+package entities.XmlEntities;
 
 import java.util.List;
 import javax.xml.bind.annotation.*;
