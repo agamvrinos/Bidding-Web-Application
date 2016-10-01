@@ -55,7 +55,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png" class="img-circle img-responsive"> </div>
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="img/default-user.png" class="img-circle img-responsive"> </div>
 
                         <span class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
@@ -122,10 +122,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="btn-toolbar">
-                                <a href="#" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Επεξεργασία Προφίλ</a>
-                                <a href="#" class="btn btn-primary"><i class="fa fa-envelope" aria-hidden="true"></i> Τα Μηνύματα μου </a>
-                            </div>
+                            </span>
                         </div>
                     </div>
                 </div>

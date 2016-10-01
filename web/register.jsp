@@ -151,6 +151,7 @@
                             <select id="UserRole" name="UserRole" class="form-control">
                                 <option value="1">Πωλητής</option>
                                 <option value="2">Προσφέρων</option>
+                                <option value="3">Πωλητής/ Προσφέρων</option>
                             </select>
                         </div>
                     </div>

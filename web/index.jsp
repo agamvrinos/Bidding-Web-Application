@@ -81,7 +81,6 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="category" style="font-weight: 400;">Κατηγορία:</label>
-                                                    <%--<input name="category" type="text" class="form-control" id="category" placeholder="π.χ Ρούχα">--%>
                                                     <select name="category" id="category" class="form-control">
                                                         <option value="">Όλες</option>
                                                         <%for(String category : categories){%>

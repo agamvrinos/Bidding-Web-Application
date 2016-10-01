@@ -391,6 +391,11 @@
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
             var map=new google.maps.Map(document.getElementById("map"),mapProp);
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(<%=item.getLatitude()%>,<%=item.getLongitude()%>),
+                map: map
+            });
         });
     });
 </script>

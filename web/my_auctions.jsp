@@ -137,7 +137,7 @@
 
                         <%--Image Section--%>
                         <div class="col-sm-3 col-xs-3 col-md-3">
-
+                            <a href="singleproduct.jsp?id=<%=userAuctions.get(i).getId()%>" >
                             <%String image = userAuctions.get(i).getImage();
 
                             // If there is an image uploaded for this item
@@ -148,6 +148,7 @@
                             else {%>
                                 <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
                             <%}%>
+                            </a>
                         </div>
 
                         <%--Info Section--%>
@@ -157,7 +158,7 @@
                                 <tbody>
                                 <tr>
                                     <th>Τίτλος</th>
-                                    <td><%=userAuctions.get(i).getName()%></td>
+                                    <td><a href="singleproduct.jsp?id=<%=userAuctions.get(i).getId()%>" ><%=userAuctions.get(i).getName()%></a></td>
                                 </tr>
                                 <tr>
                                     <th>Κατηγορία/ες</th>
@@ -206,8 +207,6 @@
                                     Date end_time = userAuctions.get(i).getEnds();
                                     SimpleDateFormat endformat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
                                     String end = endformat.format(end_time);
-
-                                    System.out.println("END: " + end);
                                 %>
                                     <tr>
                                         <th>Χρόνος που Απομένει</th>

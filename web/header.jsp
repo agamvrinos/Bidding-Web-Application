@@ -17,6 +17,9 @@
                                 <%if ( ((User) request.getSession().getAttribute("user")).getRole()!=2){%>
                                     <li><a href="my_auctions.jsp" id="my_auctions"><i class="fa fa-user"></i>Διαχείριση Δημοπρασιών</a></li>
                                 <%}%>
+                                <%if ( ((User) request.getSession().getAttribute("user")).getRole()==0){%>
+                                    <li><a href="adminpanel.jsp" id="admin_panel"><i class="fa fa-user"></i>Διαχείριση Χρηστών</a></li>
+                                <%}%>
                                 <li><a href="Logout" id="logout_button"><i class="fa fa-user"></i>Αποσύνδεση</a></li>
                             <%}%>
                         </ul>

@@ -4,6 +4,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="dao.DAOUtil" %>
+<%@ page import="dao.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <script>
@@ -200,8 +201,7 @@
                         </tr>
                         <tr>
                             <th>Πωλητής</th>
-                            <td><a href="#"><%=auctions.get(i).getSeller()%></a></td>
-
+                            <td><a href="userprofile.jsp?id=<%=new UserDAO(true).getUserbyName(auctions.get(i).getSeller()).getId()%>"><%=auctions.get(i).getSeller()%></a></td>
                         </tr>
                         </tbody>
                     </table>
