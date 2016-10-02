@@ -106,7 +106,10 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2 col-sm-2">
+                        <div class="col-md-2 col-sm-2 pull-left">
+                            <a href="newauction.jsp" class="btn btn-primary" role="button">Νέα Δημοπρασία</a>
+                        </div>
+                        <div class="col-md-2 col-sm-2 pull-right">
                             <select id="dropDown" class="form-control">
                                 <option value="2">Όλες</option>
                                 <option value="1">Δημοσιευμένες</option>
@@ -115,9 +118,7 @@
                             </select>
                         </div>
                     </div>
-
                 </div>
-
 
                 <hr style="border-top: 1px solid #34525a">
 
@@ -177,19 +178,19 @@
                                 </tr>
                                 <tr>
                                     <th>Τρέχουσα προσφορά</th>
-                                    <td><%=userAuctions.get(i).getCurrently()%></td>
+                                    <td>$<%=userAuctions.get(i).getCurrently()%></td>
                                 </tr>
                                 <tr>
                                     <th>Τιμή Αγοράς</th>
                                     <%if(userAuctions.get(i).getBuy_price() == null){%>
                                         <td>Δεν έχει οριστεί</td>
                                     <%}else{%>
-                                        <td><%=userAuctions.get(i).getBuy_price()%></td>
+                                        <td>$<%=userAuctions.get(i).getBuy_price()%></td>
                                     <%}%>
                                 </tr>
                                 <tr>
                                     <th>Αρχική Προσφορά</th>
-                                    <td><%=userAuctions.get(i).getFirst_bid()%></td>
+                                    <td>$<%=userAuctions.get(i).getFirst_bid()%></td>
                                 </tr>
                                 <tr>
                                     <th>Ημερομηνία/Ώρα Λήξης</th>
@@ -271,10 +272,6 @@
                 }
                 %>
 
-                <div class="row">
-                    <br>
-                    <a href="newauction.jsp" class="btn btn-primary" role="button">Νέα Δημοπρασία</a>
-                </div>
             </div>
     </div>
 

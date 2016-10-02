@@ -41,7 +41,6 @@
 
 <div class="slider-area">
     <div class="zigzag-bottom"></div>
-
     <div class="item active">
         <div class="slide-bg slide-one"></div>
         <div class="slide-text-wrapper">
