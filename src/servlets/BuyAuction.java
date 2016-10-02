@@ -24,7 +24,8 @@ public class BuyAuction extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         // Get auction parameters
-        Integer auction_id = Integer.valueOf(request.getParameter("id"));
+        String id = request.getParameter("id");
+        Integer auction_id = Integer.valueOf(id);
 
         ItemDAO dao = new ItemDAO(true);
 
@@ -68,7 +69,8 @@ public class BuyAuction extends HttpServlet {
 
         mdao.autoSuccessMessage(item.getId(), item.getName(), seller_id, buyer_id, now);
 
-        // 2) Delete/Buy Item
+        // 2) Buy Item
+        dao.disableAuction(id);
         request.setAttribute("success","yes");
         dispatcher.forward(request, response);
     }
