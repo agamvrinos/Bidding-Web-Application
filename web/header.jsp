@@ -3,7 +3,7 @@
     <div class="header-area">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="user-menu">
                         <ul>
                             <li><a href="myprofile.jsp"><i class="fa fa-user"></i>Το Προφίλ μου</a></li>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="header-right">
 
                         <ul class="list-unstyled list-inline">
