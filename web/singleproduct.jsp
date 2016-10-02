@@ -350,80 +350,45 @@
                         </div>
                     </div>
 
-                    <div class="related-products-wrapper">
-                        <h2 class="related-products-title">Σχετικα Προϊοντα</h2>
-                        <div class="related-products-carousel">
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img style="width: 100%;" src="img/blank.png" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
+                    <% // If user is logged in
+                        if(user != null) {
+                            List<Item> rec_items = idao.getRecItems(user.getUsername());
+                            if(rec_items.size() != 0){%>
+                            <div class="related-products-wrapper">
+                                <h2 class="related-products-title">Σχετικα Προϊοντα</h2>
+                                <div class="related-products-carousel">
+                                    <%  for(int i = 0; i < rec_items.size(); i++){%>
+                                        <div class="single-product">
+                                            <div class="product-f-image">
+                                                <%String rec_image = rec_items.get(i).getImage();
 
-                                <h2><a href="">Sony Smart TV - 2015</a></h2>
+                                                    // If there is an image uploaded for this item
+                                                if (rec_image != null) {%>
+                                                <img class="img-responsive center-block" src="files/<%=rec_image%>">
+                                                <%}
+                                                // Else use the default image
+                                                else {%>
+                                                <img class="img-responsive center-block" src="img/blank.png">
+                                                <%}%>
+                                                <div class="product-hover">
+                                                    <a href="singleproduct.jsp?id=<%=rec_items.get(i).getId()%>" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
+                                                </div>
+                                            </div>
 
-                                <div class="product-carousel-price">
-                                    <ins>$700.00</ins> <del>$800.00</del>
+                                            <h2><a href="singleproduct.jsp?id=<%=rec_items.get(i).getId()%>"><%=rec_items.get(i).getName()%></a></h2>
+
+                                            <div class="product-carousel-price">
+                                                <ins>$<%=rec_items.get(i).getCurrently()%></ins>
+                                                <%if (rec_items.get(i).getBuy_price()!=null){%>
+                                                $<%=rec_items.get(i).getBuy_price()%>
+                                                <%}%>
+                                            </div>
+                                        </div>
+                                    <%}%>
                                 </div>
                             </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/blank.png" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
-
-                                <h2><a href="">Apple new mac book 2015 March :P</a></h2>
-                                <div class="product-carousel-price">
-                                    <ins>$899.00</ins> <del>$999.00</del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/blank.png" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
-
-                                <h2><a href="">Apple new i phone 6</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$400.00</ins> <del>$425.00</del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/blank.png" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
-
-                                <h2><a href="">Sony playstation microsoft</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$200.00</ins> <del>$225.00</del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/blank.png" alt="">
-                                    <div class="product-hover">
-                                        <a href="" class="view-details-link"><i class="fa fa-link"></i> See details</a>
-                                    </div>
-                                </div>
-
-                                <h2><a href="">Sony Smart Air Condtion</a></h2>
-
-                                <div class="product-carousel-price">
-                                    <ins>$1200.00</ins> <del>$1355.00</del>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <%}%>
+                        <%}%>
                 </div>
             </div>
         </div>
