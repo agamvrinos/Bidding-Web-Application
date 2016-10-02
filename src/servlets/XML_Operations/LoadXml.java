@@ -2,6 +2,7 @@ package servlets.XML_Operations;
 
 import dao.BidDAO;
 import dao.ItemDAO;
+import dao.UserDAO;
 import entities.AppEntities.Bid;
 import entities.AppEntities.Item;
 import entities.AppEntities.User;
@@ -145,7 +146,7 @@ public class LoadXml extends HttpServlet {
         ItemDAO idao = new ItemDAO(true);
         idao.loadXmlEntities(item_ent);
 
-        new BidDAO(true).insertRating(sellerName, sellerRating);
+        new UserDAO(true).insertRating(sellerName, sellerRating);
     }
 
     private Double DoubleConvert(String str){

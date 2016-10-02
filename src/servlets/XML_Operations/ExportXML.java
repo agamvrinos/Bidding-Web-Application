@@ -1,6 +1,7 @@
 package servlets.XML_Operations;
 
 import dao.ItemDAO;
+import dao.UserDAO;
 import entities.AppEntities.Item;
 import entities.AppEntities.User;
 import entities.XmlEntities.*;
@@ -35,6 +36,7 @@ public class ExportXML extends HttpServlet {
         Integer item_id = Integer.parseInt(request.getParameter("export"));
 
         ItemDAO dao = new ItemDAO(true);
+        UserDAO udao = new UserDAO(true);
         Item item = dao.getItemByID(item_id);
 
         //Create XMLItems
@@ -76,7 +78,7 @@ public class ExportXML extends HttpServlet {
 
         //Fill seller with info
         xml_seller.setSellerName(item.getSeller());
-        xml_seller.setRating(dao.getUserRating(item.getSeller()));
+        xml_seller.setRating(udao.getUserRating(item.getSeller()));
 
         //Create Bids Xml object
         XmlBids xmlBids = new XmlBids();

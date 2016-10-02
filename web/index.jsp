@@ -137,6 +137,11 @@
     </div>
 </div> <!-- End promo area -->
 
+<% // If user is logged in
+    if(user != null) {
+        List<Item> rec_items = idao.getRecItems(user.getUsername());
+    if(rec_items.size() == 0){
+    %>
 <div class="maincontent-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
@@ -145,11 +150,7 @@
                 <div class="latest-product">
                     <h1 style="text-align: center">Προτεινόμενα Προϊόντα</h1>
                     <div class="product-carousel">
-                        <%
-                        // If user is logged in
-                        if(user != null) {
-                            List<Item> rec_items = idao.getRecItems(user.getUsername());
-                            for(int i = 0; i < rec_items.size(); i++){%>
+                        <%  for(int i = 0; i < rec_items.size(); i++){%>
                                 <div class="single-product">
                                     <div class="product-f-image">
                                         <img src="img/blank.png" alt="">
@@ -175,6 +176,7 @@
         </div>
     </div>
 </div> <!-- End main content area -->
+<%}%>
 
 <jsp:include page="footer.jsp" />
 

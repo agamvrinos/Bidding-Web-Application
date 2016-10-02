@@ -19,6 +19,12 @@ public class UserDAO {
     private static final String SQL_GET_USER_LIST = "SELECT SQL_CALC_FOUND_ROWS * FROM users ORDER BY id DESC LIMIT ?, " + USERS_PER_PAGE;
     private static final String SQL_VALIDATE_USERID = "UPDATE users SET validated=1 WHERE id= ?";
     private static final String SQL_VALIDATE_USERNAME = "UPDATE users SET validated=1 WHERE username= ?";
+    private static final String SQL_GET_USER_RATING = "SELECT rating FROM ratings WHERE username = ?";
+    private static final String SQL_INSERT_RATING = "INSERT INTO ratings (username, rating) " +
+            "SELECT col1, col2 " +
+            "FROM (select ? as col1, ? as col2) t " +
+            "WHERE NOT EXISTS (SELECT * FROM ratings WHERE username = ?);";
+    private static final String SQL_UPDATE_RATING = "UPDATE ratings SET rating = rating + ? WHERE username = ?";
 
     private ConnectionFactory factory;
 
@@ -65,7 +71,7 @@ public class UserDAO {
             }
             // if User was created from the UI then set initial rating to 0
             else if (ret != 0 && is_imported == 0){
-                new BidDAO(true).insertRating(userInfo.getUsername(), 0);
+                insertRating(userInfo.getUsername(), 0);
             }
 
         } catch (SQLIntegrityConstraintViolationException e1){
@@ -258,6 +264,58 @@ public class UserDAO {
         }
         catch (SQLException e){
             System.err.println(e.getMessage());
+        }
+    }
+
+    public void insertRating(String username, Integer rating) {
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement;
+
+            // Insert User-Bidder rating
+            statement = DAOUtil.prepareStatement(connection, SQL_INSERT_RATING, true, username, rating, username);
+            statement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Errori at InsertRating");
+        }
+    }
+
+    public void updateRating(String username, Integer rating_val) {
+        try {
+            Connection connection = factory.getConnection();
+            PreparedStatement statement;
+
+            // Update User rating
+            statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_RATING, true, rating_val, username);
+            statement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            System.out.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Errori at UpdateRating");
+        }
+    }
+
+    public Integer getUserRating(String username){
+
+        try {
+            Connection connection = factory.getConnection();
+
+            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_USER_RATING, false, username);
+            ResultSet result = statement.executeQuery();
+
+            result.next();
+            Integer rating = result.getInt(1);
+
+            connection.close();
+            return rating;
+        }
+        catch (SQLException ex){
+            System.err.println("ERROR: " + ex.getMessage());
+            throw new RuntimeException("Error at getUserRating");
         }
     }
 }

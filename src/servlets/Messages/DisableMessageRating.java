@@ -2,6 +2,7 @@ package servlets.Messages;
 
 import dao.BidDAO;
 import dao.MessageDAO;
+import dao.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +14,6 @@ import java.io.IOException;
 @WebServlet("/DisableMessageRating")
 public class DisableMessageRating extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        System.out.println("EMPENES?");
 
         // Get sender id in order to update his rating
         String seller_uname = request.getParameter("seller_uname");
@@ -31,12 +30,13 @@ public class DisableMessageRating extends HttpServlet {
 
         MessageDAO mdao = new MessageDAO(true);
         BidDAO bdao = new BidDAO(true);
+        UserDAO udao = new UserDAO(true);
 
         // Update msg is_auto so the user wont be able to rate anymore
         mdao.updateIsAuto(message_id);
 
         // Update the rating of the user
-        bdao.updateRating(seller_uname, rating);
+        udao.updateRating(seller_uname, rating);
 
     }
 }

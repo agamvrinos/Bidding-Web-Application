@@ -61,7 +61,7 @@ public class BidDAO {
                 throw new RuntimeException("Creating Bid failed, no rows affected.");
 
             // Insert User-Bidder rating
-            insertRating(bidder_name, bidder_rating);
+            new UserDAO(true).insertRating(bidder_name, bidder_rating);
 
             connection.close();
 
@@ -71,38 +71,37 @@ public class BidDAO {
         }
     }
 
-    //TODO: oti na nai sunartiseis edw. InsertRating kai UpdateRating sto BidDAO??????
-    public void insertRating(String username, Integer rating) {
-        try {
-            Connection connection = factory.getConnection();
-            PreparedStatement statement;
-
-            // Insert User-Bidder rating
-            statement = DAOUtil.prepareStatement(connection, SQL_INSERT_RATING, true, username, rating, username);
-            statement.executeUpdate();
-
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            throw new RuntimeException("Errori at InsertRating");
-        }
-    }
-
-    public void updateRating(String username, Integer rating_val) {
-        try {
-            Connection connection = factory.getConnection();
-            PreparedStatement statement;
-
-            // Update User rating
-            statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_RATING, true, rating_val, username);
-            statement.executeUpdate();
-
-            connection.close();
-        } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            throw new RuntimeException("Errori at UpdateRating");
-        }
-    }
+//    public void insertRating(String username, Integer rating) {
+//        try {
+//            Connection connection = factory.getConnection();
+//            PreparedStatement statement;
+//
+//            // Insert User-Bidder rating
+//            statement = DAOUtil.prepareStatement(connection, SQL_INSERT_RATING, true, username, rating, username);
+//            statement.executeUpdate();
+//
+//            connection.close();
+//        } catch (SQLException ex) {
+//            System.out.println("ERROR: " + ex.getMessage());
+//            throw new RuntimeException("Errori at InsertRating");
+//        }
+//    }
+//
+//    public void updateRating(String username, Integer rating_val) {
+//        try {
+//            Connection connection = factory.getConnection();
+//            PreparedStatement statement;
+//
+//            // Update User rating
+//            statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_RATING, true, rating_val, username);
+//            statement.executeUpdate();
+//
+//            connection.close();
+//        } catch (SQLException ex) {
+//            System.out.println("ERROR: " + ex.getMessage());
+//            throw new RuntimeException("Errori at UpdateRating");
+//        }
+//    }
 
     public List<Bid> getItemBids(Integer id){
 

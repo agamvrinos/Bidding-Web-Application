@@ -678,25 +678,25 @@ public class ItemDAO {
 
     }
 
-    public Integer getUserRating(String username){
-
-        try {
-            Connection connection = factory.getConnection();
-
-            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_USER_RATING, false, username);
-            ResultSet result = statement.executeQuery();
-
-            result.next();
-            Integer rating = result.getInt(1);
-
-            connection.close();
-            return rating;
-        }
-        catch (SQLException ex){
-            System.err.println("ERROR: " + ex.getMessage());
-            throw new RuntimeException("Error at getUserRating");
-        }
-    }
+//    public Integer getUserRating(String username){
+//
+//        try {
+//            Connection connection = factory.getConnection();
+//
+//            PreparedStatement statement = DAOUtil.prepareStatement(connection, SQL_GET_USER_RATING, false, username);
+//            ResultSet result = statement.executeQuery();
+//
+//            result.next();
+//            Integer rating = result.getInt(1);
+//
+//            connection.close();
+//            return rating;
+//        }
+//        catch (SQLException ex){
+//            System.err.println("ERROR: " + ex.getMessage());
+//            throw new RuntimeException("Error at getUserRating");
+//        }
+//    }
 
     public void updateRecommendedItems(){
 

@@ -35,6 +35,10 @@ public class Register extends HttpServlet {
         String afm = request.getParameter("afm");
         String role = request.getParameter("UserRole");
 
+        Integer role_int = Integer.parseInt(role);
+        if(role_int > 3 || role_int < 1)
+            response.sendRedirect("error_page.jsp");
+
         // Create UserDTO
         User userInfo = new User(fullname, username, password, email, phone, country, city, address, afm, Integer.parseInt(role));
 

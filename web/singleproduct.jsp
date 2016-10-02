@@ -5,15 +5,16 @@
 <%@ page import="dao.BidDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entities.AppEntities.Bid" %>
+<%@ page import="dao.UserDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW--%>
     <%
         Integer auction_id = Integer.valueOf(request.getParameter("id"));
-//        String chosen_category = request.getParameter("category");
 
         ItemDAO idao = new ItemDAO(true);
         BidDAO bdao = new BidDAO(true);
+        UserDAO udao = new UserDAO(true);
 
         Item item = idao.getItemByID(auction_id);
 
@@ -173,7 +174,7 @@
 
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <h5><span style="background-color: #34525a;" class="label label-default">Βαθμολογία: <%=idao.getUserRating(item.getSeller())%> <i class="fa fa-thumbs-up" aria-hidden="true"></i></span></h5>                                        </div>
+                                            <h5><span style="background-color: #34525a;" class="label label-default">Βαθμολογία: <%=udao.getUserRating(item.getSeller())%> <i class="fa fa-thumbs-up" aria-hidden="true"></i></span></h5>                                        </div>
                                         </div>
                                     </div>
 
