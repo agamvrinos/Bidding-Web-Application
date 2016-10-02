@@ -27,6 +27,7 @@ public class Register extends HttpServlet {
         String fullname = request.getParameter("fullname");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String password_rep = request.getParameter("password_repeat");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String country = request.getParameter("country");
@@ -50,20 +51,21 @@ public class Register extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        if (register_result == -2){     // Duplicate Username check
+        RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+        RequestDispatcher dispatcher2 = request.getRequestDispatcher("registerSuccess.jsp");
+
+        if (register_result == -2 || register_result == -1){     // Duplicate Username check
             request.setAttribute("register-error", register_result);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
             dispatcher.forward(request, response);
         }
-        else if (register_result == -1) {
-            request.setAttribute("register-error", register_result);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+        else if (!password.equals(password_rep)){
+            request.setAttribute("register-error", -3);
             dispatcher.forward(request, response);
         }
-        else if (register_result == 1){ // No Errors. Register is successful
+        // No Errors. Register is successful
+        else if (register_result == 1){
             request.setAttribute("username", username);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("registerSuccess.jsp");
-            dispatcher.forward(request, response);
+            dispatcher2.forward(request, response);
         }
 
     }

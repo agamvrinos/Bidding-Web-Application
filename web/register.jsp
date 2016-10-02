@@ -55,7 +55,15 @@
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             <strong>Προσοχή! </strong>Υπήρξε ένα πρόβλημα κατά την εγγραφή. Προσπαθήστε ξανά.
                         </div><%
+                    }
+                    // Pwd does not match
+                    else if (value != null && value == -3){%>
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Προσοχή! </strong>Η επιβεβαίωση κωδικού δεν είναι ίδια. Προσπαθήστε ξανά.
+                        </div><%
                     }%>
+
 
                 <fieldset>
                     <!-- Text input-->

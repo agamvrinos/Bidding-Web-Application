@@ -55,7 +55,6 @@
             var minutes = Math.floor((distance % _hour) / _minute);
             var seconds = Math.floor((distance % _minute) / _second);
 
-
             if (String(hours).length < 2){
                 hours = 0 + String(hours);
             }
@@ -197,27 +196,29 @@
 
                                     <div class="row">
                                         <div class="col-md-8 gap">
-                                            <%
-                                                Date end_t = item.getEnds();
-                                                SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-                                                String ended = end_format.format(end_t);
-                                            %>
-
-                                            <span style="font-weight: bold;">Λήξη: </span>
-                                            <div class="countdown-<%=item.getId()%>" style="color:green;"></div>
-                                            <script>
-                                                CountDownTimer('<%=ended%>', 'countdown-<%=item.getId()%>', '<%=item.getId()%>');
-                                            </script>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-8 gap">
                                             <span style="font-weight: bold;">Κατηγορίες: </span>
                                             <% for(int i=0; i<item.getCategories().size(); i++){%>
                                                 <%=item.getCategories().get(i)%>
                                                 <% if (i<item.getCategories().size()-1){%>,<%}%>
                                             <%}%>
+                                        </div>
+                                    </div>
+
+                                    <div class="row gap">
+                                        <%
+                                            Date end_t = item.getEnds();
+                                            SimpleDateFormat end_format = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+                                            String ended = end_format.format(end_t);
+                                        %>
+                                        <div class="col-md-1">
+                                            <span style="font-weight: bold;">Απομένει:</span>
+                                        </div>
+
+                                        <div class="col-md-9">
+                                            <div class="countdown-<%=item.getId()%>" style="color:green; margin-left: 2px;"></div>
+                                            <script>
+                                                CountDownTimer('<%=ended%>', 'countdown-<%=item.getId()%>', '<%=item.getId()%>');
+                                            </script>
                                         </div>
                                     </div>
 
@@ -412,6 +413,8 @@
 
 <jsp:include page="footer.jsp" />
 
+</body>
+
 <script src="javascript/jquery-1.10.2.js"></script>
 <script src="javascript/jquery-ui.js"></script>
 <script src="javascript/form.js"></script>
@@ -461,5 +464,5 @@
         $('#offers-table').DataTable();
     });
 </script>
-</body>
+
 </html>
