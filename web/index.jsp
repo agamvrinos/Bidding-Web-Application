@@ -152,7 +152,17 @@
                         <%  for(int i = 0; i < rec_items.size(); i++){%>
                                 <div class="single-product">
                                     <div class="product-f-image">
-                                        <img src="img/blank.png" alt="">
+                                        <%String image = rec_items.get(i).getImage();
+
+                                        // If there is an image uploaded for this item
+                                        if (image != null) {%>
+                                            <img class="img-responsive center-block" src="files/<%=image%>" style="height: 200px; width: 200px">
+                                        <%}
+                                        // Else use the default image
+                                        else {%>
+                                            <img class="img-responsive center-block" src="img/blank.png" style="height: 200px; width: 200px">
+                                        <%}%>
+
                                         <div class="product-hover">
                                             <a href="singleproduct.jsp?id=<%=rec_items.get(i).getId()%>" class="view-details-link"><i class="fa fa-link"></i> προβολη</a>
                                         </div>
@@ -161,9 +171,9 @@
                                     <h2><a href="singleproduct.jsp?id=<%=rec_items.get(i).getId()%>"><%=rec_items.get(i).getName()%></a></h2>
 
                                     <div class="product-carousel-price">
-                                        <ins><%=rec_items.get(i).getCurrently()%>$</ins>
+                                        <ins>$<%=rec_items.get(i).getCurrently()%></ins>
                                         <%if (rec_items.get(i).getBuy_price()!=null){%>
-                                            <%=rec_items.get(i).getBuy_price()%>$
+                                            $<%=rec_items.get(i).getBuy_price()%>
                                         <%}%>
                                     </div>
                                 </div>
