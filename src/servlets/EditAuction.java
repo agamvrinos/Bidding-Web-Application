@@ -80,7 +80,7 @@ public class EditAuction extends HttpServlet {
                 } else if (name.equals("desc")) {
                     desc = getValue(part);
                 } else if(name.equals("image")) {
-//                    image = part.getSubmittedFileName();
+                    image = part.getSubmittedFileName();
 
                     // No image submitted
                     if (image.equals("")) {

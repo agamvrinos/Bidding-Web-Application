@@ -18,14 +18,65 @@
 
         Item item = idao.getItemByID(auction_id);
 
-        List<Bid> bids = bdao.getItemBids(auction_id);
-
         //if not valid, error page
         if(item == null) {
             response.sendRedirect("error_page.jsp");
             return;
         }
+
+        List<Bid> bids = bdao.getItemBids(auction_id);
 %>
+
+<script>
+
+
+    function CountDownTimer(dt, class_name, auction_id)
+    {
+        var end = new Date(dt);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementsByClassName(class_name)[0].innerHTML = 'Η Δημοπρασία έληξε!';
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+
+            if (String(hours).length < 2){
+                hours = 0 + String(hours);
+            }
+            if (String(minutes).length < 2){
+                minutes = 0 + String(minutes);
+            }
+            if (String(seconds).length < 2){
+                seconds = 0 + String(seconds);
+            }
+
+            var datestr = days + ' days ' +
+                    hours + ' hrs ' +
+                    minutes + ' mins ' +
+                    seconds + ' secs';
+
+            document.getElementsByClassName(class_name)[0].innerHTML = datestr;
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    }
+</script>
 
 <html>
 <head>
@@ -152,7 +203,11 @@
                                                 String ended = end_format.format(end_t);
                                             %>
 
-                                            <span style="font-weight: bold;">Λήξη: </span> <%=ended%>
+                                            <span style="font-weight: bold;">Λήξη: </span>
+                                            <div class="countdown-<%=item.getId()%>" style="color:green;"></div>
+                                            <script>
+                                                CountDownTimer('<%=ended%>', 'countdown-<%=item.getId()%>', '<%=item.getId()%>');
+                                            </script>
                                         </div>
                                     </div>
 

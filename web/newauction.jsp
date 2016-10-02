@@ -121,18 +121,6 @@
                         </div>
                     </div>
 
-                    <%--<div class="form-group required">--%>
-                        <%--<label class="col-md-4 control-label" for="datetimepicker_dark2">Ημερομηνία/Ώρα έναρξης</label>--%>
-                        <%--<div class="col-md-4">--%>
-                            <%--<div class="input-group date" >--%>
-                                <%--<input id="datetimepicker_dark2" type="text" placeholder="Ημερομηνία/Ώρα έναρξης" class="form-control" />--%>
-                                    <%--<span class="input-group-addon">--%>
-                                        <%--<i class="fa fa-calendar" aria-hidden="true"></i>--%>
-                                    <%--</span>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
                     <div class="form-group required">
                         <label class="col-md-4 control-label" for="datetimepicker_dark">Ημερομηνία/Ώρα λήξης</label>
                         <div class="col-md-4">
