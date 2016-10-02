@@ -30,8 +30,10 @@ public class ExportXML extends HttpServlet {
 
         // Error handling
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null || user.getRole() != 0)
+        if (user == null || user.getRole() != 0) {
             response.sendRedirect("error_page.jsp");
+            return;
+        }
 
         Integer item_id = Integer.parseInt(request.getParameter("export"));
 

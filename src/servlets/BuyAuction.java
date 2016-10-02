@@ -56,11 +56,14 @@ public class BuyAuction extends HttpServlet {
             return;
         }
 
+        User buyer = (User) request.getSession().getAttribute("user");
+        if (buyer == null || buyer.getRole() == 1)
+            response.sendRedirect("error_page.jsp");
+
         // If I get here then the item CAN be bought
 
         // 1) Send a message to the user that bought it
         UserDAO udao = new UserDAO(true);
-        User buyer = (User) request.getSession().getAttribute("user");
         User seller = udao.getUserbyName(item.getSeller());
 
         Integer seller_id = seller.getId();

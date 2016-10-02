@@ -38,8 +38,10 @@ public class LoadXml extends HttpServlet {
 
         // Error handling
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null || user.getRole() != 0)
+        if (user == null || user.getRole() != 0) {
             response.sendRedirect("error_page.jsp");
+            return;
+        }
 
         String xmlpath = request.getParameter("xml_path");
 

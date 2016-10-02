@@ -30,7 +30,6 @@
         request.setAttribute("nologgedin","no");
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
-
         return;
     }
 %>

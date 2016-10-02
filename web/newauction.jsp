@@ -4,8 +4,10 @@
 <%@ page import="entities.AppEntities.User" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null || sessionUser.getRole() == 2)
+    if(sessionUser==null || sessionUser.getRole() == 2) {
         response.sendRedirect("error_page.jsp");
+        return;
+    }
 %>
 
 <html>

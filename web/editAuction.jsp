@@ -7,8 +7,10 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null)
+    if(sessionUser==null) {
         response.sendRedirect("error_page.jsp");
+        return;
+    }
 
     String id = request.getParameter("id");
     Integer iid = Integer.valueOf(id);

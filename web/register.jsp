@@ -2,8 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser!=null)
+    if(sessionUser!=null) {
         response.sendRedirect("index.jsp");
+        return;
+    }
 %>
 <html>
 <head>

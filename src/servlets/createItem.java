@@ -39,8 +39,8 @@ public class createItem extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         // in case you are not logged in
-        if (user == null) {
-            response.sendRedirect("index.jsp");
+        if (user == null || user.getRole() == 2) {
+            response.sendRedirect("error_page.jsp");
             return;
         }
 

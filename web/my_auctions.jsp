@@ -6,8 +6,9 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null || sessionUser.getRole() == 2)
+    if(sessionUser==null || sessionUser.getRole() == 2) {
         response.sendRedirect("error_page.jsp");
+    }
 %>
 <script>
 
@@ -103,6 +104,12 @@
                     <strong>Eπιτυχία! </strong>Η Δημοπρασία σας τροποποιήθηκε!
                 </div>
                 <% } %>
+                <% if (request.getAttribute("error-message") != null) { %>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Προσοχή! </strong><%=(String) request.getAttribute("error-message")%>
+                </div>
+                <% }%>
 
                 <div class="form-group">
                     <div class="row">
@@ -251,16 +258,19 @@
                                     <a href="#" class="btn btn-warning disabled" role="button">Τροποποίηση</a>
                                 <%}else if (userAuctions.get(i).getState() == 0){%>
                                     <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                    <br>
+                                    <a href="DeleteAuction?id=<%=userAuctions.get(i).getId()%>" onclick="return confirm('Είστε σίγουροι για την διαγραφή της δημοπρασίας?');" class="btn btn-danger" role="button">Διαγραφή</a>
                                 <%}else if (userAuctions.get(i).getState() == 1 ){
                                     if (userAuctions.get(i).getTotal_offers() == 0){%>
                                         <a href="editAuction.jsp?id=<%=userAuctions.get(i).getId()%>" class="btn btn-warning" role="button">Τροποποίηση</a>
+                                        <br>
+                                        <a href="DeleteAuction?id=<%=userAuctions.get(i).getId()%>" onclick="return confirm('Είστε σίγουροι για την διαγραφή της δημοπρασίας?');" class="btn btn-danger" role="button">Διαγραφή</a>
                                     <%}else{%>
                                         <a href="#" class="btn btn-warning disabled" role="button">Τροποποίηση</a>
+                                        <br>
+                                        <a href="#" class="btn btn-danger disabled" role="button">Διαγραφή</a>
                                     <%}%>
                                 <%}%>
-                                <br>
-
-                                <a href="DeleteAuction?id=<%=userAuctions.get(i).getId()%>" onclick="return confirm('Είστε σίγουροι για την διαγραφή της δημοπρασίας?');" class="btn btn-danger" role="button">Διαγραφή</a>
                             </div>
 
                         </div>

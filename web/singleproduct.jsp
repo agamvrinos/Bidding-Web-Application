@@ -6,11 +6,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="entities.AppEntities.Bid" %>
 <%@ page import="dao.UserDAO" %>
+<%@ page import="entities.AppEntities.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%--TODO: NA FTIAXTOUN OI ROLOI XRHSTWN KAI POIOS EXEI PROSVASI EDW--%>
     <%
         Integer auction_id = Integer.valueOf(request.getParameter("id"));
+        User user = (User) request.getSession().getAttribute("user");
 
         ItemDAO idao = new ItemDAO(true);
         BidDAO bdao = new BidDAO(true);
@@ -179,10 +179,10 @@
                                         <div class="col-md-8 gap">
                                             <%
                                             Double buy_price = item.getBuy_price();
-                                            if (buy_price != 0.0){%>
-                                                <span style="font-weight: bold;">Τιμή Αγοράς: </span> <%=buy_price%>$
+                                            if (buy_price != null){%>
+                                                <span style="font-weight: bold;">Τιμή Άμεσης Αγοράς: </span> $<%=buy_price%>
                                             <%} else {%>
-                                                <span style="font-weight: bold;">Τιμή Αγοράς: </span> Δεν έχει οριστεί
+                                                <span style="font-weight: bold;">Τιμή Άμεσης Αγοράς: </span> Δεν έχει οριστεί
                                             <%}%>
 
                                         </div>
@@ -190,7 +190,7 @@
 
                                     <div class="row">
                                         <div class="col-md-8 gap">
-                                            <span style="font-weight: bold;">Τρέχουσα Προσφορά: </span> <%=item.getCurrently()%>$
+                                            <span style="font-weight: bold;">Τρέχουσα Τιμή: </span> $<%=item.getCurrently()%>
                                         </div>
                                     </div>
 
@@ -204,6 +204,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Χώρα: </span> <%=item.getCountry()%>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 gap">
+                                            <span style="font-weight: bold;">Περιοχή: </span> <%=item.getLocation()%>
+                                        </div>
+                                    </div>
+
                                     <div class="row gap">
                                         <%
                                             Date end_t = item.getEnds();
@@ -211,7 +223,7 @@
                                             String ended = end_format.format(end_t);
                                         %>
                                         <div class="col-md-1">
-                                            <span style="font-weight: bold;">Απομένει:</span>
+                                            <span style="font-weight: bold;">Απομένει: </span>
                                         </div>
 
                                         <div class="col-md-9">
@@ -224,7 +236,7 @@
 
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <span style="font-weight: bold;">Πωλητής: </span> <a href="#"> <%=item.getSeller()%></a>
+                                            <span style="font-weight: bold;">Πωλητής: </span> <a href="userprofile.jsp?id=<%=udao.getUserbyName(item.getSeller()).getId()%>"> <%=item.getSeller()%></a>
                                         </div>
                                     </div>
 
@@ -237,16 +249,16 @@
                                 <br>
                                 <br>
 
+                                <%if (item.getState() == 1 && user != null && user.getRole() != 1){%>
                                 <%--Betting Field and Button--%>
                                 <div class="row">
                                     <div class="col-md-8">
                                         <form action="BetOffer" method="get">
 
                                             <input type="hidden" name="id" value="<%=auction_id%>">
-                                            <%--<input type="hidden" name="category" value="<%=chosen_category%>">--%>
 
                                             <div class="input-group">
-                                                <span class="input-group-addon"><%=item.getCurrently()%>$</span>
+                                                <span class="input-group-addon">$<%=item.getCurrently()%></span>
                                                 <input id="bid" name="bid" type="text" class="form-control" value="0.0">
                                             <span class="input-group-btn">
                                                 <button id="register" name="register" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την Υποβολή Προσφοράς?');">Υποβολή</button>
@@ -258,17 +270,21 @@
 
                                 <br>
                                 <br>
+                                <%}%>
+
 
                                 <%--Buy Now Button--%>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <%if (buy_price != null){%>
-                                            <a href="BuyAuction?id=<%=auction_id%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
-                                        <%}%>
+                                <%if (buy_price != null && item.getState() == 1 && user != null && user.getRole() != 1){%>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                                <a href="BuyAuction?id=<%=auction_id%>" class="btn btn-primary" onclick="return confirm('Είστε σίγουροι για την αγορά?');">Άμεση Αγορά </a>
+
+                                        </div>
                                     </div>
-                                </div>
+                                <%}%>
 
                                 <%--Export XML Button--%>
+                                <%if (user != null && user.getRole() == 0){%>
                                 <div class="row">
                                     <form action="ExportXML" method="POST" id="export-xml">
                                     <div class="col-md-8">
@@ -277,22 +293,27 @@
                                     </div>
                                     </form>
                                 </div>
+                                <%}%>
 
                                 <br>
 
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
                                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Περιγραφή</a></li>
+                                        <%if (item.getLatitude() != null){%>
                                         <li role="presentation"><a href="#maps" id="gmaps" aria-controls="gmaps" role="tab" data-toggle="tab">Χάρτης</a></li>
+                                        <%}%>
                                         <li role="presentation"><a href="#offers" id="#offers" aria-controls="offers" role="tab" data-toggle="tab">Προσφορές</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
                                             <p style="text-align: justify;"><%=item.getDesc()%></p>
                                         </div>
+                                        <%if (item.getLatitude() != null){%>
                                         <div role="tabpanel" class="tab-pane fade" id="maps">
                                             <div id="map"></div>
                                         </div>
+                                        <%}%>
                                         <div role="tabpanel" class="tab-pane fade" id="offers">
 
                                             <table id="offers-table" class="table table-striped hover display compact" cellspacing="0" width="100%">

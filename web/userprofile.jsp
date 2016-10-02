@@ -4,13 +4,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  String uid = request.getParameter("id");
     //in case id parameter is missing or invalid
-    if(uid == null || DAOUtil.IntConvert(uid) == -1)
+    if(uid == null || DAOUtil.IntConvert(uid) == -1) {
         response.sendRedirect("error_page.jsp");
+    }
 
     User user = new UserDAO(true).getUserbyID(Integer.valueOf(uid));
     //if user doesnt exist
-    if(user==null)
+    if(user==null) {
         response.sendRedirect("error_page.jsp");
+        return;
+    }
 
     User sessionUser = (User) request.getSession().getAttribute("user");
     int sessionUserRole = -1;

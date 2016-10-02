@@ -23,7 +23,6 @@ public class BetOffer extends HttpServlet {
 
         // Get auction parameters
         Integer auction_id = Integer.valueOf(request.getParameter("id"));
-        String chosen_category = request.getParameter("category");
         String b = request.getParameter("bid");
 
         Double bid = isNumeric(b);
@@ -33,7 +32,6 @@ public class BetOffer extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("singleproduct.jsp?id=" + auction_id);
-        RequestDispatcher dispatcher2 = request.getRequestDispatcher("singleproduct.jsp?id=" + auction_id + "&" + chosen_category);
         RequestDispatcher dispatcher3 = request.getRequestDispatcher("login.jsp");
 
         ItemDAO dao = new ItemDAO(true);
@@ -61,11 +59,10 @@ public class BetOffer extends HttpServlet {
         // Check if bet is not numeric
         if (bid == null){
             request.setAttribute("error-message","Το ποσό που προσφέρετε δεν είναι έγκυρο.");
-            dispatcher2.forward(request, response);
+            dispatcher.forward(request, response);
             return;
         }
 
-        UserDAO udao = new UserDAO(true);
         User bidder = (User) request.getSession().getAttribute("user");
         if (bidder == null){
             request.setAttribute("error-message","Πρέπει να είστε συνδεδεμένος για να υποβάλετε προσφορά.");
@@ -73,15 +70,21 @@ public class BetOffer extends HttpServlet {
             return;
         }
 
+        if (bidder.getRole() == 1) {
+            request.setAttribute("error-message","Είστε πωλητής, δεν μπορείτε να υποβάλετε προσφορές!");
+            dispatcher.forward(request, response);
+            return;
+        }
+
         //place bid
         if (dao.BetAuction(auction_id, bid, bidder.getUsername()) == -1){
             request.setAttribute("error-message","Το ποσό που προσφέρετε είναι μικρότερο από το ήδη υπάρχον.");
-            dispatcher2.forward(request, response);
+            dispatcher.forward(request, response);
             return;
         }
 
         //return to the same item page
-        dispatcher2.forward(request, response);
+        dispatcher.forward(request, response);
         return;
     }
 

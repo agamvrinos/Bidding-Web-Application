@@ -37,8 +37,37 @@ public class EditAuction extends HttpServlet {
         ItemDAO dao = new ItemDAO(true);
 
         // in case you are not logged in
-        if (user == null) {
-            response.sendRedirect("index.jsp");
+        if (user == null  || user.getRole() == 2) {
+            response.sendRedirect("error_page.jsp");
+            return;
+        }
+
+        Integer int_id;
+        String auction_id = request.getParameter("id");
+
+        try {
+            int_id = Integer.parseInt(auction_id);
+        }
+        catch(NumberFormatException | NullPointerException e) {
+            response.sendRedirect("error_page.jsp");
+            return;
+        }
+
+        Item item = dao.getItemByID(int_id);
+        if (item == null) {
+            response.sendRedirect("error_page.jsp");
+            return;
+        }
+
+        if(!dao.belongsToUser(user.getUsername(), item.getId())) {
+            response.sendRedirect("error_page.jsp");
+            return;
+        }
+
+        if (!(item.getState() == 0 || (item.getState() == 1 && item.getTotal_offers() == 0))){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("my_auctions.jsp");
+            request.setAttribute("error-message","Είναι αδύνατη η τροποπίηση του προϊόντος εφόσον υπάρχει τουλάχιστον μια προσφορά!");
+            dispatcher.forward(request, response);
             return;
         }
 
@@ -179,11 +208,11 @@ public class EditAuction extends HttpServlet {
         }
 
 
-        Item item = new Item(Integer.valueOf(id), title, first_bid_number, first_bid_number, buyout_number, country, location,
+        Item item2 = new Item(Integer.valueOf(id), title, first_bid_number, first_bid_number, buyout_number, country, location,
                 latitude_number, longitude_number, new Date(), null, datetime, user.getUsername(), desc, cat, old_item.getBids(), old_item.getState(), image, old_item.getTotal_offers());
 
         // Update item values
-        dao.updateItem(item, old_item);
+        dao.updateItem(item2, old_item);
 
         request.setAttribute("auction-edit-success","yes");
         RequestDispatcher dispatcher = request.getRequestDispatcher("my_auctions.jsp");

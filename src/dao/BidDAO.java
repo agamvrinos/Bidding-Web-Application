@@ -16,11 +16,6 @@ public class BidDAO {
     private ConnectionFactory factory;
 
     private static final String SQL_INSERT_BID = "INSERT INTO bids (item_id, username, bid_time, bid_amount) VALUES (?, ?, ?, ?)";
-    private static final String SQL_INSERT_RATING = "INSERT INTO ratings (username, rating) " +
-            "SELECT col1, col2 " +
-            "FROM (select ? as col1, ? as col2) t " +
-            "WHERE NOT EXISTS (SELECT * FROM ratings WHERE username = ?);";
-    private static final String SQL_UPDATE_RATING = "UPDATE ratings SET rating = rating + ? WHERE username = ?";
     private static final String SQL_GET_ITEM_BIDS = "SELECT bids.bid_id, bids.username, bids.bid_time, bids.bid_amount," +
             " users.country, users.city, ratings.rating FROM ted.bids, ted.users, ted.ratings WHERE bids.item_id = ? " +
             "AND users.username = bids.username AND users.username = ratings.username ORDER BY bids.bid_amount DESC";
@@ -70,38 +65,6 @@ public class BidDAO {
             throw new RuntimeException("Errori at InsertBid");
         }
     }
-
-//    public void insertRating(String username, Integer rating) {
-//        try {
-//            Connection connection = factory.getConnection();
-//            PreparedStatement statement;
-//
-//            // Insert User-Bidder rating
-//            statement = DAOUtil.prepareStatement(connection, SQL_INSERT_RATING, true, username, rating, username);
-//            statement.executeUpdate();
-//
-//            connection.close();
-//        } catch (SQLException ex) {
-//            System.out.println("ERROR: " + ex.getMessage());
-//            throw new RuntimeException("Errori at InsertRating");
-//        }
-//    }
-//
-//    public void updateRating(String username, Integer rating_val) {
-//        try {
-//            Connection connection = factory.getConnection();
-//            PreparedStatement statement;
-//
-//            // Update User rating
-//            statement = DAOUtil.prepareStatement(connection, SQL_UPDATE_RATING, true, rating_val, username);
-//            statement.executeUpdate();
-//
-//            connection.close();
-//        } catch (SQLException ex) {
-//            System.out.println("ERROR: " + ex.getMessage());
-//            throw new RuntimeException("Errori at UpdateRating");
-//        }
-//    }
 
     public List<Bid> getItemBids(Integer id){
 

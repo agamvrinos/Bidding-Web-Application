@@ -23,6 +23,12 @@ public class Register extends HttpServlet {
         // Set request encoding to UTF-8
         request.setCharacterEncoding("UTF-8");
 
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        if(sessionUser!=null) {
+            response.sendRedirect("index.jsp");
+            return;
+        }
+
         // Get register form fields
         String fullname = request.getParameter("fullname");
         String username = request.getParameter("username");

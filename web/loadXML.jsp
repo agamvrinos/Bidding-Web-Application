@@ -1,8 +1,9 @@
 <%@ page import="entities.AppEntities.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  User sessionUser = (User) request.getSession().getAttribute("user");
-    if(sessionUser==null || sessionUser.getRole()!=0)
+    if(sessionUser==null || sessionUser.getRole()!=0) {
         response.sendRedirect("error_page.jsp");
+    }
 %>
 
 <html>
