@@ -139,7 +139,7 @@
 <% // If user is logged in
     if(user != null) {
         List<Item> rec_items = idao.getRecItems(user.getUsername());
-    if(rec_items.size() == 0){
+    if(rec_items.size() != 0){
     %>
 <div class="maincontent-area">
     <div class="zigzag-bottom"></div>
