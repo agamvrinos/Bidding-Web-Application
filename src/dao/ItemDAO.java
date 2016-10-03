@@ -509,7 +509,7 @@ public class ItemDAO {
         Double current_bid = item.getCurrently();
 
         // User should bid more than the current bid
-        if (bid_value < current_bid){
+        if (bid_value <= current_bid){
             return LOW_BET;
         }
 

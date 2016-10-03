@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="buyout">Τιμή Άμεσης Αγοράς</label>
                         <div class="col-md-4">
-                            <input <%if (item.getBuy_price() == 0.0){%> value="" <%}else{%> value="<%=item.getBuy_price()%><%}%>" id="buyout" name="buyout" placeholder="Τιμή Άμεσης Αγοράς" class="form-control input-md" type="text">
+                            <input <%if (item.getBuy_price() == null){%> value="" <%}else{%> value="<%=item.getBuy_price()%><%}%>" id="buyout" name="buyout" placeholder="Τιμή Άμεσης Αγοράς" class="form-control input-md" type="text">
                         </div>
                     </div>
 
@@ -138,10 +138,10 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Συντεταγμένες</label>
                         <div class="col-md-2">
-                            <input <%if (item.getLatitude() == 0.0){%> value="" <%}else{%>value="<%=item.getLatitude()%>"<%}%> id="latitude" name="latitude" placeholder="Latitude" class="form-control input-md" type="text">
+                            <input <%if (item.getLatitude() == null){%> value="" <%}else{%>value="<%=item.getLatitude()%>"<%}%> id="latitude" name="latitude" placeholder="Latitude" class="form-control input-md" type="text">
                         </div>
                         <div class="col-md-2">
-                            <input <%if (item.getLongitude() == 0.0){%> value="" <%}else{%>value="<%=item.getLongitude()%>"<%}%> id="longitude" name="longitude" placeholder="Longitude" class="form-control input-md" type="text">
+                            <input <%if (item.getLongitude() == null){%> value="" <%}else{%>value="<%=item.getLongitude()%>"<%}%> id="longitude" name="longitude" placeholder="Longitude" class="form-control input-md" type="text">
                         </div>
                     </div>
 
