@@ -50,6 +50,11 @@ public class BuyAuction extends HttpServlet {
         Item item = dao.getItemByID(auction_id);
         Date ends = item.getEnds();
 
+        if(item.getState() != 1){
+            response.sendRedirect("singleproduct.jsp?id=" + auction_id);
+            return;
+        }
+
         if (now.compareTo(ends) > 0){
             request.setAttribute("ended","yes");
             dispatcher.forward(request, response);
@@ -57,8 +62,10 @@ public class BuyAuction extends HttpServlet {
         }
 
         User buyer = (User) request.getSession().getAttribute("user");
-        if (buyer == null || buyer.getRole() == 1)
+        if (buyer == null || buyer.getRole() == 1) {
             response.sendRedirect("error_page.jsp");
+            return;
+        }
 
         // If I get here then the item CAN be bought
 
