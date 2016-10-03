@@ -76,8 +76,11 @@
                         else if (role == 1) {
                             roletext = "Πωλητής";
                         }
-                        else {
+                        else if (role == 2){
                             roletext = "Προσφέρον";
+                        }
+                        else {
+                            roletext = "Πωλητής/ Προσφέρον";
                         }%>
                     <td><%=roletext%></td>
                     <% if (userlist.get(i).getValidated()==0){ %>

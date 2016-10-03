@@ -355,7 +355,7 @@
                             List<Item> rec_items = idao.getRecItems(user.getUsername());
                             if(rec_items.size() != 0){%>
                             <div class="related-products-wrapper">
-                                <h2 class="related-products-title">Σχετικα Προϊοντα</h2>
+                                <h2 class="related-products-title">Προτεινομενα Προϊοντα</h2>
                                 <div class="related-products-carousel">
                                     <%  for(int i = 0; i < rec_items.size(); i++){%>
                                         <div class="single-product">
