@@ -81,7 +81,7 @@ public class BuyAuction extends HttpServlet {
 
         // 2) Buy Item
         dao.disableAuction(id);
-        request.setAttribute("success","yes");
-        dispatcher.forward(request, response);
+
+        response.sendRedirect("my_messages.jsp");
     }
 }
