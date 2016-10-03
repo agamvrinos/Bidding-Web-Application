@@ -22,10 +22,7 @@ import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/LoadXml")
 public class LoadXml extends HttpServlet {
@@ -163,7 +160,7 @@ public class LoadXml extends HttpServlet {
     }
 
     private Date DateConvert(String str){
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy hh:mm:ss", Locale.US);
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
         Date date;

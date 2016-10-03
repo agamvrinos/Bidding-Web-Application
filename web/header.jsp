@@ -14,7 +14,7 @@
                             else {
                             %>
                                 <li><a href="my_messages.jsp" ><i class="fa fa-envelope"></i>Μηνύματα</a></li>
-                                <%if ( ((User) request.getSession().getAttribute("user")).getRole()!=2){%>
+                                <%if ( ((User) request.getSession().getAttribute("user")).getRole() != 2 && ((User) request.getSession().getAttribute("user")).getRole() != 0){%>
                                     <li><a href="my_auctions.jsp" id="my_auctions"><i class="fa fa-user"></i>Διαχείριση Δημοπρασιών</a></li>
                                 <%}%>
                                 <%if ( ((User) request.getSession().getAttribute("user")).getRole()==0){%>
