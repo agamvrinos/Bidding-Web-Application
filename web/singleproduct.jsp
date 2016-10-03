@@ -227,7 +227,7 @@
                                         </div>
 
                                         <div class="col-md-9">
-                                            <div class="countdown-<%=item.getId()%>" style="color:green; margin-left: 2px;"></div>
+                                            <div class="countdown-<%=item.getId()%>" style="color:green; margin-left: 8px;"></div>
                                             <script>
                                                 CountDownTimer('<%=ended%>', 'countdown-<%=item.getId()%>', '<%=item.getId()%>');
                                             </script>
