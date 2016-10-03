@@ -388,8 +388,13 @@ public class ItemDAO {
                     lon = null;
                 }
 
+                Double buy_price = result.getDouble("buy_price");
+                if (result.wasNull()) {
+                    buy_price = null;
+                }
+
                 Item item = new Item(id, result.getString("name"), result.getDouble("currently"), result.getDouble("first_bid"),
-                        result.getDouble("buy_price"), result.getString("country"), result.getString("location"),
+                        buy_price, result.getString("country"), result.getString("location"),
                         lat, lon, result.getTimestamp("creation"),
                         result.getTimestamp("starts"), result.getTimestamp("ends"), result.getString("seller"), result.getString("description"),
                         null, bdao.getItemBids(id), result.getInt("state"), result.getString("image"), result.getInt("total_offers"));

@@ -24,7 +24,7 @@
         return;
     }
     // If item exists but does not belong to user then error OR item has ended OR not published
-    else if (!idao.belongsToUser(sessionUser.getUsername(), iid) || item.getState() == -1 || (item.getState() == 0 && item.getTotal_offers() != 0){
+    else if (!idao.belongsToUser(sessionUser.getUsername(), iid) || item.getState() == -1 || (item.getState() == 0 && item.getTotal_offers() != 0)){
         response.sendRedirect("error_page.jsp");
         return;
     }

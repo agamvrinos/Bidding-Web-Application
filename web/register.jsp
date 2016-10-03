@@ -160,8 +160,8 @@
                         <div class="col-md-4">
                             <select id="UserRole" name="UserRole" class="form-control">
                                 <option value="1">Πωλητής</option>
-                                <option value="2">Προσφέρων</option>
-                                <option value="3">Πωλητής/ Προσφέρων</option>
+                                <option value="2">Προσφέρον</option>
+                                <option value="3">Πωλητής/ Προσφέρον</option>
                             </select>
                         </div>
                     </div>
