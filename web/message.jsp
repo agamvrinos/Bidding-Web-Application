@@ -37,9 +37,9 @@
 
     // Who sent me the message???? or to whom did I sent it????
     User sender = new UserDAO(true).getUserbyID(message.getSender_id());
-    String sender_fullname = sender.getFullname();
+    String sender_username = sender.getUsername();
     User receiver = new UserDAO(true).getUserbyID(message.getReceiver_id());
-    String receiver_fullname = receiver.getFullname();
+    String receiver_username = receiver.getUsername();
 
     if (msg_type.equals("rec"))   // Mark message as read
         mdao.updateIsRead(message_id);
@@ -93,9 +93,9 @@
                         <%=message.getTitle()%><br>
                     </div>
                     <% if (msg_type.equals("rec")){%>
-                        <i><span>Αποστολέας:</span> <%=sender_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
+                        <i><span>Αποστολέας:</span> <%=sender_username%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
                     <% } else if (msg_type.equals("send")){%>
-                        <i><span>Εστάλη στον:</span> <%=receiver_fullname%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
+                        <i><span>Εστάλη στον:</span> <%=receiver_username%> <span>Ημερομηνία/Ώρα:</span> <%=date%></i><br><br>
                     <% }%>
                 </div>
                 <div id="msg-content">
