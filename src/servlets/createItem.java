@@ -182,7 +182,6 @@ public class createItem extends HttpServlet {
             datetime = sdf.parse(date);
         }
         catch (ParseException ex){
-            //TODO: Den xreiazetai me to new calendar mallon
             request.setAttribute("item-creation-error","Κάτι πήγε στραβά με την ημερομηνία που συμπληρώσατε! Προσπαθήστε ξανά!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("newauction.jsp");
             dispatcher.forward(request, response);

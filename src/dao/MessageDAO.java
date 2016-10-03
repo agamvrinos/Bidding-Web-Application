@@ -243,6 +243,4 @@ public class MessageDAO {
             throw new RuntimeException("Error at auto message");
         }
     }
-
-
 }

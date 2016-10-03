@@ -8,18 +8,13 @@
 
 <%
     // Make sure user is logged in
-    User sessionUser;
     if (request.getSession().getAttribute("user")==null) {
         request.setAttribute("nologgedin","no");
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
         return;
     }
-    else {
-        sessionUser = (User) request.getSession().getAttribute("user");
-    }
 
-    //TODO: CHECK ID+TYPE PARAMETERS FOR EPITHETIKOUS XRISTES POU TA PIRAZOUN
     // Get the message id passed and type of message (rec or sent)
     Integer message_id = Integer.valueOf(request.getParameter("id"));
     String msg_type = request.getParameter("type");
@@ -28,11 +23,13 @@
     MessageDAO mdao = new MessageDAO(true);
     Message message = mdao.getMessageById(message_id);
 
-    // No message with this id
-    if (message == null){
+    // Check1: No message with this id
+    // Check2: Illegal type
+    if (message == null || (!msg_type.equals("send") && !msg_type.equals("rec"))){
         response.sendRedirect("error_page.jsp");
         return;
     }
+
     // Format Date
     Date end_t = message.getDate();
     SimpleDateFormat end_format = new SimpleDateFormat("dd/MM/yyyy hh:mm");

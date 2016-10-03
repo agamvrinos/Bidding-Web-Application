@@ -19,7 +19,6 @@
         sessionUser = (User) request.getSession().getAttribute("user");
     }
 
-    //TODO: CHECK ID PARAMETER FOR EPITHETIKOUS XRISTES POU TO PIRAZOUN
     // Get the message id passed
     Integer message_id = Integer.valueOf(request.getParameter("id"));
     String msg_type = request.getParameter("type");
@@ -27,6 +26,13 @@
     // Get full message using the id
     MessageDAO dao = new MessageDAO(true);
     Message message = dao.getMessageById(message_id);
+
+    // Check1: No message with this id
+    // Check2: Illegal type
+    if (message == null || (!msg_type.equals("send") && !msg_type.equals("rec"))){
+        response.sendRedirect("error_page.jsp");
+        return;
+    }
 %>
 <html>
 <head>
