@@ -19,10 +19,10 @@
         <location>/ExceptionHandler</location>
     </error-page>
 
-    <!--<error-page>-->
-        <!--<exception-type>javax.servlet.ServletException</exception-type>-->
-        <!--<location>/ExceptionHandler</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <exception-type>javax.servlet.ServletException</exception-type>
+        <location>/ExceptionHandler</location>
+    </error-page>
 
     <listener>
         <listener-class>support.Listener</listener-class>
