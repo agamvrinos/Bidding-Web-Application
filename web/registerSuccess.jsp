@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Register Success</title>
+    <title>Επιτυχία εγγραφής</title>
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -33,7 +33,7 @@
                         response.sendRedirect("error_page.jsp");%>
                 <br>
                 <h3>Καλως ήρθες, <%=username%>!</h3> <br>
-                <p>Ο Λογαριασμός σου μόλις δημιουργήθηκε! Δεν θα είστε σε θέση να
+                <p>Ο Λογαριασμός σας μόλις δημιουργήθηκε! Δεν θα είστε σε θέση να
                     συνδεθείτε μέχρι να γίνει ενεργοποίηση του λογαριασμού σας από τον
                     Διαχειριστή. Ευχαριστούμε!</p>
             </div>
