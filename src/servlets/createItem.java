@@ -144,14 +144,6 @@ public class createItem extends HttpServlet {
             }
         }
 
-        System.out.println("Title: " + title);
-        System.out.println("First Bid: " + first_bid);
-        System.out.println("buyout: " + buyout);
-        System.out.println("country: " + country);
-        System.out.println("location: " + location);
-        System.out.println("date: " + date);
-        System.out.println("desc: " + desc);
-
         Double first_bid_number = null;
         Double buyout_number = null;
         Double latitude_number = null;
